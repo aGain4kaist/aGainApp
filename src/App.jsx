@@ -1,35 +1,35 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from './firebaseConfig';  // Firestore 설정 불러오기
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    const fetchMessage = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "messages"));
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());  // 데이터를 콘솔에 출력
+          setMessage(doc.data().text);  // 'text' 필드를 가져오기
+        });
+      } catch (error) {
+        console.error("Error fetching messages:", error);  // 에러 확인
+      }
+    };
+  
+    fetchMessage();
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+     <h1>Firestore에서 가져온 메시지:</h1>
+     <p>{message}</p>
     </>
   )
 }
 
-export default App
+export default App;
