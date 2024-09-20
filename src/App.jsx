@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from './firebaseConfig';  // Firestore 설정 불러오기
+import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react';  // Chakra UI 컴포넌트 추가
 
 function App() {
   const [message, setMessage] = useState('')
@@ -25,11 +23,16 @@ function App() {
   }, []);
 
   return (
-    <>
-     <h1>Firestore에서 가져온 메시지:</h1>
-     <p>{message}</p>
-    </>
-  )
+    <VStack spacing={4} align="center" mt={10}>
+      <Heading>Firestore에서 가져온 메시지</Heading>
+      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg">
+        <Text fontSize="xl">{message || "메시지를 불러오는 중..."}</Text>
+      </Box>
+      <Button colorScheme="blue" onClick={() => window.location.reload()}>
+        다시 불러오기
+      </Button>
+    </VStack>
+  );
 }
 
 export default App;
