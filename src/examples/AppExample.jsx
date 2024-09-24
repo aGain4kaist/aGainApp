@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from './firebaseConfig'; // Firestore 설정 불러오기
+import { db } from '../utils/firebaseConfig'; // Firestore 설정 불러오기
 import { Box, Heading, Text, Button, VStack } from '@chakra-ui/react'; // Chakra UI 컴포넌트 추가
 
-function App() {
+function AppExample() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -35,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppExample;
