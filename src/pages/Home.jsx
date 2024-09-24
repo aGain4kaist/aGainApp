@@ -1,7 +1,11 @@
 import React from 'react';
 import { Box, Flex, Text, Button } from '@chakra-ui/react';
 import '@/styles/Home.scss';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css'; // Swiper 기본 스타일
 
+// dummy items
+const clothingItems = ['글 1', '글 2', '글 3', '글 4'];
 function Home() {
   return (
     <Box className="home-page" bg="gray.100" minH="100vh" p={4}>
@@ -18,26 +22,49 @@ function Home() {
         <Text fontSize="lg" fontWeight="bold" mb={4}>
           주변에 이런 옷이 등록 됐어!
         </Text>
-        <Flex justifyContent="space-between">
-          <Box
-            className="clothing-card"
-            bg="blue.200"
-            w="45%"
-            h="100px"
-            borderRadius="md"
-          >
-            <Text>글 1</Text>
-          </Box>
-          <Box
-            className="clothing-card"
-            bg="blue.200"
-            w="45%"
-            h="100px"
-            borderRadius="md"
-          >
-            <Text>글 2</Text>
-          </Box>
+        {/* 수평 슬라이더 */}
+        <Flex overflowX="auto" whiteSpace="nowrap" paddingBottom="10px">
+          {clothingItems.map((item, index) => (
+            <Box
+              key={index}
+              className="clothing-card"
+              bg="blue.300"
+              minWidth="150px"
+              h="100px"
+              borderRadius="md"
+              textAlign="center"
+              lineHeight="100px"
+              fontWeight="bold"
+              mr={4} // 박스 간격
+            >
+              {item}
+            </Box>
+          ))}
         </Flex>
+      </Box>
+
+      {/* Swiper 슬라이더 */}
+      <Box mt={6}>
+        <Text fontSize="lg" fontWeight="bold" mb={4}>
+          주변에 이런 옷이 등록 됐어!
+        </Text>
+        <Swiper spaceBetween={20} slidesPerView="auto" freeMode={true}>
+          {clothingItems.map((item, index) => (
+            <SwiperSlide key={index} style={{ width: '150px' }}>
+              <Box
+                className="clothing-card"
+                bg="blue.300"
+                h="100px"
+                borderRadius="md"
+                textAlign="center"
+                lineHeight="100px"
+                fontWeight="bold"
+              >
+                {item}
+              </Box>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </Box>
 
       {/* 내 주변의 파티들 */}
