@@ -2,10 +2,10 @@ import React from 'react';
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import { FaHome, FaSearch, FaTshirt, FaUser } from 'react-icons/fa'; // 아이콘
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Home from '../../pages/Home';
-import ClothingSearch from '../../pages/ClothingSearch';
-import PartySearch from '../../pages/PartySearch';
-import MyClothes from '../../pages/MyClothes';
+import Home from '@/pages/Home';
+import ClothingSearch from '@/pages/ClothingSearch';
+import PartySearch from '@/pages/PartySearch';
+import MyClothes from '@/pages/MyClothes';
 
 function AppLayout() {
   return (
