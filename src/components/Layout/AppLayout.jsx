@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Flex, IconButton } from '@chakra-ui/react';
-import { FaHome, FaSearch, FaTshirt, FaUser } from 'react-icons/fa'; // 아이콘
+import { FaHome, FaSearch, FaTshirt, FaUser, FaPlus } from 'react-icons/fa'; // 아이콘
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
@@ -66,6 +66,19 @@ function AppLayout() {
             />
           </Link>
         </Flex>
+        <IconButton
+          aria-label="등록"
+          icon={<FaPlus />}
+          colorScheme="teal"
+          position="fixed"
+          bottom="40px"
+          left="50%"
+          transform="translateX(-50%)"
+          borderRadius="full"
+          width="60px"
+          height="60px"
+          zIndex="20"
+        />
       </Router>
     </>
   );
