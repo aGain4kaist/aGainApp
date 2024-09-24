@@ -13,27 +13,27 @@ $font-stack: Arial, sans-serif;
 }
 
 // 중첩
-body {
-  margin: 0;
-  padding: 0;
-  background-color: $primary-color;
-  font-family: $font-stack;
-  color: white;
+// body {
+//   margin: 0;
+//   padding: 0;
+//   background-color: $primary-color;
+//   font-family: $font-stack;
+//   color: white;
 
-  // 중첩된 스타일
-  header {
-    background-color: $secondary-color;
-    padding: 10px;
+//   // 중첩된 스타일
+//   header {
+//     background-color: $secondary-color;
+//     padding: 10px;
     
-    h1 {
-      font-size: 2rem;
-      text-align: center;
-    }
-  }
+//     h1 {
+//       font-size: 2rem;
+//       text-align: center;
+//     }
+//   }
 
-  // 믹스인 사용
-  .container {
-    @include flex-center;
-    height: 100vh;
-  }
-}
+//   // 믹스인 사용
+//   .container {
+//     @include flex-center;
+//     height: 100vh;
+//   }
+// }
