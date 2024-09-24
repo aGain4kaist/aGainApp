@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChakraProvider, Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import { FaHome, FaSearch, FaTshirt, FaUser } from 'react-icons/fa'; // 아이콘
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 
@@ -76,7 +76,12 @@ function PartySearch() {
 }
 
 function ClothingSearch() {
-  return <div>옷 찾기</div>;
+  //   return <div>옷 찾기</div>;
+  return (
+    <div>
+      <IconButton icon={<FaUser />} />
+    </div>
+  );
 }
 
 function MyClothes() {
