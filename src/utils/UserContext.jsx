@@ -5,7 +5,7 @@ const UserContext = createContext();
 
 // 2. Context Provider 작성
 export function UserProvider({ children }) {
-  const [user, setUser] = useState(null);  // 유저 정보 상태
+  const [user, setUser] = useState(null); // 유저 정보 상태
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
