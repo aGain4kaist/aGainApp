@@ -6,6 +6,7 @@ import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
 import PartySearch from '@/pages/PartySearch';
 import MyClothes from '@/pages/MyClothes';
+import KakaoMap from '../../utils/KakaoMap';
 
 function AppLayout() {
   return (
