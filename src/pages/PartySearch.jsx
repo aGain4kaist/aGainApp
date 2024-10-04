@@ -15,7 +15,7 @@ function PartySearch() {
           </button>
         </div>
       </div>
-      <div>
+      <div id="map" style={{ width: '100%', height: '50vh' }}>
         <KakaoMap />
       </div>
     </>
