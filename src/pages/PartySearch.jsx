@@ -1,5 +1,6 @@
 import React from 'react';
 import { useUser } from '../utils/UserContext';
+import KakaoMap from '../utils/KakaoMap';
 
 function PartySearch() {
   const { user, setUser } = useUser();
@@ -13,6 +14,9 @@ function PartySearch() {
             Set User
           </button>
         </div>
+      </div>
+      <div>
+        <KakaoMap />
       </div>
     </>
   );
