@@ -8,7 +8,7 @@ import PartyListBottomSheet from '../components/PartyListBottomSheet';
 function PartySearch() {
   const { user, setUser } = useUser();
   return (
-    <Flex direction="column" height="100vh">
+    <Flex direction="column" height="100vh" position="relative">
       {/* 헤더 */}
       <Header
         title={`Welcome, ${user ? user.name : 'Guest'}!`}
@@ -16,10 +16,10 @@ function PartySearch() {
       />
 
       {/* 카카오맵이 가운데 공간을 채움 */}
-      <Box flex="1" width="100%">
-        {/* 남은 공간을 채움 */}
+      <Box flex="1" width="100%" position="relative" paddingBottom="20vh">
         <KakaoMap />
       </Box>
+
       {/* BottomSheet */}
       <PartyListBottomSheet />
     </Flex>
