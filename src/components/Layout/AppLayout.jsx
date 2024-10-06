@@ -76,7 +76,7 @@ function AppLayout() {
             icon={<FaPlus />}
             colorScheme="teal"
             position="fixed"
-            bottom="80px" // 네비게이션 바 바로 위에
+            bottom="40px" // 네비게이션 바 바로 위에
             left="50%"
             transform="translateX(-50%)"
             borderRadius="full"

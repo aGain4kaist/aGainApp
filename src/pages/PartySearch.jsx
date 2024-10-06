@@ -3,6 +3,7 @@ import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
 import { Box, Flex } from '@chakra-ui/react';
 import Header from '../components/Layout/Header'; // Header 컴포넌트 불러오기
+import PartyListBottomSheet from '../components/PartyListBottomSheet';
 
 function PartySearch() {
   const { user, setUser } = useUser();
@@ -19,6 +20,8 @@ function PartySearch() {
         {/* 남은 공간을 채움 */}
         <KakaoMap />
       </Box>
+      {/* BottomSheet */}
+      <PartyListBottomSheet />
     </Flex>
   );
 }
