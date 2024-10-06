@@ -6,7 +6,6 @@ import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
 import PartySearch from '@/pages/PartySearch';
 import MyClothes from '@/pages/MyClothes';
-import KakaoMap from '../../utils/KakaoMap';
 
 function AppLayout() {
   return (
@@ -14,12 +13,7 @@ function AppLayout() {
       <Router>
         {/* 전체 레이아웃을 Flex로 */}
         <Flex direction="column" height="100vh">
-          {/* 상단 헤더 영역 */}
-          <Box bg="gray.100" padding="20px" textAlign="center" zIndex="10">
-            <h1>My Header</h1>
-          </Box>
-
-          {/* Body 내용물: 남은 공간을 모두 차지 */}
+          {/* 페이지별로 헤더와 바디를 관리하게 됨 */}
           <Box flex="1" overflow="auto">
             <Routes>
               <Route path="/" element={<Home />} />
