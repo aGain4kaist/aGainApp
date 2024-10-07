@@ -6,7 +6,6 @@ import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
 import PartySearch from '@/pages/PartySearch';
 import MyClothes from '@/pages/MyClothes';
-import PartyDetail from '@/pages/PartyDetail';
 
 function AppLayout() {
   return (
@@ -21,7 +20,6 @@ function AppLayout() {
               <Route path="/party" element={<PartySearch />} />
               <Route path="/clothes" element={<ClothingSearch />} />
               <Route path="/my-clothes" element={<MyClothes />} />
-              <Route path="/party/:id" element={<PartyDetail />} />
             </Routes>
           </Box>
 

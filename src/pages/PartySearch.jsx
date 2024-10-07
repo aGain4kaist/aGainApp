@@ -1,8 +1,9 @@
+// PartySearch.jsx
 import React from 'react';
 import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
 import { Box, Flex } from '@chakra-ui/react';
-import Header from '../components/Layout/Header'; // Header 컴포넌트 불러오기
+import Header from '../components/Layout/Header';
 import PartyListBottomSheet from '../components/PartyListBottomSheet';
 
 function PartySearch() {
@@ -15,13 +16,21 @@ function PartySearch() {
         subtitle="내 주변의 파티를 찾아보세요"
       />
 
-      {/* 카카오맵이 가운데 공간을 채움 */}
-      <Box flex="1" width="100%" position="relative" paddingBottom="20vh">
+      {/* 카카오맵 */}
+      <Box
+        flex="1"
+        width="100%"
+        position="relative"
+        zIndex="1"
+        paddingBottom="20vh"
+      >
         <KakaoMap />
       </Box>
 
       {/* BottomSheet */}
-      <PartyListBottomSheet />
+      <Box position="relative" zIndex="2">
+        <PartyListBottomSheet />
+      </Box>
     </Flex>
   );
 }

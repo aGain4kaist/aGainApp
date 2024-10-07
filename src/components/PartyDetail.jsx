@@ -5,12 +5,13 @@ import { ArrowBackIcon } from '@chakra-ui/icons';
 
 function PartyDetail({ party, onBack }) {
   return (
-    <Box px={4} pt={10} position="relative">
-      <IconButton
+    <Box px={4} pt={4} position="relative">
+      {/* 뒤로가기 버튼 */}
+      {/* <IconButton
         icon={<ArrowBackIcon />}
         aria-label="Back"
         position="absolute"
-        top="2"
+        top="4"
         left="4"
         onClick={onBack}
         variant="ghost"
@@ -18,10 +19,20 @@ function PartyDetail({ party, onBack }) {
         borderRadius="full"
         color="purple.500"
         _hover={{ bg: 'purple.100' }}
+      /> */}
+      {/* 이미지 자리 박스 */}
+      <Box
+        width="90%"
+        height="150px"
+        bg="gray.200"
+        borderRadius="lg"
+        mx="auto"
+        mb={4}
       />
+
       <Box mb={4}>
         <Text fontSize="sm" color="gray.500" mb="1">
-          내 위치로부터 21km
+          내 위치로부터 ・ 21km
         </Text>
         <Text fontSize="2xl" fontWeight="bold" mb="2">
           {party.name}

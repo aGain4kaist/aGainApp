@@ -2,17 +2,7 @@
 import React from 'react';
 import { Box, Text, Flex } from '@chakra-ui/react';
 
-const partyListData = [
-  { id: 1, name: '파티 A' },
-  { id: 2, name: '파티 B' },
-  { id: 3, name: '파티 C' },
-  { id: 4, name: '파티 D' },
-  { id: 5, name: '파티 E' },
-  { id: 6, name: '파티 F' },
-  { id: 7, name: '파티 G' },
-];
-
-function PartyList({ onPartyClick, isExpanded }) {
+function PartyList({ onPartyClick, isExpanded, partyListData }) {
   return (
     <Box px={4} pt={2}>
       {/* 상단 타이틀 및 정렬 옵션 */}
@@ -27,7 +17,7 @@ function PartyList({ onPartyClick, isExpanded }) {
       {/* 파티 목록 */}
       <Box
         overflowY="auto"
-        maxHeight={isExpanded ? 'calc(70vh - 100px)' : 'calc(30vh - 100px)'}
+        maxHeight={isExpanded ? 'calc(70vh - 120px)' : 'calc(30vh - 120px)'}
         px={2}
       >
         {partyListData.map((party) => (
