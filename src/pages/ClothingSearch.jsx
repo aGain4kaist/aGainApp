@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Text, IconButton, Image, Heading, VStack, HStack, useColorModeValue } from '@chakra-ui/react';
+import { Box, Text, IconButton, Image, Heading, VStack, HStack, useColorModeValue, Button } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -7,18 +7,18 @@ const CATEGORIES = ['Type1', 'Type2', 'Type3', 'Type4', ];
 
 const CLOTHING_ITEMS = {
 	Type1: [
-		{ id: 1, name: '옷 1', image: '/images/sample_image.png', description: '옷 설명 1', likes: 0 },
-		{ id: 2, name: '옷 2', image: '/images/sample_image.png', description: '옷 설명 2', likes: 0 },
+		{ id: 1, userid:'name1', userprofile:'/images/sample_profile_image.png', name: '옷 1', image: '/images/sample_image.png', description: '옷 설명 1', likes: 0 },
+		{ id: 2, userid:'name2', userprofile:'/images/sample_profile_image.png', name: '옷 2', image: '/images/sample_image.png', description: '옷 설명 2', likes: 0 },
 	],
 	Type2: [
-		{ id: 3, name: '옷 3', image: '/images/sample_image.png', description: '옷 설명 3', likes: 0 },
-		{ id: 4, name: '옷 4', image: '/images/sample_image.png', description: '옷 설명 4', likes: 0 },
+		{ id: 3, userid:'name3', userprofile:'/images/sample_profile_image.png', name: '옷 3', image: '/images/sample_image.png', description: '옷 설명 3', likes: 0 },
+		{ id: 4, userid:'name4', userprofile:'/images/sample_profile_image.png', name: '옷 4', image: '/images/sample_image.png', description: '옷 설명 4', likes: 0 },
 	],
 	Type3: [
-		{ id: 5, name: '옷 5', image: '/images/sample_image.png', description: '옷 설명 5', likes: 0 },
+		{ id: 5, userid:'name5', userprofile:'/images/sample_profile_image.png', name: '옷 5', image: '/images/sample_image.png', description: '옷 설명 5', likes: 0 },
 	],
 	Type4: [
-		{ id: 6, name: '옷 6', image: '/images/sample_image.png', description: '옷 설명 6', likes: 0 },
+		{ id: 6, userid:'name6', userprofile:'/images/sample_profile_image.png', name: '옷 6', image: '/images/sample_image.png', description: '옷 설명 6', likes: 0 },
 	],
   };
 
@@ -56,10 +56,23 @@ function ClothingSearch() {
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        style={{ height: '400px' }}
+        style={{ height: '450px' }}
       >
         {CLOTHING_ITEMS[selectedCategory].map((item, index) => (
           <SwiperSlide key={item.id}>
+			<HStack spacing={3} align="left">
+			  <Button 
+			  backgroundImage="/images/sample_profile_image.png"
+			  backgroundSize="cover"
+			  backgroundPosition="center"
+			  _hover={{
+				opacity: 0.8, // 호버 시 투명도
+			  }}
+			  >
+			  </Button>
+              <Text fontSize="xl" fontWeight="bold">{item.userid}</Text>
+
+			</HStack>
               <Text fontSize="xl" fontWeight="bold">{item.name}</Text>
             <VStack spacing={4} align="left">
               <Image
@@ -77,6 +90,7 @@ function ClothingSearch() {
                 <IconButton
                   aria-label="Like"
                   icon={<FaHeart />}
+				  variant="ghost"
                   colorScheme={likes[item.id] ? 'red' : 'gray'}
 				  
 				  onClick={() => {
@@ -84,6 +98,11 @@ function ClothingSearch() {
 					  ...prevLikes,
 					  [item.id]: prevLikes[item.id] ?0:1,
 					}));
+				  }}
+				  sx={{ // 배경색 제거
+					_hover: { bg: 'transparent' },
+					_focus: { bg: 'transparent' },
+					_active: { bg: 'transparent' },
 				  }}
                 />
                 <Text>{likes[item.id] ? 1 : 0}</Text>
