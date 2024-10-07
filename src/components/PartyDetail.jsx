@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, IconButton, Button, Image } from '@chakra-ui/react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
+import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 
 function PartyDetail({ party, onBack }) {
   // 파티 시작 및 종료 시간 포맷
@@ -10,16 +9,32 @@ function PartyDetail({ party, onBack }) {
 
   return (
     <Box px={4} pt={4} position="relative">
-      {/* 파티 이미지 */}
-      <Box width="90%" height="150px" mx="auto" mb={4}>
-        <Image
-          src={party.image[0]} // 이미지 URL
-          alt={`${party.name} 이미지`}
-          objectFit="cover"
-          width="100%"
-          height="100%"
-          borderRadius="lg"
-        />
+      {/* 파티 이미지 또는 기본 박스 */}
+      <Box
+        width="90%"
+        height="200px"
+        bg="gray.200"
+        mx="auto"
+        mb={4}
+        borderRadius="lg"
+        overflow="hidden" // 이미지가 박스 경계를 넘지 않도록 설정
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        {party.image ? (
+          <Image
+            src={party.image[0]} // 이미지 URL
+            alt={`${party.name} 이미지`}
+            objectFit="cover"
+            width="100%"
+            height="100%"
+          />
+        ) : (
+          <Text color="gray.500" fontSize="lg">
+            이미지 없음
+          </Text>
+        )}
       </Box>
 
       {/* 파티 정보 */}

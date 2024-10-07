@@ -127,7 +127,7 @@ function PartyListBottomSheet({ isExpanded, setIsExpanded }) {
           icon={<ArrowBackIcon boxSize={6} />}
           aria-label="Back"
           position="absolute"
-          bottom="calc(70vh + 70px)"
+          bottom="calc(80vh + 70px)"
           left="10px"
           onClick={clearSelection}
           variant="solid"
@@ -149,13 +149,13 @@ function PartyListBottomSheet({ isExpanded, setIsExpanded }) {
         borderTopRadius="2xl"
         boxShadow="0px -2px 10px rgba(0, 0, 0, 0.1)"
         transition="height 0.3s ease"
-        height={isExpanded ? '70vh' : '30vh'}
+        height={isExpanded ? '80vh' : '35vh'}
         zIndex="20"
         overflow="hidden"
       >
         <Flex
           justifyContent="center"
-          py={2}
+          py={0}
           position="relative"
           onClick={() => !selectedParty && toggleExpand()}
         >
