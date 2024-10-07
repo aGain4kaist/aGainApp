@@ -15,8 +15,9 @@ function PartySearch() {
       {/* 헤더 - BottomSheet가 확장되지 않았을 때만 표시 */}
       {!isExpanded && (
         <Header
-          title={`Welcome, ${user ? user.name : 'Guest'}!`}
-          subtitle="내 주변의 파티를 찾아보세요"
+          user={user}
+          title="파티 찾기"
+          subtitle={`Welcome, ${user ? user.name : 'Guest'}!`}
         />
       )}
 
