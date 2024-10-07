@@ -1,20 +1,45 @@
-import React from 'react';
+// PartySearch.jsx
+import React, { useState } from 'react';
 import { useUser } from '../utils/UserContext';
+import KakaoMap from '../utils/KakaoMap';
+import { Box, Flex } from '@chakra-ui/react';
+import Header from '../components/Layout/Header';
+import PartyListBottomSheet from '../components/PartyListBottomSheet';
 
 function PartySearch() {
-  const { user, setUser } = useUser();
+  const { user } = useUser();
+  const [isExpanded, setIsExpanded] = useState(false); // BottomSheet의 확장 상태 관리
+
   return (
-    <>
-      <div>
-        PartySearch
-        <div>
-          <h1>Welcome, {user ? user.name : 'Guest'}!</h1>
-          <button onClick={() => setUser({ name: 'John Doe' })}>
-            Set User
-          </button>
-        </div>
-      </div>
-    </>
+    <Flex direction="column" height="100vh" position="relative">
+      {/* 헤더 - BottomSheet가 확장되지 않았을 때만 표시 */}
+      {!isExpanded && (
+        <Header
+          user={user}
+          title="파티 찾기"
+          subtitle={`Welcome, ${user ? user.name : 'Guest'}!`}
+        />
+      )}
+
+      {/* 카카오맵 */}
+      <Box
+        flex="1"
+        width="100%"
+        position="relative"
+        zIndex="1"
+        paddingBottom="20vh"
+      >
+        <KakaoMap />
+      </Box>
+
+      {/* BottomSheet */}
+      <Box position="relative" zIndex="2">
+        <PartyListBottomSheet
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
+        />
+      </Box>
+    </Flex>
   );
 }
 
