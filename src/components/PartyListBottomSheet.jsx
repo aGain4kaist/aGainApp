@@ -67,7 +67,12 @@ function BottomSheet() {
       </Box>
 
       {/* 파티 목록 */}
-      <Box flex="1" p={4} overflowY="auto" height="100%">
+      <Box
+        flex="1"
+        p={4}
+        overflowY="auto"
+        height={isExpanded ? 'calc(60vh - 100px)' : 'calc(20vh - 100px)'} // 고정된 상단 영역 제외한 높이
+      >
         {partyList.map((party) => (
           <Box
             key={party.id}
