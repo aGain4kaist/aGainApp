@@ -19,8 +19,7 @@ const partyListData = [
   { id: 7, name: '파티 G' },
 ];
 
-function PartyListBottomSheet() {
-  const [isExpanded, setIsExpanded] = useState(false);
+function PartyListBottomSheet({ isExpanded, setIsExpanded }) {
   const [selectedParty, setSelectedParty] = useState(null);
 
   const toggleExpand = () => {
@@ -34,7 +33,7 @@ function PartyListBottomSheet() {
 
   const clearSelection = () => {
     setSelectedParty(null);
-    setIsExpanded(false); // 선택 해제 시 자동 축소
+    setIsExpanded(false);
   };
 
   return (
@@ -42,14 +41,14 @@ function PartyListBottomSheet() {
       {/* 뒤로가기 버튼 */}
       {selectedParty && (
         <IconButton
-          icon={<ArrowBackIcon boxSize={6} />} // 아이콘 크기 조정
+          icon={<ArrowBackIcon boxSize={6} />}
           aria-label="Back"
           position="absolute"
           bottom="calc(70vh + 70px)"
           left="10px"
           onClick={clearSelection}
           variant="solid"
-          size="md" // 버튼 크기 줄이기
+          size="md"
           borderRadius="full"
           bg="white"
           color="purple.500"
