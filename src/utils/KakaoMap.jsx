@@ -1,31 +1,21 @@
+// KakaoMap.jsx
 import React from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { useNavigate } from 'react-router-dom';
 
-function KakaoMap({ info, setInfo }) {
-  const positions = [
-    {
-      title: '카이스트 정문',
-      latlng: { lat: 36.365679109284, lng: 127.36395917051 },
-    },
-    {
-      title: '창의학습관',
-      latlng: { lat: 36.370379109284, lng: 127.36265917051 },
-    },
-    {
-      title: 'KI 빌딩',
-      latlng: { lat: 36.367979109284, lng: 127.36395917051 },
-    },
-  ];
+function KakaoMap({ partyListData, handlePartyClick }) {
+  const navigate = useNavigate();
+
   return (
     <Map
       center={{ lat: 36.370379109284, lng: 127.36265917051 }}
-      style={{ width: '100%', height: '100%' }} // 유동형 크기 설정
+      style={{ width: '100%', height: '100%' }}
       level={4}
     >
-      {positions.map((position, index) => (
+      {partyListData.map((party) => (
         <MapMarker
-          key={`${position.title}-${position.latlng}`}
-          position={position.latlng}
+          key={party.id}
+          position={{ lat: party.location[0], lng: party.location[1] }}
           image={{
             src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
             size: {
@@ -33,10 +23,8 @@ function KakaoMap({ info, setInfo }) {
               height: 35,
             },
           }}
-          title={position.title}
-          onClick={(marker) => {
-            setInfo({ name: marker.Gb });
-          }}
+          title={party.name}
+          onClick={() => handlePartyClick(party)} // 마커 클릭 시 handlePartyClick 호출
         />
       ))}
     </Map>
