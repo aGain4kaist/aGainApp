@@ -28,6 +28,7 @@ function PartySearch() {
         position="relative"
         zIndex="1"
         paddingBottom="20vh"
+        top="-5vh"
       >
         <KakaoMap />
       </Box>
