@@ -30,7 +30,7 @@ function AppLayout() {
           bottom="0"
           left="0"
           width="100%"
-          height="75px"
+          height="85px"
           bg="#FFF"
           borderTop="1px solid #E8E8E8"
           justifyContent="space-around"
@@ -97,7 +97,7 @@ function AppLayout() {
               </Text>
             </Button>
           </Link>
-          <Box width="70px" height="51px">
+          <Box width="80px" height="51px">
             <Box height="34px"></Box>
             <Text
               color="#000" // 글자 색상
@@ -108,7 +108,7 @@ function AppLayout() {
               fontWeight="500" // 글자 두께
               lineHeight="normal" // 줄 높이
             >
-              옷 등록
+              옷 넣어두기
             </Text>
           </Box>
           <Link to="/clothes">
@@ -177,7 +177,7 @@ function AppLayout() {
           </Link>
         </Flex>
         <Button
-          aria-label="옷 등록"
+          aria-label="옷 넣어두기"
           display="flex"
           flexDirection="column"
           justifyContent="center"
@@ -186,7 +186,7 @@ function AppLayout() {
           height="70px"
           background="none"
           position="fixed"
-          bottom="33px"
+          bottom="43px"
           left="50%"
           transform="translateX(-50%)"
           zIndex="20"
@@ -207,20 +207,20 @@ function AppLayout() {
           >
             {/* 옷걸이 아이콘 */}
             <IconifyIcon
-              icon={'fluent:clothes-hanger-24-regular'}
+              icon={'icon-park-outline:hanger'}
               style={{
                 width: '40px',
                 height: '40px',
                 color: 'white',
                 position: 'absolute',
-                top: '53%',
-                left: '53%',
+                top: '50%',
+                left: '50%',
                 transform: 'translate(-50%, -50%)',
               }}
               zIndex="25"
             />
             {/* '+' 아이콘 */}
-            <IconifyIcon
+            {/* <IconifyIcon
               icon={'tabler:plus'}
               style={{
                 width: '20px',
@@ -231,21 +231,8 @@ function AppLayout() {
                 left: '33%',
                 transform: 'translate(-50%, -50%)',
               }}
-            />
+            /> */}
           </Box>
-
-          {/* 텍스트 */}
-          {/* <Text
-            color="#000" // 텍스트 색상
-            textAlign="center" // 텍스트 중앙 정렬
-            fontFamily="'SUIT', sans-serif" // 폰트 패밀리 설정
-            fontSize="14px" // 폰트 크기
-            fontWeight={500} // 폰트 두께
-            lineHeight="normal" // 라인 높이
-            marginTop="5px" // 아이콘과 텍스트 간격
-          >
-            옷 등록
-          </Text> */}
         </Button>
       </Router>
     </>
