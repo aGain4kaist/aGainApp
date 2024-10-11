@@ -1,5 +1,13 @@
 import React from 'react';
-import { Box, Text, Flex, Input, Icon as ChakraIcon, Image, Button } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Flex,
+  Input,
+  Icon as ChakraIcon,
+  Image,
+  Button,
+} from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 import { MdiTicketOutline } from '@iconify/icons-mdi/ticket';
 import { FaTicketAlt } from 'react-icons/fa';
@@ -18,64 +26,73 @@ function Header({ title, subtitle, user }) {
       backdropFilter="backdrop-filter: blur(25px)"
       position="relative"
     >
-	  <Flex 
-      flexDirection="column"
-      mt='25px'
-      mb='25px'
-      ml='25px'
-      mr='25px'
-      justifyContent="space-between"
-    >
-		  {/* 티켓 아이콘과 숫자 */}
-		  <Flex justifyContent="space-between" alignItems="center" mb="19px">
-        <Image
-          w='39px'
-          h='26px'
-          src='/images/logo.png'
-          alt='logo'
-        />
-          
-				<Flex alignItems="center" gap="4px">
-          <IconifyIcon style={{color: 'gray'}} icon="mdi:ticket-outline" width="25px" height="25px"/>
-				  <Text fontSize="16px" fontStyle="normal" fontFamily="suit" fontWeight="600" color="gray.500">
-					  {user ? user.ticketCount : 0}
-				  </Text>
-				</Flex>
-			</Flex>
+      <Flex
+        flexDirection="column"
+        mt="25px"
+        mb="25px"
+        ml="25px"
+        mr="25px"
+        justifyContent="space-between"
+      >
+        {/* 티켓 아이콘과 숫자 */}
+        <Flex justifyContent="space-between" alignItems="center" mb="19px">
+          <Image w="39px" h="26px" src="/images/logo.png" alt="logo" />
 
-		  <Flex justifyContent="space-between" alignItems="center">
-				<Text 
-          
-          fontSize='32px'
-          fontFamily="suit"
-          fontStyle="normal"
-          fontWeight="800"
-          lineHeight="normal"
-          color="var(--21-purple-dark, #411461)"
+          <Flex alignItems="center" gap="4px">
+            <IconifyIcon
+              style={{ color: 'gray' }}
+              icon="mdi:ticket-outline"
+              width="25px"
+              height="25px"
+            />
+            <Text
+              fontSize="16px"
+              fontStyle="normal"
+              fontFamily="suit"
+              fontWeight="600"
+              color="gray.500"
+            >
+              {user ? user.ticketCount : 0}
+            </Text>
+          </Flex>
+        </Flex>
+
+        <Flex justifyContent="space-between" alignItems="center">
+          <Text
+            fontSize="32px"
+            fontFamily="suit"
+            fontStyle="normal"
+            fontWeight="800"
+            lineHeight="normal"
+            color="var(--21-purple-dark, #411461)"
           >
-				{title}
-				</Text>
-        <Button
-          width="40px"
-          height="40px"
-          padding="5px"
-          justifyContent="center"
-          alignItems="center"
-          gap="10px"
-          flexShrink="0"
-          borderRadius="12px"
-          border="1px solid"
-          borderColor="var(--lightlight-Gray, #E8E8E8)"
-          background="var(--background-silver, #FAF9FF)"
-          boxShadow="0px 0px 5px 1px rgba(0, 0, 0, 0.10)"
-        >
-          <IconifyIcon icon="ph:magnifying-glass-bold" width="30px" height="30px" flexShrink="0"/>
-        </Button>
-			</Flex>
+            {title}
+          </Text>
+          <Button
+            width="40px"
+            height="40px"
+            padding="5px"
+            justifyContent="center"
+            alignItems="center"
+            gap="10px"
+            flexShrink="0"
+            borderRadius="12px"
+            border="1px solid"
+            borderColor="var(--lightlight-Gray, #E8E8E8)"
+            background="var(--background-silver, #FAF9FF)"
+            boxShadow="0px 0px 5px 1px rgba(0, 0, 0, 0.10)"
+          >
+            <IconifyIcon
+              icon="ph:magnifying-glass-bold"
+              width="30px"
+              height="30px"
+              flexShrink="0"
+            />
+          </Button>
+        </Flex>
 
-      
-			{/* 서브타이틀 */}
-      {/*
+        {/* 서브타이틀 */}
+        {/*
 			{subtitle && (
 				<Text fontSize="md" color="gray.500" mb={4}>
 				{subtitle}
@@ -83,8 +100,8 @@ function Header({ title, subtitle, user }) {
 			)}
         */}
 
-			{/* 검색 바 */}
-      {/*
+        {/* 검색 바 */}
+        {/*
 			<Flex
 				alignItems="center"
 				borderRadius="full"
@@ -101,7 +118,7 @@ function Header({ title, subtitle, user }) {
 				/>
 			</Flex>
       */}
-	  </Flex>
+      </Flex>
     </Box>
   );
 }
