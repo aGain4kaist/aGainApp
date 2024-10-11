@@ -1,4 +1,3 @@
-// PartyListBottomSheet.js
 import React, { useState, useEffect } from 'react';
 import { Box, Flex, IconButton } from '@chakra-ui/react';
 import {
@@ -15,18 +14,16 @@ function PartyListBottomSheet({
   partyListData,
   selectedParty,
   handlePartyClick,
+  clearSelection, // clearSelection을 prop으로 받음
 }) {
   const [internalSelectedParty, setInternalSelectedParty] = useState(null);
+
   useEffect(() => {
     setInternalSelectedParty(selectedParty);
   }, [selectedParty]);
+
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
-  };
-
-  const clearSelection = () => {
-    setInternalSelectedParty(null);
-    setIsExpanded(false);
   };
 
   return (
@@ -39,7 +36,7 @@ function PartyListBottomSheet({
           position="absolute"
           bottom="calc(80vh + 70px)"
           left="10px"
-          onClick={clearSelection}
+          onClick={clearSelection} // 뒤로가기 버튼에 clearSelection을 연결
           variant="solid"
           size="md"
           borderRadius="full"

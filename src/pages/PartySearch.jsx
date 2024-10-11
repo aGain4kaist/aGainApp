@@ -9,7 +9,7 @@ import PartyListBottomSheet from '../components/PartyListBottomSheet';
 const partyListData = [
   {
     id: 1,
-    name: '본원파뤼',
+    name: '본원 재입기 파티',
     host: [1, 'admin'],
     location: [36.37060041810503, 127.36129881931089],
     address: '대전광역시 유성구 대학로 291',
@@ -17,17 +17,11 @@ const partyListData = [
     cloth: [1, 3],
     favs: 0,
     date: ['2024-11-15T13:00:00+09:00', '2024-11-15T17:00:00+09:00'],
-    image: ['party1.jpg', '0123456789abcdef'],
-    __note1__: 'host: 호스트 아이디, 호스트 닉네임',
-    __note2__: 'location: 위도, 경도',
-    __note3__: 'distance는 km단위',
-    __note4__: 'cloth는 파티에 등록된 옷 id의 리스트',
-    __note5__: 'favs는 즐찾 수, date는 시작 시각/종료 시각',
-    __note6__: 'image는 url/액세스 코드',
+    image: ['본원파티.png', '0123456789abcdef'],
   },
   {
     id: 2,
-    name: '창학 파뤼',
+    name: '창의 의류 교환전',
     host: [2, 'Taewookim'],
     location: [36.370595893175924, 127.36279199289771],
     address: '대전광역시 유성구 대학로 291',
@@ -39,7 +33,7 @@ const partyListData = [
   },
   {
     id: 3,
-    name: '기계동 파뤼',
+    name: '기계 옷장 파티',
     host: [3, 'Ihchaeryu'],
     location: [36.37231967587628, 127.3589666366722],
     address: '대전광역시 유성구 대학로 291',
@@ -51,7 +45,7 @@ const partyListData = [
   },
   {
     id: 4,
-    name: '자과동 파뤼',
+    name: '자연의 재입기 마켓',
     host: [1, 'admin'],
     location: [36.36977915010141, 127.36466024588023],
     address: '대전광역시 유성구 대학로 291',
@@ -63,7 +57,7 @@ const partyListData = [
   },
   {
     id: 5,
-    name: '파스쿠찌파뤼',
+    name: '파스쿠찌 리사이클링',
     host: [2, 'Taewookim'],
     location: [36.36855384484363, 127.36456538416813],
     address: '대전광역시 유성구 대학로 291',
@@ -75,7 +69,7 @@ const partyListData = [
   },
   {
     id: 6,
-    name: '오리연못파뤼',
+    name: '오리 연못 옷장',
     host: [3, 'Ihchaeryu'],
     location: [36.36776604785511, 127.36284571173304],
     address: '대전광역시 유성구 대학로 291',
@@ -87,7 +81,7 @@ const partyListData = [
   },
   {
     id: 7,
-    name: '정문파뤼',
+    name: '정문 의류 나눔',
     host: [4, 'notkim16'],
     location: [36.365679109284, 127.36395917051],
     address: '대전광역시 유성구 대학로 291',
@@ -109,6 +103,13 @@ function PartySearch() {
     setSelectedParty(party);
     setIsExpanded(true); // BottomSheet를 확장 상태로 설정
   };
+
+  // clearSelection 함수 정의
+  const clearSelection = () => {
+    setSelectedParty(null); // 선택된 파티 초기화
+    setIsExpanded(false); // BottomSheet를 축소 상태로 설정
+  };
+
   return (
     <Flex direction="column" height="100vh" position="relative">
       {/* 헤더 - BottomSheet가 확장되지 않았을 때만 표시 */}
@@ -142,7 +143,8 @@ function PartySearch() {
           setIsExpanded={setIsExpanded}
           partyListData={partyListData}
           selectedParty={selectedParty}
-          handlePartyClick={handlePartyClick} // 전달
+          handlePartyClick={handlePartyClick}
+          clearSelection={clearSelection} // clearSelection을 전달
         />
       </Box>
     </Flex>

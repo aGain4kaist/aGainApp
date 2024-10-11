@@ -6,7 +6,9 @@ function PartyDetail({ party, onBack }) {
   const startTime = new Date(party.date[0]);
   const endTime = new Date(party.date[1]);
   const formatTime = (date) => `${date.getHours()}시 ~ ${endTime.getHours()}시`;
-
+  const imageUrl = party.image
+    ? `/src/assets/images/partyImages/${party.image[0]}`
+    : null;
   return (
     <Box px={4} pt={4} position="relative">
       {/* 파티 이미지 또는 기본 박스 */}
@@ -22,9 +24,9 @@ function PartyDetail({ party, onBack }) {
         alignItems="center"
         justifyContent="center"
       >
-        {party.image ? (
+        {imageUrl ? (
           <Image
-            src={party.image[0]} // 이미지 URL
+            src={imageUrl} // 이미지 URL
             alt={`${party.name} 이미지`}
             objectFit="cover"
             width="100%"
