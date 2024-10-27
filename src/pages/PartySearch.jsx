@@ -21,7 +21,7 @@ const partyListData = [
   },
   {
     id: 2,
-    name: '창의 의류 교환전',
+    name: '창의 의류 교환',
     host: [2, 'Taewookim'],
     location: [36.370595893175924, 127.36279199289771],
     address: '대전광역시 유성구 대학로 291',
@@ -29,11 +29,11 @@ const partyListData = [
     cloth: [2, 4],
     favs: 0,
     date: ['2024-11-15T13:00:00+09:00', '2024-11-15T17:00:00+09:00'],
-    image: ['party2.jpg', '0123456789abcdef'],
+    image: ['창의관파티.png', '0123456789abcdef'],
   },
   {
     id: 3,
-    name: '기계 옷장 파티',
+    name: '기계동 옷장 파티',
     host: [3, 'Ihchaeryu'],
     location: [36.37231967587628, 127.3589666366722],
     address: '대전광역시 유성구 대학로 291',
@@ -41,11 +41,11 @@ const partyListData = [
     cloth: [5],
     favs: 0,
     date: ['2024-11-15T13:00:00+09:00', '2024-11-15T17:00:00+09:00'],
-    image: ['party3.jpg', '0123456789abcdef'],
+    image: ['기계동파티.png', '0123456789abcdef'],
   },
   {
     id: 4,
-    name: '자연의 재입기 마켓',
+    name: '자과동 재입기 마켓',
     host: [1, 'admin'],
     location: [36.36977915010141, 127.36466024588023],
     address: '대전광역시 유성구 대학로 291',
@@ -53,11 +53,11 @@ const partyListData = [
     cloth: [],
     favs: 0,
     date: ['2024-11-16T13:00:00+09:00', '2024-11-16T17:00:00+09:00'],
-    image: ['party4.jpg', '0123456789abcdef'],
+    image: ['자과동파티.png', '0123456789abcdef'],
   },
   {
     id: 5,
-    name: '파스쿠찌 리사이클링',
+    name: '파스쿠찌 텀블러 재사용 파티',
     host: [2, 'Taewookim'],
     location: [36.36855384484363, 127.36456538416813],
     address: '대전광역시 유성구 대학로 291',
@@ -65,7 +65,7 @@ const partyListData = [
     cloth: [6, 7],
     favs: 0,
     date: ['2024-11-15T13:00:00+09:00', '2024-11-15T17:00:00+09:00'],
-    image: ['party5.jpg', '0123456789abcdef'],
+    image: ['파스쿠찌파티.png', '0123456789abcdef'],
   },
   {
     id: 6,
@@ -77,7 +77,7 @@ const partyListData = [
     cloth: [8, 9],
     favs: 0,
     date: ['2024-11-15T13:00:00+09:00', '2024-11-15T17:00:00+09:00'],
-    image: ['party6.jpg', '0123456789abcdef'],
+    image: ['오리연못파티.png', '0123456789abcdef'],
   },
   {
     id: 7,
@@ -89,7 +89,7 @@ const partyListData = [
     cloth: [10, 11],
     favs: 0,
     date: ['2024-11-16T13:00:00+09:00', '2024-11-16T17:00:00+09:00'],
-    image: ['party7.jpg', '0123456789abcdef'],
+    image: ['정문파티.png', '0123456789abcdef'],
   },
 ];
 

@@ -10,7 +10,7 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
           내게 가까운 파티들
         </Text>
         <Text fontSize="sm" color="purple.500">
-          날짜순 ▼
+          거리순 ▼
         </Text>
       </Flex>
 
