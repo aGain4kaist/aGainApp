@@ -9,10 +9,10 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
     ? `/src/assets/images/partyImages/${party.image[0]}`
     : null;
 
-    const handleFavClick = (e) => {
-        e.stopPropagation(); // Prevent triggering the onPartyClick
-        onToggleFavorite(party.id);
-    };
+  const handleFavClick = (e) => {
+    e.stopPropagation(); // Prevent triggering the onPartyClick
+    onToggleFavorite(party.id);
+  };
 
   return (
     <Flex
