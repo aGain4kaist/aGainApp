@@ -73,22 +73,19 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
                 alignItems="center"
                 alignSelf="stretch"
               >
-                <Flex
-                  flexDirection="column"
-                  alignItems="flex-start"
-                  g="2px"
-                >
-                  <Flex
-                    alignItems="center"
-                    gap="8px"
-                  >
-                    <Text fontSize="lg" fontWeight="bold" color="rgba(65, 20, 97, 1)">
+                <Flex flexDirection="column" alignItems="flex-start" g="2px">
+                  <Flex alignItems="center" gap="8px">
+                    <Text
+                      fontSize="lg"
+                      fontWeight="bold"
+                      color="rgba(65, 20, 97, 1)"
+                    >
                       {party.name}
                     </Text>
                     <Text fontSize="sm" color="gray.500">
                       {new Date(party.date[0]).toLocaleString('ko-KR', {
-                      month: 'long',
-                      day: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
                       })}
                     </Text>
                   </Flex>
@@ -96,24 +93,18 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
                     {party.address}
                   </Text>
                 </Flex>
-                <Flex
-                  flexDirection="column"
-                  w="25px"
-                  alignItems="center"
-                >
-                  <IconifyIcon 
-                    icon="ant-design:star-outlined"  
-                    style={{color: 'black'}}
+                <Flex flexDirection="column" w="25px" alignItems="center">
+                  <IconifyIcon
+                    icon="ant-design:star-outlined"
+                    style={{ color: 'black' }}
                     width="25px"
-                    height="25px" 
+                    height="25px"
                   />
                   <Text textAlign="center" color="black">
                     {party.favs}
                   </Text>
                 </Flex>
               </Flex>
-
-              
             </Flex>
           );
         })}
