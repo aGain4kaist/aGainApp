@@ -15,14 +15,14 @@ function PartyListItem({ onPartyClick, party }) {
       alignItems="center"
       alignSelf="stretch"
       borderRadius="lg"
-      p="10px"
+      py="10px"
       gap="10px"
       onClick={() => onPartyClick(party)}
     >
       {/* Party Image */}
       <Box
-        width="350px"
-        height="135px"
+        width="100%"
+        height="140px"
         bg="gray.200"
         borderRadius="xl"
         overflow="hidden"
@@ -49,8 +49,6 @@ function PartyListItem({ onPartyClick, party }) {
       {/* Party Info */}
       <Flex
         flexDirection="row"
-        px="13px"
-        py="0px"
         justifyContent="space-between"
         alignItems="center"
         alignSelf="stretch"
