@@ -1,11 +1,11 @@
 // 필요한 패키지 가져오기
-const express = require('express');
-const admin = require('firebase-admin');
+const express = require("express");
+const admin = require("firebase-admin");
 const app = express();
 const port = 3000;
 
 // Firebase Admin SDK 초기화
-const serviceAccount = require('./serviceAccountKey.json'); // Firebase 서비스 계정 키 파일
+const serviceAccount = require("./serviceAccountKey.json"); // Firebase 서비스 계정 키 파일
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -37,14 +37,14 @@ app.use(express.json());
 app.get('/party', async (req, res) => {
   try {
     const snapshot = await db.collection('Party').get();
+    const docs = snapshot.docs;
     const {latitude, longitude} = req.query;
-    let items = [];
-    for(let doc in snapshot)
+    let items = []
+    docs.forEach((doc) =>
     {
-        const data = doc.data();
-        const distance = getDistance(latitude, longitude, data.latitude, data.longitude);
-        items.push({distance: distance, ...data});
-    }
+        const distance = getDistance(latitude, longitude, doc.data().location[0], doc.data().location[1]);
+        items.push({distance: distance, ...doc.data()});
+    });
     /*snapshot.forEach(doc => {
       items.push({ id: doc.id, ...doc.data() });
     });
@@ -61,10 +61,10 @@ app.get('/party/:id', async (req, res) => {
   const id = req.params.id;
   const {latitude, longitude} = req.query;
   try {
-    const doc = await db.collection('items').doc(id).get();
+    const doc = await db.collection('Party').doc(id).get();
     if (doc.exists) {
         const data = doc.data();
-        const distance = getDistance(latitude, longitude, data.latitude, data.longitude);
+        const distance = getDistance(latitude, longitude, doc.data().location[0], doc.data().location[1]);
         res.json({ distance: distance, ...doc.data() });
     } else {
       res.status(404).send('Item not found');
