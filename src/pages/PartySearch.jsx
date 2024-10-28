@@ -7,8 +7,6 @@ import Header from '../components/Layout/Header';
 import PartyListBottomSheet from '../components/PartyListBottomSheet';
 import { partyListData } from '../data/partyListData';
 
-
-
 function PartySearch() {
   const { user } = useUser();
   const [isExpanded, setIsExpanded] = useState(false); // BottomSheet의 확장 상태 관리
