@@ -9,10 +9,10 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
     ? `/src/assets/images/partyImages/${party.image[0]}`
     : null;
 
-  const handleFavClick = (e) => {
-    e.stopPropagation(); // Prevent triggering the onPartyClick
-    onToggleFavorite(party.id);
-  };
+    const handleFavClick = (e) => {
+        e.stopPropagation(); // Prevent triggering the onPartyClick
+        onToggleFavorite(party.id);
+    };
 
   return (
     <Flex
@@ -32,9 +32,7 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
         borderRadius="xl"
         overflow="hidden"
         shadow="0px 2px 4px 2px rgba(0, 0, 0, 0.25)"
-        sx={{
-          flexShrink: 0,
-        }}
+        shrink={0}
       >
         {party.image ? (
           <Image
