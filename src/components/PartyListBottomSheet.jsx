@@ -88,6 +88,7 @@ function PartyListBottomSheet({
             onPartyClick={handlePartyClick}
             isExpanded={isExpanded}
             partyListData={partyListData}
+            orderedBy="distance"
           />
         )}
       </Box>
