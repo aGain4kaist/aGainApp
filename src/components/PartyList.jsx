@@ -1,16 +1,16 @@
-import {React, useState} from 'react';
+import { React, useState } from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import PartyListItem from './PartyListItem';
 
 function PartyList({ onPartyClick, isExpanded, partyListData }) {
-
   const [favorites, setFavorites] = useState([]);
 
   const handleToggleFavorite = (partyId) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.includes(partyId)
-        ? prevFavorites.filter((id) => id !== partyId) // Remove if already favorite
-        : [...prevFavorites, partyId] // Add if not favorite
+    setFavorites(
+      (prevFavorites) =>
+        prevFavorites.includes(partyId)
+          ? prevFavorites.filter((id) => id !== partyId) // Remove if already favorite
+          : [...prevFavorites, partyId] // Add if not favorite
     );
   };
 

@@ -9,10 +9,10 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
     ? `/src/assets/images/partyImages/${party.image[0]}`
     : null;
 
-    const handleFavClick = (e) => {
-        e.stopPropagation(); // Prevent triggering the onPartyClick
-        onToggleFavorite(party.id);
-    };
+  const handleFavClick = (e) => {
+    e.stopPropagation(); // Prevent triggering the onPartyClick
+    onToggleFavorite(party.id);
+  };
 
   return (
     <Flex
@@ -76,7 +76,9 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
         </Flex>
         <Flex flexDirection="column" w="25px" alignItems="center">
           <IconifyIcon
-            icon={isFavorite ? "ant-design:star-filled" : "ant-design:star-outlined"}
+            icon={
+              isFavorite ? 'ant-design:star-filled' : 'ant-design:star-outlined'
+            }
             style={{ color: 'black' }}
             width="25px"
             height="25px"
