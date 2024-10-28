@@ -19,7 +19,6 @@
     "@iconify/icons-mdi": "^1.2.48",
     "@iconify/react": "^5.0.2",
     "@mui/material": "^6.1.2",
-    "@rollup/rollup-darwin-x64": "^4.24.2",
     "firebase": "^10.13.2",
     "framer-motion": "^11.11.1",
     "react": "^18.3.1",
