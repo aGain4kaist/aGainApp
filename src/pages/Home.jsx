@@ -8,15 +8,6 @@ import { partyListData } from '../data/partyListData';
 
 // dummy items
 const clothingItems = ['글 1', '글 2', '글 3', '글 4'];
-const partyList = [
-  { where: '장소 1', when: '날짜 1', love: '상세 정보 1' },
-  { where: '장소 2', when: '날짜 2', love: '상세 정보 2' },
-  { where: '장소 3', when: '날짜 3', love: '상세 정보 3' },
-  { where: '장소 4', when: '날짜 4', love: '상세 정보 4' },
-  { where: '장소 5', when: '날짜 5', love: '상세 정보 5' },
-  { where: '장소 6', when: '날짜 6', love: '상세 정보 6' },
-  { where: '장소 7', when: '날짜 7', love: '상세 정보 7' },
-];
 
 function Home() {
   return (

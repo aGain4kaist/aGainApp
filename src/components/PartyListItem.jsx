@@ -3,11 +3,16 @@ import React from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 
-function PartyListItem({ onPartyClick, party }) {
+function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
   // Set image URL
   const imageUrl = party.image
     ? `/src/assets/images/partyImages/${party.image[0]}`
     : null;
+
+    const handleFavClick = (e) => {
+        e.stopPropagation(); // Prevent triggering the onPartyClick
+        onToggleFavorite(party.id);
+    };
 
   return (
     <Flex
@@ -71,10 +76,11 @@ function PartyListItem({ onPartyClick, party }) {
         </Flex>
         <Flex flexDirection="column" w="25px" alignItems="center">
           <IconifyIcon
-            icon="ant-design:star-outlined"
+            icon={isFavorite ? "ant-design:star-filled" : "ant-design:star-outlined"}
             style={{ color: 'black' }}
             width="25px"
             height="25px"
+            onClick={handleFavClick}
           />
           <Text textAlign="center" color="black">
             {party.favs}

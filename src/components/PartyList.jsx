@@ -1,8 +1,19 @@
-import React from 'react';
+import {React, useState} from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import PartyListItem from './PartyListItem';
 
 function PartyList({ onPartyClick, isExpanded, partyListData }) {
+
+  const [favorites, setFavorites] = useState([]);
+
+  const handleToggleFavorite = (partyId) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.includes(partyId)
+        ? prevFavorites.filter((id) => id !== partyId) // Remove if already favorite
+        : [...prevFavorites, partyId] // Add if not favorite
+    );
+  };
+
   return (
     <Box px={4} pt={0}>
       {/* 상단 타이틀 및 정렬 옵션 */}
@@ -26,6 +37,8 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
             key={party.id}
             onPartyClick={onPartyClick}
             party={party}
+            onToggleFavorite={handleToggleFavorite}
+            isFavorite={favorites.includes(party.id)}
           />
         ))}
       </Box>
