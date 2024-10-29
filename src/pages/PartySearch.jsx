@@ -1,8 +1,7 @@
-// PartySearch.jsx
 import React, { useState } from 'react';
 import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
-import { Box, Flex, Button } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import Header from '../components/Layout/Header';
 import PartyListBottomSheet from '../components/PartyListBottomSheet';
 import { partyListData } from '../data/partyListData';
@@ -73,23 +72,6 @@ function PartySearch() {
           myLocation={myLocation}
         />
       </Box>
-
-      {/* 현재 위치 버튼 */}
-      <Button
-        position="absolute"
-        bottom="30vh"
-        left="10px"
-        zIndex="3"
-        borderRadius="full"
-        boxShadow="md"
-        onClick={goToCurrentLocation}
-        bg="white"
-        color="black"
-        _hover={{ bg: 'gray.200' }}
-      >
-        현재 위치
-      </Button>
-
       <Box position="relative" zIndex="2">
         <PartyListBottomSheet
           isExpanded={isExpanded}
@@ -101,6 +83,7 @@ function PartySearch() {
             setSelectedParty(null);
             setIsExpanded(false);
           }}
+          goToCurrentLocation={goToCurrentLocation} // 함수를 전달
         />
       </Box>
     </Flex>
