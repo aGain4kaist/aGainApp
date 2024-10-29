@@ -6,6 +6,8 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: '127.0.0.1',
+    port: 5173,
     open: true, // 개발 서버 시작 시 브라우저 자동으로 열림
   },
   resolve: {
