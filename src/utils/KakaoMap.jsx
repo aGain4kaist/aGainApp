@@ -34,8 +34,8 @@ function KakaoMap({ partyListData, handlePartyClick, center, myLocation }) {
         <MapMarker
           position={{ lat: myLocation.lat, lng: myLocation.lng }}
           image={{
-            src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 현재 위치 마커 이미지
-            size: { width: 24, height: 35 },
+            src: '/Group109.svg', // 현재 위치를 나타내는 원형 아이콘
+            size: { width: 20, height: 20 },
           }}
           title="현재 위치"
         />

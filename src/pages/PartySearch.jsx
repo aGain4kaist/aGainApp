@@ -29,7 +29,7 @@ function PartySearch() {
         const position = await new Promise((resolve, reject) => {
           navigator.geolocation.getCurrentPosition(resolve, reject, {
             enableHighAccuracy: true,
-            timeout: 10000, // 10초 후 타임아웃
+            timeout: 10000,
             maximumAge: 0,
           });
         });
@@ -38,7 +38,7 @@ function PartySearch() {
         const { latitude, longitude } = position.coords;
         const newCenter = { lat: latitude, lng: longitude };
         setCenter(newCenter);
-        setMyLocation(newCenter); // 내 위치 마커 설정
+        setMyLocation(newCenter);
       } catch (error) {
         console.error('현재 위치를 가져올 수 없습니다.', error);
         alert('현재 위치를 가져올 수 없습니다. 위치 접근 권한을 확인해주세요.');
@@ -78,11 +78,14 @@ function PartySearch() {
       <Button
         position="absolute"
         bottom="30vh"
-        right="20px"
+        left="10px"
         zIndex="3"
         borderRadius="full"
         boxShadow="md"
         onClick={goToCurrentLocation}
+        bg="white"
+        color="black"
+        _hover={{ bg: 'gray.200' }}
       >
         현재 위치
       </Button>
