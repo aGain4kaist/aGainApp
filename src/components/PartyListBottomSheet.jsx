@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Flex, IconButton } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Image } from '@chakra-ui/react';
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -14,7 +14,8 @@ function PartyListBottomSheet({
   partyListData,
   selectedParty,
   handlePartyClick,
-  clearSelection, // clearSelection을 prop으로 받음
+  clearSelection,
+  goToCurrentLocation,
 }) {
   const [internalSelectedParty, setInternalSelectedParty] = useState(null);
 
@@ -28,7 +29,6 @@ function PartyListBottomSheet({
 
   return (
     <>
-      {/* 뒤로가기 버튼 */}
       {internalSelectedParty && (
         <IconButton
           icon={<ArrowBackIcon boxSize={6} />}
@@ -36,7 +36,7 @@ function PartyListBottomSheet({
           position="absolute"
           bottom="calc(80vh + 70px)"
           left="10px"
-          onClick={clearSelection} // 뒤로가기 버튼에 clearSelection을 연결
+          onClick={clearSelection}
           variant="solid"
           size="md"
           borderRadius="full"
@@ -45,6 +45,28 @@ function PartyListBottomSheet({
           boxShadow="md"
           zIndex="25"
           _hover={{ bg: 'purple.100' }}
+        />
+      )}
+      {!isExpanded && (
+        <IconButton
+          icon={
+            <Image
+              src="/current_focus_button.png"
+              alt="현재 위치"
+              boxSize="20px"
+            />
+          }
+          position="absolute"
+          bottom="calc(40vh + 21px)"
+          zIndex="25"
+          borderRadius="full"
+          boxShadow="md"
+          onClick={goToCurrentLocation}
+          bg="white"
+          _hover={{ bg: 'gray.200' }}
+          aria-label="현재 위치로 이동"
+          size="md"
+          m={2}
         />
       )}
       <Box

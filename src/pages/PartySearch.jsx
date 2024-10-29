@@ -1,4 +1,3 @@
-// PartySearch.jsx
 import React, { useState } from 'react';
 import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
@@ -9,24 +8,47 @@ import { partyListData } from '../data/partyListData';
 
 function PartySearch() {
   const { user } = useUser();
-  const [isExpanded, setIsExpanded] = useState(false); // BottomSheet의 확장 상태 관리
+  const [isExpanded, setIsExpanded] = useState(false);
   const [selectedParty, setSelectedParty] = useState(null);
+  const [center, setCenter] = useState({
+    lat: 36.370379109284,
+    lng: 127.36265917051,
+  });
+  const [myLocation, setMyLocation] = useState(null);
 
-  // handlePartyClick 함수 정의
   const handlePartyClick = (party) => {
     setSelectedParty(party);
-    setIsExpanded(true); // BottomSheet를 확장 상태로 설정
+    setIsExpanded(true);
   };
 
-  // clearSelection 함수 정의
-  const clearSelection = () => {
-    setSelectedParty(null); // 선택된 파티 초기화
-    setIsExpanded(false); // BottomSheet를 축소 상태로 설정
+  const goToCurrentLocation = async () => {
+    if (navigator.geolocation) {
+      try {
+        // 현재 위치 가져오기
+        const position = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+          });
+        });
+
+        // 위치 설정
+        const { latitude, longitude } = position.coords;
+        const newCenter = { lat: latitude, lng: longitude };
+        setCenter(newCenter);
+        setMyLocation(newCenter);
+      } catch (error) {
+        console.error('현재 위치를 가져올 수 없습니다.', error);
+        alert('현재 위치를 가져올 수 없습니다. 위치 접근 권한을 확인해주세요.');
+      }
+    } else {
+      alert('위치 정보가 지원되지 않는 브라우저입니다.');
+    }
   };
 
   return (
     <Flex direction="column" height="100vh" position="relative">
-      {/* 헤더 - BottomSheet가 확장되지 않았을 때만 표시 */}
       {!isExpanded && (
         <Header
           user={user}
@@ -35,7 +57,6 @@ function PartySearch() {
         />
       )}
 
-      {/* 카카오맵 */}
       <Box
         flex="1"
         width="100%"
@@ -47,10 +68,10 @@ function PartySearch() {
         <KakaoMap
           partyListData={partyListData}
           handlePartyClick={handlePartyClick}
+          center={center}
+          myLocation={myLocation}
         />
       </Box>
-
-      {/* BottomSheet */}
       <Box position="relative" zIndex="2">
         <PartyListBottomSheet
           isExpanded={isExpanded}
@@ -58,7 +79,11 @@ function PartySearch() {
           partyListData={partyListData}
           selectedParty={selectedParty}
           handlePartyClick={handlePartyClick}
-          clearSelection={clearSelection} // clearSelection을 전달
+          clearSelection={() => {
+            setSelectedParty(null);
+            setIsExpanded(false);
+          }}
+          goToCurrentLocation={goToCurrentLocation} // 함수를 전달
         />
       </Box>
     </Flex>
