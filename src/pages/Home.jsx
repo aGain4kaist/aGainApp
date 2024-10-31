@@ -7,8 +7,6 @@ import PartyListItem from '../components/PartyListItem';
 import { clothingItems } from '../data/clothingItems';
 import { partyListData } from '../data/partyListData';
 
-
-
 function Home() {
   return (
     <Box className="home-page" bg="gray.100" minH="100vh" p="25px">
@@ -20,12 +18,8 @@ function Home() {
         <Text fontSize="sm">지금까지 6번의 교환으로 총 99L를 절약했어! :)</Text>
       </Box>
 
-
       {/* 옷 등록 영역 */}
       <ClothingSwiper items={clothingItems} />
-
-
-
 
       {/* 곧 열리는 파티들 */}
       <Box mt={6}>
