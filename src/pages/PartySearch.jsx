@@ -114,11 +114,7 @@ function PartySearch() {
     <Flex direction="column" height="100vh" position="relative">
       {/* 헤더 - BottomSheet가 확장되지 않았을 때만 표시 */}
       {!isExpanded && (
-        <Header
-		      user={user}
-		      id="Party-Search"
-          title="파티 찾기"
-        />
+        <Header user={user} id="Party-Search" title="파티 찾기" />
       )}
 
       {/* 카카오맵 */}

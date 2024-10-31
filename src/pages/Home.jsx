@@ -25,10 +25,10 @@ function Home() {
         title="안녕하세요, again님!"
         subtitle="21%와 함께 지금까지 물 2,000L를 절약했어요."
       />
-        
+
       <Box className="home-page" bg="gray.100" minH="100vh" p={4}>
         {/* 상단 헤더 */}
-      {/* 이전 헤더
+        {/* 이전 헤더
         <Box bg="purple.400" borderRadius="md" p={4} color="white">
           <Text fontSize="2xl" fontWeight="bold">
             안녕 aGAIN! 👕

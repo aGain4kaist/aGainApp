@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useState } from 'react';  
+import { useState } from 'react';
 import {
   Box,
   Text,
@@ -21,39 +21,42 @@ function Header({ id, title, subtitle, user }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
   const [isSearchBoxExpanded, setIsSearchBoxExpanded] = useState(false);
   const [isTitleExpanded, setIsTitleExpanded] = useState(false);
-  const [searchBoxInputValue, setSearchBoxInputValue] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("var(--background-silver, #FAF9FF)")
-  const [textColor, setTextColor] = useState("var(--21-purple-dark, #411461)")
-  
-  const handleSearchButtonClick = () => { // 검색 버튼이 눌림: 검색 버튼은 비활성화, 검색창을 표시
-    setIsSearchButtonExpanded(false);
+  const [searchBoxInputValue, setSearchBoxInputValue] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState(
+    'var(--background-silver, #FAF9FF)'
+  );
+  const [textColor, setTextColor] = useState('var(--21-purple-dark, #411461)');
+
+  const handleSearchButtonClick = () => {
+    // 검색 버튼이 눌림: 검색 버튼은 비활성화, 검색창을 표시
+    setIsTitleExpanded(false);
     setIsSearchBoxExpanded(true);
-  }
+  };
   const handleSearchBoxBlur = () => {
-    if (searchBoxInputValue.trim() === "") { // 검색창 입력이 끝남: 아무것도 입력하지 않은 경우는 검색창 비활성화 후 버튼 표시
-      setIsSearchButtonExpanded(true);
+    if (searchBoxInputValue.trim() === '') {
+      // 검색창 입력이 끝남: 아무것도 입력하지 않은 경우는 검색창 비활성화 후 버튼 표시
+      setIsTitleExpanded(true);
       setIsSearchBoxExpanded(false);
     }
-  }
+  };
 
   useEffect(() => {
     console.log(id);
-    switch(id) {
-      case "Home":
+    switch (id) {
+      case 'Home':
         setIsTitleExpanded(true);
-        setBackgroundColor("var(--background-silver, #411461)");
-        setTextColor("var(--Backgrounds-Primary, #FFF)")
+        setBackgroundColor('var(--background-silver, #411461)');
+        setTextColor('var(--Backgrounds-Primary, #FFF)');
         break;
-      case "Party-Search":
+      case 'Party-Search':
         setIsTitleExpanded(true);
         setIsSearchButtonExpanded(true);
         break;
       default:
         setIsTitleExpanded(true);
     }
-    
-    return () => {
-    };
+
+    return () => {};
   }, []);
 
   return (
@@ -99,7 +102,7 @@ function Header({ id, title, subtitle, user }) {
           </Flex>
         </Flex>
 
-        <div> 
+        <div>
           {isTitleExpanded && (
             <Flex justifyContent="space-between" alignItems="center">
               <Text
@@ -141,11 +144,17 @@ function Header({ id, title, subtitle, user }) {
             </Flex>
           )}
         </div>
-		
+
         {/* 서브타이틀 */}
         {subtitle && (
-          <Text fontSize="18px" color={textColor} fontFamily="suit" fontStyle="normal" mb={4}>
-          {subtitle}
+          <Text
+            fontSize="18px"
+            color={textColor}
+            fontFamily="suit"
+            fontStyle="normal"
+            mb={4}
+          >
+            {subtitle}
           </Text>
         )}
         {/* 검색 바 */}
@@ -153,38 +162,41 @@ function Header({ id, title, subtitle, user }) {
         <div>
           {isSearchBoxExpanded && (
             <Flex
-            alignItems="center"
-            borderRadius="full"
-            boxShadow="sm"
-            bg="#FFFFFF"
-            paddingX="4"
-            paddingY="2"
-            onChange={(e) => setSearchBoxInputValue(e.target.value)}
-            onBlur={handleSearchBoxBlur}
-          >
-            <Input
-              variant="unstyled"
-              placeholder="파티 이름 또는 위치를 검색하세요"
-              _placeholder={{ color: "#707070" }}
+              alignItems="center"
+              borderRadius="full"
+              boxShadow="sm"
               bg="#FFFFFF"
-              fontSize="md"
-              fontFamily="suit"
-            />
-            <Button w="25px" h="25px" p="0" bg="#FFFFFF">
-              <IconifyIcon
-                icon="ph:magnifying-glass-bold"
-                width="25px"
-                height="25px"
-                _hover={{ bg: "transparent", cursor: "default" }}
-                _active={{ bg: "transparent", transform: "none", transition: "none" }}
-                _focus={{ boxShadow: "none" }}
-                flexShrink="0"
+              paddingX="4"
+              paddingY="2"
+              onChange={(e) => setSearchBoxInputValue(e.target.value)}
+              onBlur={handleSearchBoxBlur}
+            >
+              <Input
+                variant="unstyled"
+                placeholder="파티 이름 또는 위치를 검색하세요"
+                _placeholder={{ color: '#707070' }}
+                bg="#FFFFFF"
+                fontSize="md"
+                fontFamily="suit"
               />
-            </Button>
-          </Flex>
+              <Button w="25px" h="25px" p="0" bg="#FFFFFF">
+                <IconifyIcon
+                  icon="ph:magnifying-glass-bold"
+                  width="25px"
+                  height="25px"
+                  _hover={{ bg: 'transparent', cursor: 'default' }}
+                  _active={{
+                    bg: 'transparent',
+                    transform: 'none',
+                    transition: 'none',
+                  }}
+                  _focus={{ boxShadow: 'none' }}
+                  flexShrink="0"
+                />
+              </Button>
+            </Flex>
           )}
         </div>
-        
       </Flex>
     </Box>
   );
