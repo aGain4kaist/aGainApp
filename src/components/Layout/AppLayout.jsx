@@ -36,7 +36,7 @@ function AppLayout() {
             justifyContent="space-around"
             filter="drop-shadow(0px -1px 8px rgba(0, 0, 0, 0.08))"
             padding="10px"
-            flexShrink={0}
+            shrink={0}
             zIndex="10"
           >
             <Link to="/">
@@ -49,7 +49,7 @@ function AppLayout() {
                 width="50px"
                 height="51px"
                 gap="4px"
-                flexShrink={0}
+                shrink={0}
                 variant="ghost"
                 _hover={{ backgroundColor: 'transparent' }}
                 _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
@@ -75,7 +75,7 @@ function AppLayout() {
                 width="50px"
                 height="51px"
                 gap="4px"
-                flexShrink={0}
+                shrink={0}
                 variant="ghost"
                 _hover={{ backgroundColor: 'transparent' }}
                 _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
@@ -112,7 +112,7 @@ function AppLayout() {
                 width="50px"
                 height="51px"
                 gap="1px"
-                flexShrink={0}
+                shrink={0}
                 variant="ghost"
                 _hover={{ backgroundColor: 'transparent' }}
                 _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
@@ -141,7 +141,7 @@ function AppLayout() {
                 width="50px"
                 height="51px"
                 gap="4px"
-                flexShrink={0}
+                shrink={0}
                 variant="ghost"
                 _hover={{ backgroundColor: 'transparent' }}
                 _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}

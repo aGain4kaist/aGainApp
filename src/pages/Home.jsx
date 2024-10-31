@@ -4,18 +4,11 @@ import '@/styles/Home.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css'; // Swiper 기본 스타일
 import Header from '../components/Layout/Header';
+import PartyListItem from '../components/PartyListItem';
+import { partyListData } from '../data/partyListData';
 
 // dummy items
 const clothingItems = ['글 1', '글 2', '글 3', '글 4'];
-const partyList = [
-  { where: '장소 1', when: '날짜 1', love: '상세 정보 1' },
-  { where: '장소 2', when: '날짜 2', love: '상세 정보 2' },
-  { where: '장소 3', when: '날짜 3', love: '상세 정보 3' },
-  { where: '장소 4', when: '날짜 4', love: '상세 정보 4' },
-  { where: '장소 5', when: '날짜 5', love: '상세 정보 5' },
-  { where: '장소 6', when: '날짜 6', love: '상세 정보 6' },
-  { where: '장소 7', when: '날짜 7', love: '상세 정보 7' },
-];
 
 function Home() {
   return (
@@ -92,7 +85,7 @@ function Home() {
             내 주변의 파티들!
           </Text>
           <Flex direction="column" gap={4}>
-            {partyList.map((party, index) => (
+            {partyListData.map((party, index) => (
               <Box
                 key={index} // 각 항목에 고유한 key 값 지정
                 className="party-card"
@@ -107,6 +100,21 @@ function Home() {
             ))}
           </Flex>
         </Box>
+      </Box>
+      {/* 곧 열리는 파티들 */}
+      <Box mt={6}>
+        <Text fontSize="2xl" fontWeight="bold">
+          곧 열리는 파티들
+        </Text>
+        <Flex direction="column">
+          {partyListData.map((party) => (
+            <PartyListItem
+              key={party.id}
+              onPartyClick={() => {}} // temporary empty function
+              party={party}
+            />
+          ))}
+        </Flex>
       </Box>
     </Flex>
   );
