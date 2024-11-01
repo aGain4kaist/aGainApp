@@ -5,8 +5,8 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import Header from '../components/Layout/Header';
 import PartyListBottomSheet from '../components/PartyListBottomSheet';
 import { partyListData } from '../data/partyListData';
-import { BottomSheet } from 'react-spring-bottom-sheet'
-import 'react-spring-bottom-sheet/dist/style.css'
+import { BottomSheet } from 'react-spring-bottom-sheet';
+import 'react-spring-bottom-sheet/dist/style.css';
 
 function PartySearch() {
   const { user } = useUser();
@@ -18,7 +18,7 @@ function PartySearch() {
   });
   const [myLocation, setMyLocation] = useState(null);
   // changing bottom sheet...
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(true);
 
   const handlePartyClick = (party) => {
     setSelectedParty(party);
@@ -53,11 +53,16 @@ function PartySearch() {
 
   return (
     <Flex direction="column" height="100vh" position="relative">
-      <BottomSheet 
+      <BottomSheet
         open={open}
         blocking={false}
         header={
-          <Flex justifyContent="space-between" alignItems="center" my={4} px={2}>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            my={4}
+            px={2}
+          >
             <Text fontSize="2xl" fontWeight="bold">
               내게 가까운 파티들
             </Text>
@@ -66,7 +71,10 @@ function PartySearch() {
             </Text>
           </Flex>
         }
-        snapPoints={({ minHeight, maxHeight }) => [maxHeight / 3, maxHeight * 0.9]}
+        snapPoints={({ minHeight, maxHeight }) => [
+          maxHeight / 3,
+          maxHeight * 0.9,
+        ]}
       >
         My awesome content here
       </BottomSheet>
