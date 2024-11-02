@@ -93,9 +93,6 @@ function Home() {
                 p={4}
                 borderRadius="md"
               >
-                <Text>
-                  Where: {party.where} / When: {party.when} / Love: {party.love}
-                </Text>
               </Box>
             ))}
           </Flex>
