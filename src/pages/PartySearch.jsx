@@ -54,10 +54,11 @@ function PartySearch() {
 
   return (
     <Flex direction="column" height="100vh" position="relative">
-      <PartySearchBottomSheet 
+      <PartySearchBottomSheet
         isExpanded={isExpanded}
         setIsExpanded={setIsExpanded}
-      />  {/* moved bottom sheet to here. Aware of similar component names!! */}
+      />{' '}
+      {/* moved bottom sheet to here. Aware of similar component names!! */}
       {!isExpanded && (
         <Header
           user={user}
@@ -65,7 +66,6 @@ function PartySearch() {
           subtitle={`Welcome, ${user ? user.name : 'Guest'}!`}
         />
       )}
-
       <Box
         flex="1"
         width="100%"
