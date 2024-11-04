@@ -7,6 +7,7 @@ import PartyListBottomSheet from '../components/PartyListBottomSheet';
 import { partyListData } from '../data/partyListData';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
+import PartySearchBottomSheet from '../components/PartySearchBottomSheet';
 
 function PartySearch() {
   const { user } = useUser();
@@ -53,31 +54,10 @@ function PartySearch() {
 
   return (
     <Flex direction="column" height="100vh" position="relative">
-      <BottomSheet
-        open={open}
-        blocking={false}
-        header={
-          <Flex
-            justifyContent="space-between"
-            alignItems="center"
-            my={4}
-            px={2}
-          >
-            <Text fontSize="2xl" fontWeight="bold">
-              내게 가까운 파티들
-            </Text>
-            <Text fontSize="md" color="purple.500">
-              거리순 ▼
-            </Text>
-          </Flex>
-        }
-        snapPoints={({ minHeight, maxHeight }) => [
-          maxHeight / 3,
-          maxHeight * 0.9,
-        ]}
-      >
-        My awesome content here
-      </BottomSheet>
+      <PartySearchBottomSheet 
+        isExpanded={isExpanded}
+        setIsExpanded={setIsExpanded}
+      />  {/* moved bottom sheet to here. Aware of similar component names!! */}
       {!isExpanded && (
         <Header
           user={user}
