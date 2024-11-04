@@ -3,6 +3,8 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import 'react-spring-bottom-sheet/dist/style.css';
 //import '../styles/customBottomSheet.css';
+import PartyListItem from '../components/PartyListItem';
+import { partyListData } from '../data/partyListData';
 
 function PartySearchBottomSheet({ isExpanded, setIsExpanded }) {
   const sheetRef = useRef();
@@ -37,7 +39,18 @@ function PartySearchBottomSheet({ isExpanded, setIsExpanded }) {
         }
       }}
     >
-      My awesome content here
+        <Flex 
+            direction="column"
+            px="30px"
+        >
+            {partyListData.map((party) => (
+                <PartyListItem
+                    key={party.id}
+                    onPartyClick={() => {}} // temporary empty function
+                    party={party}
+                />
+            ))}
+        </Flex>
     </BottomSheet>
   );
 }
