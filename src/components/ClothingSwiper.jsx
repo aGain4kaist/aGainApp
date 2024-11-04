@@ -39,7 +39,7 @@ function ClothingSwiper({ items }) {
                   fontStyle: 'normal',
                   fontWeight: 600,
                   lineHeight: 'normal',
-                  marginBottom: '-4px'
+                  marginBottom: '-4px',
                 }}
               >
                 {item.name}
@@ -56,16 +56,18 @@ function ClothingSwiper({ items }) {
                   fontStyle: 'normal',
                   fontWeight: 500,
                   lineHeight: 'normal',
-                  marginBottom: '8px'
+                  marginBottom: '8px',
                 }}
               >
-                {item.foot ? `신발 사이즈 ${item.foot}` : (item.height && item.weight ? `${item.height} ${item.weight} · 사이즈 ${item.size}` : '사이즈 비공개')}
-                </Text>
-                {/* 'weight, height' 데이터가 있을시 "키 몸무게 ˑ 사이즈 __함", 'foot' 데이터가 있을시 "신발 사이즈 __mm", 아무것도 없을시 '사이즈 비공개 */}
-
+                {item.foot
+                  ? `신발 사이즈 ${item.foot}`
+                  : item.height && item.weight
+                    ? `${item.height} ${item.weight} · 사이즈 ${item.size}`
+                    : '사이즈 비공개'}
+              </Text>
+              {/* 'weight, height' 데이터가 있을시 "키 몸무게 ˑ 사이즈 __함", 'foot' 데이터가 있을시 "신발 사이즈 __mm", 아무것도 없을시 '사이즈 비공개 */}
             </Box>
             <Box mt={1}></Box>
-
           </SwiperSlide>
         ))}
       </Swiper>
