@@ -20,14 +20,6 @@ function Home() {
       />
       {/* <Box className="home-page" bg="gray.100" minH="260vh" p="25px"> */}
       <Flex direction="column" bg="gray.100" p="25px">
-        {/* 상단 헤더 */}
-        <Box bg="purple.400" borderRadius="md" p={4} color="white">
-          <Text fontSize="2xl" fontWeight="bold">
-            안녕 aGAIN! 👕
-          </Text>
-          <Text fontSize="sm">지금까지 6번의 교환으로 총 99L를 절약했어! :)</Text>
-        </Box>
-
         {/* 옷 등록 영역 */}
         <Box mt={6}>
           <Text fontSize="lg" fontWeight="bold" mb={4}>
@@ -53,7 +45,6 @@ function Home() {
             ))}
           </Flex>
         </Box>
-
         {/* Swiper 슬라이더 */}
         <Box mt={6}>
           <Text fontSize="lg" fontWeight="bold" mb={4}>
@@ -92,7 +83,8 @@ function Home() {
             ))}
           </Flex>
         </Box>
-        <Box h="100px" /> {/* 하단의 navigation bar로 인해 내용이 잘려서 빈 공백을 추가함 */}
+        <Box h="100px" />{' '}
+        {/* 하단의 navigation bar로 인해 내용이 잘려서 빈 공백을 추가함 */}
       </Flex>
     </Flex>
   );
