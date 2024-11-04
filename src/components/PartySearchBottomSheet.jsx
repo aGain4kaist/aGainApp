@@ -39,18 +39,15 @@ function PartySearchBottomSheet({ isExpanded, setIsExpanded }) {
         }
       }}
     >
-        <Flex 
-            direction="column"
-            px="30px"
-        >
-            {partyListData.map((party) => (
-                <PartyListItem
-                    key={party.id}
-                    onPartyClick={() => {}} // temporary empty function
-                    party={party}
-                />
-            ))}
-        </Flex>
+      <Flex direction="column" px="30px">
+        {partyListData.map((party) => (
+          <PartyListItem
+            key={party.id}
+            onPartyClick={() => {}} // temporary empty function
+            party={party}
+          />
+        ))}
+      </Flex>
     </BottomSheet>
   );
 }
