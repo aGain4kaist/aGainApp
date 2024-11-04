@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Flex, IconButton } from '@chakra-ui/react';
-import { FaHome, FaSearch, FaTshirt, FaUser, FaPlus } from 'react-icons/fa'; // 아이콘
+import { Box, Flex, Button, IconButton, Text } from '@chakra-ui/react';
+import { Icon as IconifyIcon } from '@iconify/react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
@@ -23,66 +23,165 @@ function AppLayout() {
             </Routes>
           </Box>
 
-          {/* 하단 네비게이션 바 */}
+          {/* 하단 네비게이션 바 - 뉴비 개발자의 디자인 유지 */}
           <Flex
             as="nav"
             position="fixed"
             bottom="0"
             left="0"
             width="100%"
-            bg="white"
-            borderTop="1px solid #ccc"
+            height="85px"
+            bg="#FFF"
+            borderTop="1px solid #E8E8E8"
             justifyContent="space-around"
+            filter="drop-shadow(0px -1px 8px rgba(0, 0, 0, 0.08))"
             padding="10px"
+            shrink={0}
             zIndex="10"
           >
             <Link to="/">
-              <IconButton
+              <Button
                 aria-label="홈"
-                icon={<FaHome />}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                width="50px"
+                height="51px"
+                gap="4px"
+                shrink={0}
                 variant="ghost"
-                size="lg"
-              />
+                _hover={{ backgroundColor: 'transparent' }}
+                _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+              >
+                <IconifyIcon icon="bx:home" style={{ fontSize: '30px' }} />
+                <Text
+                  color="#000"
+                  fontFamily="'SUIT', sans-serif"
+                  fontSize="14px"
+                  fontWeight="500"
+                >
+                  홈
+                </Text>
+              </Button>
             </Link>
             <Link to="/party">
-              <IconButton
+              <Button
                 aria-label="파티 찾기"
-                icon={<FaSearch />}
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                width="50px"
+                height="51px"
+                gap="4px"
+                shrink={0}
                 variant="ghost"
-                size="lg"
-              />
+                _hover={{ backgroundColor: 'transparent' }}
+                _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+              >
+                <IconifyIcon icon="bx:party" style={{ fontSize: '30px' }} />
+                <Text
+                  color="#000"
+                  fontFamily="'SUIT', sans-serif"
+                  fontSize="14px"
+                  fontWeight="500"
+                >
+                  파티 찾기
+                </Text>
+              </Button>
             </Link>
+            <Box width="80px" height="51px">
+              <Box height="34px"></Box>
+              <Text
+                color="#000"
+                fontFamily="'SUIT', sans-serif"
+                fontSize="14px"
+                fontWeight="500"
+              >
+                옷 넣어두기
+              </Text>
+            </Box>
             <Link to="/clothes">
-              <IconButton
-                aria-label="옷 찾기"
-                icon={<FaTshirt />}
+              <Button
+                aria-label="옷 보기"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                width="50px"
+                height="51px"
+                gap="1px"
+                shrink={0}
                 variant="ghost"
-                size="lg"
-              />
+                _hover={{ backgroundColor: 'transparent' }}
+                _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+              >
+                <IconifyIcon
+                  icon="lsicon:clothes-outline"
+                  style={{ fontSize: '33px' }}
+                />
+                <Text
+                  color="#000"
+                  fontFamily="'SUIT', sans-serif"
+                  fontSize="14px"
+                  fontWeight="500"
+                >
+                  옷 보기
+                </Text>
+              </Button>
             </Link>
             <Link to="/my-clothes">
-              <IconButton
-                aria-label="내 옷"
-                icon={<FaUser />}
+              <Button
+                aria-label="내 옷장"
+                display="flex"
+                flexDirection="column"
+                justifyContent="center"
+                alignItems="center"
+                width="50px"
+                height="51px"
+                gap="4px"
+                shrink={0}
                 variant="ghost"
-                size="lg"
-              />
+                _hover={{ backgroundColor: 'transparent' }}
+                _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+              >
+                <IconifyIcon
+                  icon="streamline:closet"
+                  style={{ fontSize: '30px' }}
+                />
+                <Text
+                  color="#000"
+                  fontFamily="'SUIT', sans-serif"
+                  fontSize="14px"
+                  fontWeight="500"
+                >
+                  내 옷장
+                </Text>
+              </Button>
             </Link>
           </Flex>
 
           {/* 중앙에 고정된 등록 버튼 */}
           <IconButton
-            aria-label="등록"
-            icon={<FaPlus />}
-            colorScheme="teal"
+            aria-label="옷 넣어두기"
+            icon={
+              <IconifyIcon
+                icon="icon-park-outline:hanger"
+                style={{ fontSize: '40px', color: 'white' }}
+              />
+            }
+            backgroundColor="#411461"
             position="fixed"
-            bottom="40px" // 네비게이션 바 바로 위에
+            bottom="43px"
             left="50%"
             transform="translateX(-50%)"
             borderRadius="full"
-            width="60px"
-            height="60px"
+            width="70px"
+            height="70px"
             zIndex="20"
+            _hover={{ backgroundColor: '#411461' }}
+            _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
           />
         </Flex>
       </Router>

@@ -1,38 +1,45 @@
-// PartyList.js
-import React from 'react';
-import { Box, Text, Flex } from '@chakra-ui/react';
+import { React, useState } from 'react';
+import { Box, Text, Flex, Image } from '@chakra-ui/react';
+import PartyListItem from './PartyListItem';
 
 function PartyList({ onPartyClick, isExpanded, partyListData }) {
+  const [favorites, setFavorites] = useState([]);
+
+  const handleToggleFavorite = (partyId) => {
+    setFavorites(
+      (prevFavorites) =>
+        prevFavorites.includes(partyId)
+          ? prevFavorites.filter((id) => id !== partyId) // Remove if already favorite
+          : [...prevFavorites, partyId] // Add if not favorite
+    );
+  };
+
   return (
-    <Box px={4} pt={2}>
+    <Box px={4} pt={0}>
       {/* 상단 타이틀 및 정렬 옵션 */}
       <Flex justifyContent="space-between" alignItems="center" mb={4} px={2}>
-        <Text fontSize="lg" fontWeight="bold">
+        <Text fontSize="2xl" fontWeight="bold">
           내게 가까운 파티들
         </Text>
-        <Text fontSize="sm" color="purple.500">
-          날짜순 ▼
+        <Text fontSize="md" color="purple.500">
+          거리순 ▼
         </Text>
       </Flex>
+
       {/* 파티 목록 */}
       <Box
         overflowY="auto"
-        maxHeight={isExpanded ? 'calc(70vh - 120px)' : 'calc(30vh - 120px)'}
+        maxHeight={isExpanded ? 'calc(80vh - 120px)' : 'calc(35vh - 120px)'}
         px={2}
       >
         {partyListData.map((party) => (
-          <Box
+          <PartyListItem
             key={party.id}
-            bg="gray.100"
-            borderRadius="md"
-            p={4}
-            mb={4}
-            boxShadow="md"
-            onClick={() => onPartyClick(party)}
-            cursor="pointer"
-          >
-            <Text>{party.name}</Text>
-          </Box>
+            onPartyClick={onPartyClick}
+            party={party}
+            onToggleFavorite={handleToggleFavorite}
+            isFavorite={favorites.includes(party.id)}
+          />
         ))}
       </Box>
     </Box>

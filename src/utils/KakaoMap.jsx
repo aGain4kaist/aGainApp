@@ -1,44 +1,45 @@
-import React from 'react';
+// KakaoMap.jsx
+import React, { useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-function KakaoMap({ info, setInfo }) {
-  const positions = [
-    {
-      title: '카이스트 정문',
-      latlng: { lat: 36.365679109284, lng: 127.36395917051 },
-    },
-    {
-      title: '창의학습관',
-      latlng: { lat: 36.370379109284, lng: 127.36265917051 },
-    },
-    {
-      title: 'KI 빌딩',
-      latlng: { lat: 36.367979109284, lng: 127.36395917051 },
-    },
-  ];
+function KakaoMap({ partyListData, handlePartyClick, center, myLocation }) {
+  const [map, setMap] = React.useState(null);
+
+  useEffect(() => {
+    if (map && center) {
+      map.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+    }
+  }, [center, map]);
+
   return (
     <Map
-      center={{ lat: 36.370379109284, lng: 127.36265917051 }}
-      style={{ width: '100%', height: '100%' }} // 유동형 크기 설정
+      center={center}
+      style={{ width: '100%', height: '100%' }}
       level={4}
+      onCreate={setMap} // 지도 객체를 setMap에 저장
     >
-      {positions.map((position, index) => (
+      {partyListData.map((party) => (
         <MapMarker
-          key={`${position.title}-${position.latlng}`}
-          position={position.latlng}
+          key={party.id}
+          position={{ lat: party.location[0], lng: party.location[1] }}
           image={{
             src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-            size: {
-              width: 24,
-              height: 35,
-            },
+            size: { width: 24, height: 35 },
           }}
-          title={position.title}
-          onClick={(marker) => {
-            setInfo({ name: marker.Gb });
-          }}
+          title={party.name}
+          onClick={() => handlePartyClick(party)}
         />
       ))}
+      {myLocation && (
+        <MapMarker
+          position={{ lat: myLocation.lat, lng: myLocation.lng }}
+          image={{
+            src: '/Group109.svg', // 현재 위치를 나타내는 원형 아이콘
+            size: { width: 20, height: 20 },
+          }}
+          title="현재 위치"
+        />
+      )}
     </Map>
   );
 }
