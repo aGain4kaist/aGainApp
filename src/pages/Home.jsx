@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Text, Button } from '@chakra-ui/react';
+import { Box, Flex, Text, Button, Spacer } from '@chakra-ui/react';
 import '@/styles/Home.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css'; // Swiper 기본 스타일
@@ -18,17 +18,15 @@ function Home() {
         title="안녕하세요, again님!"
         subtitle="21%와 함께 지금까지 물 2,000L를 절약했어요."
       />
-
-      <Box className="home-page" bg="gray.100" minH="100vh" p={4}>
+      {/* <Box className="home-page" bg="gray.100" minH="260vh" p="25px"> */}
+      <Flex direction="column" bg="gray.100" p="25px">
         {/* 상단 헤더 */}
-        {/* 이전 헤더
         <Box bg="purple.400" borderRadius="md" p={4} color="white">
           <Text fontSize="2xl" fontWeight="bold">
             안녕 aGAIN! 👕
           </Text>
           <Text fontSize="sm">지금까지 6번의 교환으로 총 99L를 절약했어! :)</Text>
         </Box>
-      */}
 
         {/* 옷 등록 영역 */}
         <Box mt={6}>
@@ -79,40 +77,23 @@ function Home() {
             ))}
           </Swiper>
         </Box>
-        {/* 내 주변의 파티들 */}
+        {/* 곧 열리는 파티들 */}
         <Box mt={6}>
-          <Text fontSize="lg" fontWeight="bold" mb={4}>
-            내 주변의 파티들!
+          <Text fontSize="2xl" fontWeight="bold">
+            곧 열리는 파티들
           </Text>
-          <Flex direction="column" gap={4}>
-            {partyListData.map((party, index) => (
-              <Box
-                key={index} // 각 항목에 고유한 key 값 지정
-                className="party-card"
-                bg="gray.200"
-                p={4}
-                borderRadius="md"
-              >
-              </Box>
+          <Flex direction="column">
+            {partyListData.map((party) => (
+              <PartyListItem
+                key={party.id}
+                onPartyClick={() => {}} // temporary empty function
+                party={party}
+              />
             ))}
           </Flex>
         </Box>
-      </Box>
-      {/* 곧 열리는 파티들 */}
-      <Box mt={6}>
-        <Text fontSize="2xl" fontWeight="bold">
-          곧 열리는 파티들
-        </Text>
-        <Flex direction="column">
-          {partyListData.map((party) => (
-            <PartyListItem
-              key={party.id}
-              onPartyClick={() => {}} // temporary empty function
-              party={party}
-            />
-          ))}
-        </Flex>
-      </Box>
+        <Box h="100px" /> {/* 하단의 navigation bar로 인해 내용이 잘려서 빈 공백을 추가함 */}
+      </Flex>
     </Flex>
   );
 }
