@@ -1,24 +1,23 @@
-const { db } = require('../config/firebaseAdmin');
+const PartyModel = require('../models/partyModel');
 const { getDistance } = require('../utils/helpers');
 
 exports.getAllParties = async (req, res) => {
   try {
-    const snapshot = await db.collection('Party').get();
-    const docs = snapshot.docs;
+    const parties = await PartyModel.getAllParties();
     const { latitude, longitude } = req.query;
-    let items = [];
 
-    docs.forEach((doc) => {
-      const distance = getDistance(
-        latitude,
-        longitude,
-        doc.data().location[0],
-        doc.data().location[1]
-      );
-      items.push({ distance: distance, ...doc.data() });
-    });
+    const items = parties
+      .map((party) => {
+        const distance = getDistance(
+          latitude,
+          longitude,
+          party.location[0],
+          party.location[1]
+        );
+        return { ...party, distance };
+      })
+      .sort((a, b) => a.distance - b.distance);
 
-    items.sort((a, b) => a.distance - b.distance);
     res.json(items);
   } catch (error) {
     res.status(500).send('Error fetching parties');
@@ -26,19 +25,17 @@ exports.getAllParties = async (req, res) => {
 };
 
 exports.getPartyById = async (req, res) => {
-  const id = req.params.id;
-  const { latitude, longitude } = req.query;
   try {
-    const doc = await db.collection('Party').doc(id).get();
-    if (doc.exists) {
-      const data = doc.data();
+    const party = await PartyModel.getPartyById(req.params.id);
+    if (party) {
+      const { latitude, longitude } = req.query;
       const distance = getDistance(
         latitude,
         longitude,
-        data.location[0],
-        data.location[1]
+        party.location[0],
+        party.location[1]
       );
-      res.json({ distance, ...data });
+      res.json({ ...party, distance });
     } else {
       res.status(404).send('Party not found');
     }
