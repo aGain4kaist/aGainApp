@@ -1,8 +1,8 @@
-import React from 'react';
-import { Box, Flex, Text, Button, Spacer } from '@chakra-ui/react';
 import '@/styles/Home.scss';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
+import React from 'react';
 import 'swiper/css'; // Swiper 기본 스타일
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Header from '../components/Layout/Header';
 import PartyListItem from '../components/PartyListItem';
 import { partyListData } from '../data/partyListData';
@@ -19,7 +19,7 @@ function Home() {
         subtitle="21%와 함께 지금까지 물 2,000L를 절약했어요."
       />
       {/* <Box className="home-page" bg="gray.100" minH="260vh" p="25px"> */}
-      <Flex direction="column" bg="gray.100" p="25px">
+      <Flex direction="column" bg="var(--background-silver, #FAF9FF)" p="25px">
         {/* 옷 등록 영역 */}
         <Box mt={6}>
           <Text fontSize="lg" fontWeight="bold" mb={4}>

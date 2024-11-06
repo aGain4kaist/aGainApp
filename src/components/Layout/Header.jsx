@@ -1,21 +1,13 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
 import {
   Box,
-  Text,
-  Flex,
-  Input,
-  Icon as ChakraIcon,
-  Image,
   Button,
-  InputGroup,
-  InputRightAddon,
-  InputRightElement,
+  Flex,
+  Image,
+  Input,
+  Text
 } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
-import { MdiTicketOutline } from '@iconify/icons-mdi/ticket';
-import { FaTicketAlt } from 'react-icons/fa';
-import { SearchIcon } from '@chakra-ui/icons';
+import React, { useEffect, useState } from 'react';
 
 function Header({ id, title, subtitle, user }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
@@ -26,6 +18,9 @@ function Header({ id, title, subtitle, user }) {
     'var(--background-silver, #FAF9FF)'
   );
   const [textColor, setTextColor] = useState('var(--21-purple-dark, #411461)');
+  
+  // boxShadow 상태 추가
+  const [boxShadow, setBoxShadow] = useState('0px 4px 4px 0px rgba(0, 0, 0, 0.25)');
 
   const handleSearchButtonClick = () => {
     // 검색 버튼이 눌림: 검색 버튼은 비활성화, 검색창을 표시
@@ -51,7 +46,18 @@ function Header({ id, title, subtitle, user }) {
       case 'Party-Search':
         setIsTitleExpanded(true);
         setIsSearchButtonExpanded(true);
+        
+        
+
         break;
+
+      case 'Clothing-Search':
+        setIsTitleExpanded(true);
+        setBackgroundColor('var(--background-silver, #FAF9FF)');
+        // Clothing-Search일 때 boxShadow를 표시 X
+        setBoxShadow('none');
+        break;
+
       default:
         setIsTitleExpanded(true);
     }
@@ -63,12 +69,14 @@ function Header({ id, title, subtitle, user }) {
     <Box
       zIndex="2"
       bg="transparent"
-      boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+      
+      // boxShadow 상태를 적용
+      boxShadow={boxShadow}
+
       background={backgroundColor}
-      //padding="px"
       borderBottomRadius="xl"
       borderRadius="0px 0px 30px 30px"
-      backdropFilter="backdrop-filter: blur(25px)"
+      backdropFilter="blur(25px)"
       position="relative"
     >
       <Flex
