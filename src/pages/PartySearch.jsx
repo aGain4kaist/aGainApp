@@ -53,12 +53,8 @@ function PartySearch() {
   };
 
   return (
-    <Flex direction="column" height="100vh" position="relative">
-      <PartySearchBottomSheet
-        isExpanded={isExpanded}
-        setIsExpanded={setIsExpanded}
-      />{' '}
-      {/* moved bottom sheet to here. Aware of similar component names!! */}
+    <>
+    {/* <Flex direction="column" height="100vh" position="relative">
       {!isExpanded && (
         <Header
           user={user}
@@ -71,7 +67,7 @@ function PartySearch() {
         width="100%"
         position="relative"
         zIndex="1"
-        paddingBottom="20vh"
+        paddingBottom="10vh"
         top="-5vh"
       >
         <KakaoMap
@@ -81,21 +77,25 @@ function PartySearch() {
           myLocation={myLocation}
         />
       </Box>
-      {/*<Box position="relative" zIndex="2">
-         <PartyListBottomSheet
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-          partyListData={partyListData}
-          selectedParty={selectedParty}
-          handlePartyClick={handlePartyClick}
-          clearSelection={() => {
-            setSelectedParty(null);
-            setIsExpanded(false);
-          }}
-          goToCurrentLocation={goToCurrentLocation} // 함수를 전달
-        /> 
-      </Box>*/}
-    </Flex>
+    </Flex> */}
+    <Box
+      flex="1"
+      width="100%"
+      height="100%"
+      position="absolute"
+      paddingBottom="10vh"
+      top="-5vh"
+    >
+      <KakaoMap
+        partyListData={partyListData}
+        handlePartyClick={handlePartyClick}
+        center={center}
+        myLocation={myLocation}
+      />
+    </Box>
+    <PartySearchBottomSheet/>
+    {/* moved bottom sheet to here. Aware of similar component names!! */}
+    </>
   );
 }
 

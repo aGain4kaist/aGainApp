@@ -1,45 +1,44 @@
-import React, { useRef } from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
-import { BottomSheet } from 'react-spring-bottom-sheet';
-import 'react-spring-bottom-sheet/dist/style.css';
-//import '../styles/customBottomSheet.css';
+import React from "react";
+import { Box } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import PartySearchBottomSheetHeader from "./PartySearchBottomSheetHeader";
 import PartyListItem from '../components/PartyListItem';
 import { partyListData } from '../data/partyListData';
+import { useBottomSheet, MAX_Y, MIN_Y, BOTTOM_SHEET_HEIGHT } from "../hooks/useBottomSheet";
 
-function PartySearchBottomSheet({ isExpanded, setIsExpanded }) {
-  const sheetRef = useRef();
+const MotionBox = motion.create(Box);
+
+function PartySearchBottomSheet() {
+
+  const { sheetRef, contentRef } = useBottomSheet();
 
   return (
-    <BottomSheet
+    <MotionBox
       ref={sheetRef}
-      open
-      blocking={false}
-      header={
-        <Flex justifyContent="space-between" alignItems="center" mt={6} px={2}>
-          <Text fontSize="2xl" fontWeight="bold">
-            내게 가까운 파티들
-          </Text>
-          <Text fontSize="md" color="purple.500">
-            거리순 ▼
-          </Text>
-        </Flex>
-      }
-      snapPoints={({ minHeight, maxHeight }) => [
-        maxHeight / 3,
-        maxHeight * 0.9,
-      ]}
-      onSpringStart={(event) => {
-        if (event.type === 'SNAP') {
-          const currentHeight = sheetRef.current.height;
-          if (currentHeight < 400) {
-            setIsExpanded(true); // Hide header immediately when starting transition to top
-          } else if (currentHeight >= 800) {
-            setIsExpanded(false); // Show header immediately when starting transition to bottom
-          }
-        }
-      }}
+      display="flex"
+      flexDirection="column"
+      position="fixed"
+      zIndex="1"
+      top={MAX_Y}
+      left="0"
+      right="0"
+      borderTopRadius="30px"
+      bg="white"
+      boxShadow="0px -10px 70px 0px rgba(0, 0, 0, 0.25)"
+      h={`${BOTTOM_SHEET_HEIGHT}px`}
+      // transition="transform 5s ease-out"
     >
-      <Flex direction="column" px="30px">
+      <PartySearchBottomSheetHeader />
+      {/* Content Section */}
+      <Box
+        ref={contentRef}
+        overflow="auto"
+        sx={{
+          WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
+          padding: '0 32px', // Optional padding for inner content
+        }}
+        flex="1"  // To take up remaining space within the MotionBox
+      >
         {partyListData.map((party) => (
           <PartyListItem
             key={party.id}
@@ -47,8 +46,8 @@ function PartySearchBottomSheet({ isExpanded, setIsExpanded }) {
             party={party}
           />
         ))}
-      </Flex>
-    </BottomSheet>
+      </Box>
+    </MotionBox>
   );
 }
 
