@@ -112,10 +112,10 @@ export function useBottomSheet() {
 
       if (currentSheetY !== MIN_Y) {
         if (touchMove.movingDirection === 'down') {
-          console.log('touchend: moving down');
+          console.log('TOUCHEND: moving down');
           sheetRef.current.style.setProperty('transform', 'translateY(0)');
         } else if (touchMove.movingDirection === 'up') {
-          console.log('touchend: moving up');
+          console.log('TOUCHEND: moving up');
           sheetRef.current.style.setProperty(
             'transform',
             `translateY(${MIN_Y - MAX_Y}px)`
