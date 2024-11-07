@@ -103,7 +103,7 @@ function PartySearch() {
           setIsExpanded(false);
         }}
         goToCurrentLocation={goToCurrentLocation} // 함수를 전달
-       />
+      />
       {/* moved bottom sheet to here. Aware of similar component names!! */}
     </>
   );
