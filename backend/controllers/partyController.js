@@ -43,3 +43,16 @@ exports.getPartyById = async (req, res) => {
     res.status(500).send('Error fetching party');
   }
 };
+
+exports.getClothesOfParty = async (req, res) => {
+  try {
+    const party = await PartyModel.getPartyById(req.params.id);
+    if (party) {
+      res.json(party.cloth);
+    } else {
+      res.status(404).send('Party not found');
+    }
+  } catch (error) {
+    res.status(500).send('Error fetching clothes');
+  }
+}
