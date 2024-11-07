@@ -16,7 +16,7 @@ function PartyDetail({ party, onBack }) {
     setIsFavorite(!isFavorite);
   };
   return (
-    <Box px="35px" pt="52px" position="relative" zIndex={20}>
+    <Box px="35px" pt="52px" position="relative" zIndex="20">
       {/* 파티 이미지 또는 기본 박스 */}
       <Box
         width="100%"
@@ -71,7 +71,11 @@ function PartyDetail({ party, onBack }) {
           <Flex alignItems="center">
             <IconifyIcon
               icon="uis:calender"
-              style={{ fontSize: '18px', marginRight: '10px' }}
+              style={{
+                color: '#7D7D7D',
+                fontSize: '18px',
+                marginRight: '10px',
+              }}
             />
             <Text color="#7D7D7D" fontWeight={500}>
               {`${startTime.getMonth() + 1}월 ${startTime.getDate()}일 (${['일', '월', '화', '수', '목', '금', '토'][startTime.getDay()]})`}
@@ -80,7 +84,11 @@ function PartyDetail({ party, onBack }) {
           <Flex alignItems="center">
             <IconifyIcon
               icon="mdi:clock"
-              style={{ fontSize: '18px', marginRight: '10px' }}
+              style={{
+                color: '#7D7D7D',
+                fontSize: '18px',
+                marginRight: '10px',
+              }}
             />
             <Text color="#7D7D7D" fontWeight={500}>
               {formatTime(startTime)}
@@ -89,7 +97,11 @@ function PartyDetail({ party, onBack }) {
           <Flex alignItems="center">
             <IconifyIcon
               icon="ic:round-location-on"
-              style={{ fontSize: '18px', marginRight: '10px' }}
+              style={{
+                color: '#7D7D7D',
+                fontSize: '18px',
+                marginRight: '10px',
+              }}
             />
             <Text color="#7D7D7D" fontWeight={500}>
               {party.address}
@@ -98,7 +110,11 @@ function PartyDetail({ party, onBack }) {
           <Flex alignItems="center">
             <IconifyIcon
               icon="jam:crown-f"
-              style={{ fontSize: '18px', marginRight: '10px' }}
+              style={{
+                color: '#7D7D7D',
+                fontSize: '18px',
+                marginRight: '10px',
+              }}
             />
             <Text color="#7D7D7D" fontWeight={500}>
               {party.host[1]}님이 호스트
