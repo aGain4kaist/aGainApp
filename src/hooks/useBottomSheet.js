@@ -5,7 +5,7 @@ export const MIN_Y = 120; // 바텀시트가 최대로 높이 올라갔을 때�
 export const MAX_Y = window.innerHeight - 400; // 바텀시트가 최소로 내려갔을 때의 y 값
 export const BOTTOM_SHEET_HEIGHT = window.innerHeight - MIN_Y; // 바텀시트의 세로 길이
 
-export function useBottomSheet() {
+export function useBottomSheet(isExpanded, setIsExpanded) {
   const sheetRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -113,9 +113,11 @@ export function useBottomSheet() {
       if (currentSheetY !== MIN_Y) {
         if (touchMove.movingDirection === 'down') {
           console.log('TOUCHEND: moving down');
+          setIsExpanded(false);
           sheetRef.current.style.setProperty('transform', 'translateY(0)');
         } else if (touchMove.movingDirection === 'up') {
           console.log('TOUCHEND: moving up');
+          setIsExpanded(true);
           sheetRef.current.style.setProperty(
             'transform',
             `translateY(${MIN_Y - MAX_Y}px)`

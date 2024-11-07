@@ -93,7 +93,17 @@ function PartySearch() {
           myLocation={myLocation}
         />
       </Box>
-      <PartySearchBottomSheet />
+      <PartySearchBottomSheet
+        isExpanded={isExpanded}
+        setIsExpanded={setIsExpanded}
+        selectedParty={selectedParty}
+        handlePartyClick={handlePartyClick}
+        clearSelection={() => {
+          setSelectedParty(null);
+          setIsExpanded(false);
+        }}
+        goToCurrentLocation={goToCurrentLocation} // 함수를 전달
+       />
       {/* moved bottom sheet to here. Aware of similar component names!! */}
     </>
   );

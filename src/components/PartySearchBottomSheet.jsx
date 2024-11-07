@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { React, useEffect, useState } from 'react';
+import { Box, IconButton, Image, Button } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
@@ -10,19 +10,61 @@ import {
   MIN_Y,
   BOTTOM_SHEET_HEIGHT,
 } from '../hooks/useBottomSheet';
+import { Icon as IconifyIcon } from '@iconify/react';
 
 const MotionBox = motion.create(Box);
 
-function PartySearchBottomSheet() {
-  const { sheetRef, contentRef } = useBottomSheet();
+function PartySearchBottomSheet({
+    isExpanded,
+    setIsExpanded,
+    selectedParty,
+    handlePartyClick,
+    clearSelection,
+    goToCurrentLocation,
+}) {
+  const { sheetRef, contentRef } = useBottomSheet(isExpanded, setIsExpanded);
+
+  const [internalSelectedParty, setInternalSelectedParty] = useState(null);
+
+  useEffect(() => {
+    setInternalSelectedParty(selectedParty);
+  }, [selectedParty]);
 
   return (
+    <>
+    {!isExpanded && 
+      (<Button
+        w='50px'
+        h='50px'
+        alignContent='center'
+        justifyContent='center'
+        position="absolute"
+        bottom="calc(40vh + 21px)"
+        zIndex="25"
+        borderRadius="full"
+        boxShadow="md"
+        onClick={goToCurrentLocation}
+        bg="white"
+        aria-label="현재 위치로 이동"
+        m='20px'
+        p='0px'
+      >
+        <IconifyIcon 
+          icon={
+            'lsicon:map-location-filled'
+          }
+          style={{ color: '#7C31B4' }}
+          width="30px"
+          height="30px"
+        />
+      </Button>)
+    }
     <MotionBox
       ref={sheetRef}
       display="flex"
       flexDirection="column"
       position="fixed"
-      zIndex="1"
+      zIndex="30"
       top={MAX_Y}
       left="0"
       right="0"
@@ -52,6 +94,7 @@ function PartySearchBottomSheet() {
         ))}
       </Box>
     </MotionBox>
+    </>
   );
 }
 
