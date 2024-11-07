@@ -4,7 +4,7 @@ import { Box, Text, Flex, Spacer } from '@chakra-ui/react';
 function PartySearchBottomSheetHeader() {
   return (
     <Box
-      h="80px"
+      // h="80px"
       borderTopRadius="30px"
       position="relative"
       pt="4" // 16px
