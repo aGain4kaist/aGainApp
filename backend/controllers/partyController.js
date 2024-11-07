@@ -1,5 +1,5 @@
 const PartyModel = require('../models/partyModel');
-const { getDistance } = require('../utils/helpers');
+const { getDistance, format_date } = require('../utils/helpers');
 
 exports.getAllParties = async (req, res) => {
   try {
@@ -14,6 +14,7 @@ exports.getAllParties = async (req, res) => {
           party.location[0],
           party.location[1]
         );
+        party.date = [format_date(party.date[0]), format_date(party.date[1])];
         return { ...party, distance };
       })
       .sort((a, b) => a.distance - b.distance);
