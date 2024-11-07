@@ -1,5 +1,5 @@
 // PartyListItem.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 
@@ -13,7 +13,9 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
     e.stopPropagation(); // Prevent triggering the onPartyClick
     onToggleFavorite(party.id);
   };
-
+  useEffect(() => {
+    console.log(party?.name);
+  }, []);
   return (
     <Flex
       flexDirection="column"

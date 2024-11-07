@@ -1,6 +1,10 @@
 const express = require('express');
+const cors = require('cors'); // cors 패키지 가져오기
 const app = express();
 const port = 3000;
+
+// CORS 설정
+app.use(cors()); // 모든 도메인에 대해 CORS 허용
 
 const partyRoutes = require('./routes/partyRoutes');
 
