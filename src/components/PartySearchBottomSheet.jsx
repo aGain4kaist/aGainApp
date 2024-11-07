@@ -1,15 +1,19 @@
-import React from "react";
-import { Box } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import PartySearchBottomSheetHeader from "./PartySearchBottomSheetHeader";
+import React from 'react';
+import { Box } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
 import { partyListData } from '../data/partyListData';
-import { useBottomSheet, MAX_Y, MIN_Y, BOTTOM_SHEET_HEIGHT } from "../hooks/useBottomSheet";
+import {
+  useBottomSheet,
+  MAX_Y,
+  MIN_Y,
+  BOTTOM_SHEET_HEIGHT,
+} from '../hooks/useBottomSheet';
 
 const MotionBox = motion.create(Box);
 
 function PartySearchBottomSheet() {
-
   const { sheetRef, contentRef } = useBottomSheet();
 
   return (
@@ -37,7 +41,7 @@ function PartySearchBottomSheet() {
           WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
           padding: '0 32px', // Optional padding for inner content
         }}
-        flex="1"  // To take up remaining space within the MotionBox
+        flex="1" // To take up remaining space within the MotionBox
       >
         {partyListData.map((party) => (
           <PartyListItem

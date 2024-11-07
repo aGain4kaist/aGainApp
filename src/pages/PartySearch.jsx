@@ -54,7 +54,7 @@ function PartySearch() {
 
   return (
     <>
-    {/* <Flex direction="column" height="100vh" position="relative">
+      {/* <Flex direction="column" height="100vh" position="relative">
       {!isExpanded && (
         <Header
           user={user}
@@ -78,23 +78,23 @@ function PartySearch() {
         />
       </Box>
     </Flex> */}
-    <Box
-      flex="1"
-      width="100%"
-      height="100%"
-      position="absolute"
-      paddingBottom="10vh"
-      top="-5vh"
-    >
-      <KakaoMap
-        partyListData={partyListData}
-        handlePartyClick={handlePartyClick}
-        center={center}
-        myLocation={myLocation}
-      />
-    </Box>
-    <PartySearchBottomSheet/>
-    {/* moved bottom sheet to here. Aware of similar component names!! */}
+      <Box
+        flex="1"
+        width="100%"
+        height="100%"
+        position="absolute"
+        paddingBottom="10vh"
+        top="-5vh"
+      >
+        <KakaoMap
+          partyListData={partyListData}
+          handlePartyClick={handlePartyClick}
+          center={center}
+          myLocation={myLocation}
+        />
+      </Box>
+      <PartySearchBottomSheet />
+      {/* moved bottom sheet to here. Aware of similar component names!! */}
     </>
   );
 }
