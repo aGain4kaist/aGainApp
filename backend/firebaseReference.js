@@ -22,7 +22,6 @@ const {
 
 const app = initializeApp(firebaseConfig);
 
-
 // 예시 데이터 추가 및 수정용 API 함수들
 const express = require('express');
 const admin = require('firebase-admin');
@@ -114,4 +113,4 @@ getDataFromFirestore();
 
 */
 
-module.exports = {app};
+module.exports = { app };
