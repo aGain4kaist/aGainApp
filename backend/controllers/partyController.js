@@ -20,7 +20,6 @@ async function edit_party(party, latitude, longitude)
     party.image = signedUrls[0];
     party.date = [format_date(party.date[0]), format_date(party.date[1])];
     party.distance = distance;
-    console.log(party);
     return party;
     /*
     file.getSignedUrl({
@@ -59,7 +58,6 @@ exports.getPartyById = async (req, res) => {
     if (party) {
       const { latitude, longitude } = req.query;
       const item = await edit_party(party, latitude, longitude);
-      console.log(item);
       res.json(item);
     } else {
       res.status(404).send('Party not found');
