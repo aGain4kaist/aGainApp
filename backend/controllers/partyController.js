@@ -48,6 +48,7 @@ exports.getAllParties = async (req, res) => {
       .then(result => {result.sort((a,b) => a.distance - b.distance); res.json(result);});
   } catch (error) {
     console.log(error);
+
     res.status(500).send('Error fetching parties');
   }
 };
@@ -57,8 +58,10 @@ exports.getPartyById = async (req, res) => {
     const party = await PartyModel.getPartyById(req.params.id);
     if (party) {
       const { latitude, longitude } = req.query;
+
       const item = await edit_party(party, latitude, longitude);
       res.json(item);
+
     } else {
       res.status(404).send('Party not found');
     }
@@ -79,3 +82,4 @@ exports.getClothesOfParty = async (req, res) => {
     res.status(500).send('Error fetching clothes');
   }
 };
+
