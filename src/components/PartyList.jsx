@@ -1,3 +1,7 @@
+/* 
+-------- NOT USING THIS FILE ANYMORE -----------
+-------- DID NOT DELETE IT JUST IN CASE CONFLICT REFERENCE IS NEEDED -------
+
 import { React, useState } from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import PartyListItem from './PartyListItem';
@@ -16,7 +20,6 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
 
   return (
     <Box px={4} pt={0}>
-      {/* 상단 타이틀 및 정렬 옵션 */}
       <Flex justifyContent="space-between" alignItems="center" mb={4} px={2}>
         <Text fontSize="2xl" fontWeight="bold">
           내게 가까운 파티들
@@ -26,7 +29,7 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
         </Text>
       </Flex>
 
-      {/* 파티 목록 */}
+
       <Box
         overflowY="auto"
         maxHeight={isExpanded ? 'calc(80vh - 120px)' : 'calc(35vh - 120px)'}
@@ -47,3 +50,4 @@ function PartyList({ onPartyClick, isExpanded, partyListData }) {
 }
 
 export default PartyList;
+ */

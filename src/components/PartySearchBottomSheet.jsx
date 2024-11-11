@@ -26,8 +26,6 @@ function PartySearchBottomSheet({
 }) {
   const { sheetRef, contentRef } = useBottomSheet(setIsExpanded, selectedParty);
 
-  //const [internalSelectedParty, setInternalSelectedParty] = useState(null);
-
   useEffect(() => {
     setSelectedParty(selectedParty);
   }, [selectedParty, setSelectedParty]);

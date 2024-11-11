@@ -3,10 +3,7 @@ import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import Header from '../components/Layout/Header';
-import PartyListBottomSheet from '../components/PartyListBottomSheet';
 import { partyListData } from '../data/partyListData';
-import { BottomSheet } from 'react-spring-bottom-sheet';
-import 'react-spring-bottom-sheet/dist/style.css';
 import PartySearchBottomSheet from '../components/PartySearchBottomSheet';
 
 function PartySearch() {
@@ -18,8 +15,6 @@ function PartySearch() {
     lng: 127.36265917051,
   });
   const [myLocation, setMyLocation] = useState(null);
-  // changing bottom sheet...
-  // const [open, setOpen] = useState(true);
 
   const handlePartyClick = (party) => {
     console.log('handling party click: ', party);
@@ -55,7 +50,8 @@ function PartySearch() {
 
   return (
     <>
-      {/* <Flex direction="column" height="100vh" position="relative">
+      {/* WILL ADD HEADER BACK HERE LATER
+      <Flex direction="column" height="100vh" position="relative">
       {!isExpanded && (
         <Header
           user={user}
@@ -63,21 +59,6 @@ function PartySearch() {
           subtitle={`Welcome, ${user ? user.name : 'Guest'}!`}
         />
       )}
-      <Box
-        flex="1"
-        width="100%"
-        position="relative"
-        zIndex="1"
-        paddingBottom="10vh"
-        top="-5vh"
-      >
-        <KakaoMap
-          partyListData={partyListData}
-          handlePartyClick={handlePartyClick}
-          center={center}
-          myLocation={myLocation}
-        />
-      </Box>
     </Flex> */}
       <Box
         flex="1"
