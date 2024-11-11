@@ -1,6 +1,9 @@
 # How to Run
 
-채워 넣어주세요.
+- aGainApp 폴더에서 터미널에 "cd backend"를 실행합니다.
+- 이후 "npm install"을 실행합니다.
+- 설치가 끝나면 "node index.js"를 실행합니다.
+- API 명세서는 다음 링크를 참고하세요. https://www.notion.so/dad9df69a70548fdb1c979f11d8968df?p=9594e840c1ec4d619286b88f4cb7c1c4&pm=s
 
 # 파일별 역할 설명
 
