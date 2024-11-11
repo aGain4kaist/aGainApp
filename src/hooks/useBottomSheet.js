@@ -54,7 +54,7 @@ export function useBottomSheet(setIsExpanded, selectedParty) {
     const handleTouchStart = (e) => {
       const { touchStart } = metrics.current;
 
-      touchStart.sheetY = sheetRef.current.getBoundingClientRect().y;
+      touchStart.sheetY = sheetRef.current.getBoundingClientRect().y || 0;
       touchStart.touchY = e.touches[0].clientY;
 
       metrics.current.touchMove.prevTouchY = touchStart.touchY; // Initialize prevTouchY on start
@@ -166,14 +166,20 @@ export function useBottomSheet(setIsExpanded, selectedParty) {
 
   // content 영역을 터치하는 것을 기록
   useEffect(() => {
-    const handleTouchStart = () => {
+    const handleContentTouchStart = () => {
       metrics.current.isContentAreaTouched = true;
     };
-
-    contentRef.current.addEventListener('touchstart', handleTouchStart);
-
-    return () =>
-      contentRef.current.removeEventListener('touchstart', handleTouchStart);
+  
+    const content = contentRef.current;
+    if (content) {
+      content.addEventListener('touchstart', handleContentTouchStart);
+    }
+  
+    return () => {
+      if (content) {
+        content.removeEventListener('touchstart', handleContentTouchStart);
+      }
+    };
   }, []);
 
   return { sheetRef, contentRef };
