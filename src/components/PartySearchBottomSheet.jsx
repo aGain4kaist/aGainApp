@@ -88,8 +88,8 @@ function PartySearchBottomSheet({
       >
         {internalSelectedParty ? (
           <PartyDetail party={internalSelectedParty} onBack={clearSelection} />
-        ) :
-          (<>
+        ) : (
+          <>
             <PartySearchBottomSheetHeader />
             <Box
               ref={contentRef}
@@ -103,13 +103,13 @@ function PartySearchBottomSheet({
               {partyListData.map((party) => (
                 <PartyListItem
                   key={party.id}
-                  onPartyClick={handlePartyClick} 
+                  onPartyClick={handlePartyClick}
                   party={party}
                 />
               ))}
             </Box>
           </>
-          )}
+        )}
       </MotionBox>
     </>
   );
