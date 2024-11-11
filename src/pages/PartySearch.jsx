@@ -53,11 +53,7 @@ function PartySearch() {
       {/* WILL ADD HEADER BACK HERE LATER
       <Flex direction="column" height="100vh" position="relative">
       {!isExpanded && (
-        <Header
-          user={user}
-          title="파티 찾기"
-          subtitle={`Welcome, ${user ? user.name : 'Guest'}!`}
-        />
+        <Header user={user} id="Party-Search" title="파티 찾기" />
       )}
     </Flex> */}
       <Box
