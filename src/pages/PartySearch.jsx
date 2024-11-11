@@ -103,7 +103,7 @@ function PartySearch() {
         clearSelection={() => {
           setSelectedParty(null);
           setIsExpanded(false);
-          console.log("SELECTION CLEARED");
+          console.log('SELECTION CLEARED');
         }}
         goToCurrentLocation={goToCurrentLocation} // 함수를 전달
       />

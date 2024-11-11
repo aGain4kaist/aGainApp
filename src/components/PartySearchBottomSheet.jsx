@@ -65,12 +65,12 @@ function PartySearchBottomSheet({
           m="10px"
           p="0px"
         >
-         <IconifyIcon
+          <IconifyIcon
             icon={'material-symbols:arrow-back'}
             style={{ color: '#7C31B4' }}
             width="30px"
             height="30px"
-          /> 
+          />
         </Button>
       )}
       {!isExpanded && (
