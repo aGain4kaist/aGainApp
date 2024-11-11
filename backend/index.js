@@ -7,11 +7,13 @@ const port = 3000;
 app.use(cors()); // 모든 도메인에 대해 CORS 허용
 
 const partyRoutes = require('./routes/partyRoutes');
+//const userRoutes = require('./routes/userRoutes');
 
 app.use(express.json());
 
 // 파티 관련 라우트
 app.use('/party', partyRoutes);
+//app.use('/user', userRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

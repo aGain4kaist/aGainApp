@@ -13,4 +13,16 @@ function getDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-module.exports = { getDistance };
+function format_date(timestamp) {
+  // {"_seconds": 1234, "_nanoseconds": 1234} => "2024-11-15T13:00:00+09:00"
+  const date = new Date(timestamp._seconds * 1000);
+  const koreanDateString = new Date(
+    date.getTime() + 9 * 60 * 60 * 1000
+  ).toISOString(); // +09:00 변환
+
+  // 3. 원하는 형식으로 변환 ("YYYY-MM-DDTHH:mm:ss+09:00" 형식)
+  const result = koreanDateString.slice(0, -5) + '+09:00'; // 나노초는 생략
+  return result;
+}
+
+module.exports = { getDistance, format_date };
