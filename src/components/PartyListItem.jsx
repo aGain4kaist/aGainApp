@@ -1,19 +1,19 @@
 // PartyListItem.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Text, Flex, Image } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 
 function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
   // Set image URL
-  const imageUrl = party.image
-    ? `/src/assets/images/partyImages/${party.image[0]}`
-    : null;
+  const imageUrl = party.image ? party.image : null;
 
   const handleFavClick = (e) => {
     e.stopPropagation(); // Prevent triggering the onPartyClick
     onToggleFavorite(party.id);
   };
-
+  useEffect(() => {
+    console.log(party?.name);
+  }, []);
   return (
     <Flex
       flexDirection="column"

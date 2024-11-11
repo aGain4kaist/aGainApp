@@ -1,6 +1,7 @@
 import '@/styles/Home.scss';
 import { Box, Flex, Text } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import 'swiper/css'; // Swiper 기본 스타일
 import ClothingSwiper from '../components/ClothingSwiper';
 import Header from '../components/Layout/Header';
@@ -9,6 +10,21 @@ import { clothingItems } from '../data/clothingItems';
 import { partyListData } from '../data/partyListData';
 
 function Home() {
+  const [partyList, setPartyList] = useState([]); // 파티 리스트 상태
+  // 파티 리스트를 불러오는 함수
+  const fetchPartyList = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/party'); // API 호출
+      setPartyList(response.data); // 응답 데이터를 상태에 저장
+    } catch (error) {
+      console.error('파티 목록을 불러오는데 실패했습니다:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPartyList(); // 컴포넌트가 처음 렌더링될 때 파티 리스트 불러오기
+  }, []);
+
   return (
     <Flex direction="column" height="100vh" position="relative">
       <Header
@@ -26,7 +42,8 @@ function Home() {
             곧 열리는 파티들
           </Text>
           <Flex direction="column">
-            {partyListData.map((party) => (
+            {partyList.map((party) => (
+              // {partyListData.map((party) => (
               <PartyListItem
                 key={party.id}
                 onPartyClick={() => {}} // temporary empty function
