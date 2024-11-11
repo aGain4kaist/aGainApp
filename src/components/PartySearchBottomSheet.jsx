@@ -19,17 +19,18 @@ function PartySearchBottomSheet({
   isExpanded,
   setIsExpanded,
   selectedParty,
+  setSelectedParty,
   handlePartyClick,
   clearSelection,
   goToCurrentLocation,
 }) {
-  const { sheetRef, contentRef } = useBottomSheet(isExpanded, setIsExpanded);
+  const { sheetRef, contentRef } = useBottomSheet(setIsExpanded, selectedParty);
 
-  const [internalSelectedParty, setInternalSelectedParty] = useState(null);
+  //const [internalSelectedParty, setInternalSelectedParty] = useState(null);
 
   useEffect(() => {
-    setInternalSelectedParty(selectedParty);
-  }, [selectedParty]);
+    setSelectedParty(selectedParty);
+  }, [selectedParty, setSelectedParty]);
 
   useEffect(() => {
     if (isExpanded) {
@@ -46,6 +47,32 @@ function PartySearchBottomSheet({
 
   return (
     <>
+      {selectedParty && (
+        <Button
+          w="50px"
+          h="50px"
+          alignContent="center"
+          justifyContent="center"
+          position="absolute"
+          bottom="calc(80vh + 70px)"
+          left="10px"
+          onClick={clearSelection}
+          borderRadius="full"
+          bg="white"
+          boxShadow="md"
+          zIndex="10"
+          aria-label="뒤로 가기"
+          m="10px"
+          p="0px"
+        >
+         <IconifyIcon
+            icon={'material-symbols:arrow-back'}
+            style={{ color: '#7C31B4' }}
+            width="30px"
+            height="30px"
+          /> 
+        </Button>
+      )}
       {!isExpanded && (
         <Button
           w="50px"
@@ -86,8 +113,8 @@ function PartySearchBottomSheet({
         h={`${BOTTOM_SHEET_HEIGHT}px`}
         // transition="transform 5s ease-out"
       >
-        {internalSelectedParty ? (
-          <PartyDetail party={internalSelectedParty} onBack={clearSelection} />
+        {selectedParty ? (
+          <PartyDetail party={selectedParty} onBack={clearSelection} />
         ) : (
           <>
             <PartySearchBottomSheetHeader />

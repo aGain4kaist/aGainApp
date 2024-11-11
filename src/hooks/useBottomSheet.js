@@ -5,7 +5,7 @@ export const MIN_Y = 120; // 바텀시트가 최대로 높이 올라갔을 때�
 export const MAX_Y = window.innerHeight - 400; // 바텀시트가 최소로 내려갔을 때의 y 값
 export const BOTTOM_SHEET_HEIGHT = window.innerHeight - MIN_Y; // 바텀시트의 세로 길이
 
-export function useBottomSheet(isExpanded, setIsExpanded) {
+export function useBottomSheet(setIsExpanded, selectedParty) {
   const sheetRef = useRef(null);
   const contentRef = useRef(null);
 
@@ -21,30 +21,35 @@ export function useBottomSheet(isExpanded, setIsExpanded) {
     isContentAreaTouched: false, // 컨텐츠 영역을 터치하고 있음을 기록
   });
 
-  useEffect(() => {
-    const canUserMoveBottomSheet = () => {
-      const { touchMove, isContentAreaTouched } = metrics.current;
-
-      // 바텀시트에서 컨텐츠 영역이 아닌 부분을 터치하면 항상 바텀시트 움직이기
-      if (!isContentAreaTouched) {
-        return true;
-      }
-
-      // 바텀시트가 올라와있는 상태가 아닐 때는 컨텐츠 영역을 터치해도 바텀시트를 움직이기
-      if (sheetRef.current.getBoundingClientRect().y !== MIN_Y) {
-        // console.log(sheetRef.current.getBoundingClientRect().y); // test
-        return true;
-      }
-
-      if (touchMove.movingDirection === 'down') {
-        // 스크롤을 더 이상 올릴 것이 없다면, 바텀시트를 움직이기
-        // Safari 에서는 bounding 효과 때문에 scrollTop 이 음수가 될 수 있음
-        return contentRef.current.scrollTop <= 0;
-      }
-
+  const canUserMoveBottomSheet = () => {
+    // Prevent movement if there is a selected party
+    if (selectedParty) {
       return false;
-    };
+    }
 
+    const { touchMove, isContentAreaTouched } = metrics.current;
+
+    // 바텀시트에서 컨텐츠 영역이 아닌 부분을 터치하면 항상 바텀시트 움직이기
+    if (!isContentAreaTouched) {
+      return true;
+    }
+
+    // 바텀시트가 올라와있는 상태가 아닐 때는 컨텐츠 영역을 터치해도 바텀시트를 움직이기
+    if (sheetRef.current.getBoundingClientRect().y !== MIN_Y) {
+      // console.log(sheetRef.current.getBoundingClientRect().y); // test
+      return true;
+    }
+
+    if (touchMove.movingDirection === 'down') {
+      // 스크롤을 더 이상 올릴 것이 없다면, 바텀시트를 움직이기
+      // Safari 에서는 bounding 효과 때문에 scrollTop 이 음수가 될 수 있음
+      return contentRef.current.scrollTop <= 0;
+    }
+
+    return false;
+  };
+
+  useEffect(() => {
     // touch start
     const handleTouchStart = (e) => {
       const { touchStart } = metrics.current;
@@ -157,7 +162,7 @@ export function useBottomSheet(isExpanded, setIsExpanded) {
         console.log('event listeners removed');
       }
     };
-  }, []);
+  }, [selectedParty]);
 
   // content 영역을 터치하는 것을 기록
   useEffect(() => {

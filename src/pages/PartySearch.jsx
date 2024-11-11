@@ -19,7 +19,7 @@ function PartySearch() {
   });
   const [myLocation, setMyLocation] = useState(null);
   // changing bottom sheet...
-  const [open, setOpen] = useState(true);
+  // const [open, setOpen] = useState(true);
 
   const handlePartyClick = (party) => {
     console.log('handling party click: ', party);
@@ -98,10 +98,12 @@ function PartySearch() {
         isExpanded={isExpanded}
         setIsExpanded={setIsExpanded}
         selectedParty={selectedParty}
+        setSelectedParty={setSelectedParty}
         handlePartyClick={handlePartyClick}
         clearSelection={() => {
           setSelectedParty(null);
           setIsExpanded(false);
+          console.log("SELECTION CLEARED");
         }}
         goToCurrentLocation={goToCurrentLocation} // 함수를 전달
       />
