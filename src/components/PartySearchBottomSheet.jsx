@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
 import { partyListData } from '../data/partyListData';
+import PartyDetail from './PartyDetail';
 import {
   useBottomSheet,
   MAX_Y,
@@ -30,6 +31,19 @@ function PartySearchBottomSheet({
     setInternalSelectedParty(selectedParty);
   }, [selectedParty]);
 
+  useEffect(() => {
+    if (isExpanded) {
+      // Move sheet to expanded position
+      sheetRef.current.style.setProperty(
+        'transform',
+        `translateY(${MIN_Y - MAX_Y}px)`
+      );
+    } else {
+      // Move sheet to collapsed position
+      sheetRef.current.style.setProperty('transform', 'translateY(0)');
+    }
+  }, [sheetRef, isExpanded]); // Run whenever isExpanded changes
+
   return (
     <>
       {!isExpanded && (
@@ -40,7 +54,7 @@ function PartySearchBottomSheet({
           justifyContent="center"
           position="absolute"
           bottom="calc(40vh + 21px)"
-          zIndex="25"
+          zIndex="8"
           borderRadius="full"
           boxShadow="md"
           onClick={goToCurrentLocation}
@@ -62,7 +76,7 @@ function PartySearchBottomSheet({
         display="flex"
         flexDirection="column"
         position="fixed"
-        zIndex="30"
+        zIndex="9"
         top={MAX_Y}
         left="0"
         right="0"
@@ -72,25 +86,30 @@ function PartySearchBottomSheet({
         h={`${BOTTOM_SHEET_HEIGHT}px`}
         // transition="transform 5s ease-out"
       >
-        <PartySearchBottomSheetHeader />
-        {/* Content Section */}
-        <Box
-          ref={contentRef}
-          overflow="auto"
-          sx={{
-            WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
-            padding: '0 32px', // Optional padding for inner content
-          }}
-          flex="1" // To take up remaining space within the MotionBox
-        >
-          {partyListData.map((party) => (
-            <PartyListItem
-              key={party.id}
-              onPartyClick={() => {}} // temporary empty function
-              party={party}
-            />
-          ))}
-        </Box>
+        {internalSelectedParty ? (
+          <PartyDetail party={internalSelectedParty} onBack={clearSelection} />
+        ) :
+          (<>
+            <PartySearchBottomSheetHeader />
+            <Box
+              ref={contentRef}
+              overflow="auto"
+              sx={{
+                WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
+                padding: '0 32px', // Optional padding for inner content
+              }}
+              flex="1" // To take up remaining space within the MotionBox
+            >
+              {partyListData.map((party) => (
+                <PartyListItem
+                  key={party.id}
+                  onPartyClick={handlePartyClick} 
+                  party={party}
+                />
+              ))}
+            </Box>
+          </>
+          )}
       </MotionBox>
     </>
   );

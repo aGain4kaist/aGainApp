@@ -22,6 +22,7 @@ function PartySearch() {
   const [open, setOpen] = useState(true);
 
   const handlePartyClick = (party) => {
+    console.log("handling party click: ", party);
     setSelectedParty(party);
     setIsExpanded(true);
   };
