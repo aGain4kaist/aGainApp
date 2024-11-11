@@ -169,12 +169,12 @@ export function useBottomSheet(setIsExpanded, selectedParty) {
     const handleContentTouchStart = () => {
       metrics.current.isContentAreaTouched = true;
     };
-  
+
     const content = contentRef.current;
     if (content) {
       content.addEventListener('touchstart', handleContentTouchStart);
     }
-  
+
     return () => {
       if (content) {
         content.removeEventListener('touchstart', handleContentTouchStart);
