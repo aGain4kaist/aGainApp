@@ -8,8 +8,6 @@ import PartyListItem from '../components/PartyListItem';
 import { clothingItems } from '../data/clothingItems';
 import { partyListData } from '../data/partyListData';
 
-
-
 function Home() {
   return (
     <Flex direction="column" height="100vh" position="relative">
@@ -20,10 +18,8 @@ function Home() {
       />
       {/* <Box className="home-page" bg="gray.100" minH="260vh" p="25px"> */}
       <Flex direction="column" bg="var(--background-silver, #FAF9FF)" p="25px">
-        
-      {/* 옷 등록 영역 */}
-      <ClothingSwiper items={clothingItems} />
-
+        {/* 옷 등록 영역 */}
+        <ClothingSwiper items={clothingItems} />
         {/* 곧 열리는 파티들 */}
         <Box mt={6}>
           <Text fontSize="2xl" fontWeight="bold">
