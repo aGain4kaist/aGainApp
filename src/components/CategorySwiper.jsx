@@ -12,6 +12,7 @@ function CategorySwiper({ items }) {
       <Swiper spaceBetween={20} slidesPerView="auto">
         {items.map((item) => (
           <SwiperSlide key={item.id} style={{ width: '120px', flexShrink: 0 }}>
+            <Box mt={2}></Box>
             <Box
               width="120px"
               height="120px"
@@ -44,6 +45,7 @@ function CategorySwiper({ items }) {
                 {item.name}
               </Text>
             </Box>
+            <Box mt={2}></Box>
           </SwiperSlide>
         ))}
       </Swiper>
