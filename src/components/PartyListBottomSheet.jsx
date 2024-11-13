@@ -1,3 +1,7 @@
+/* 
+-------- NOT USING THIS FILE ANYMORE -----------
+-------- DID NOT DELETE IT JUST IN CASE CONFLICT REFERENCE IS NEEDED -------
+
 import React, { useState, useEffect } from 'react';
 import { Box, Flex, IconButton, Image } from '@chakra-ui/react';
 import {
@@ -118,3 +122,4 @@ function PartyListBottomSheet({
 }
 
 export default PartyListBottomSheet;
+ */
