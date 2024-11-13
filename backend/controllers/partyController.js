@@ -21,20 +21,6 @@ async function edit_party(party, latitude, longitude)
     party.date = [format_date(party.date[0]), format_date(party.date[1])];
     party.distance = distance;
     return party;
-    /*
-    file.getSignedUrl({
-      action: 'read',
-      expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
-    }).then((signedUrls) => {
-      party.image = signedUrls[0];
-      party.date = [format_date(party.date[0]), format_date(party.date[1])];
-      party.distance = distance;
-      console.log(party);
-      return party;
-    }).catch((error) => {
-      console.error("Error generating URL:", error);
-    });
-    */
 }
 
 exports.getAllParties = async (req, res) => {
