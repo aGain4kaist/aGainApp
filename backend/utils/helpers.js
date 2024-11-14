@@ -1,3 +1,7 @@
+const { admin } = require('../config/firebaseAdmin');
+
+const bucket = admin.storage().bucket();
+
 const R = 6371; // 지구 반지름 (킬로미터 단위)
 
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -25,4 +29,13 @@ function format_date(timestamp) {
   return result;
 }
 
-module.exports = { getDistance, format_date };
+async function getWebUrl(image_path) {
+  const file = bucket.file(image_path);
+  const signedUrls = await file.getSignedUrl({
+    action: 'read',
+    expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
+  });
+  return signedUrls[0];
+}
+
+module.exports = { getDistance, format_date, getWebUrl };

@@ -1,8 +1,6 @@
 const PartyModel = require('../models/partyModel');
-const { getDistance, format_date } = require('../utils/helpers');
-const { admin } = require('../config/firebaseAdmin');
-
-const bucket = admin.storage().bucket();
+const userModel = require('../models/userModel');
+const { getDistance, format_date, getWebUrl } = require('../utils/helpers');
 
 async function edit_party(party, latitude, longitude)
 {
@@ -12,12 +10,7 @@ async function edit_party(party, latitude, longitude)
       party.location[0],
       party.location[1]
     );
-    const file = bucket.file(party.image);
-    const signedUrls = await file.getSignedUrl({
-      action: 'read',
-      expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
-    });
-    party.image = signedUrls[0];
+    party.image = await getWebUrl(party.image);
     party.date = [format_date(party.date[0]), format_date(party.date[1])];
     party.distance = distance;
     return party;
@@ -56,16 +49,34 @@ exports.getPartyById = async (req, res) => {
   }
 };
 
-exports.getClothesOfParty = async (req, res) => {
+exports.togglePartyLike = async (req, res) => {
   try {
-    const party = await PartyModel.getPartyById(req.params.id);
-    if (party) {
-      res.json(party.cloth);
-    } else {
-      res.status(404).send('Party not found');
-    }
+      const party = await PartyModel.getPartyById(req.params.partyid);
+      const user = await UserModel.getUserById(req.params.userid);
+      for (let i = 0; i < cloth.liked_users.length; i++) {
+          if (req.params.userid == cloth.liked_users[i]) {
+              cloth.likes--;
+              cloth.liked_users.splice(i, 1);
+              for (let j = 0; j < user.liked_clothes.length; j++) {
+                  if (req.params.clothid == user.liked_clothes[j]) {
+                      user.liked_clothes.splice(j, 1);
+                  }
+              }
+              await ClothModel.updateCloth(req.params.clothid, cloth);
+              await UserModel.updateUser(req.params.userid, user);
+              res.json(cloth);
+          }
+      }
+      cloth.liked_users.push(req.params.userid);
+      user.liked_clothes.push(req.params.clothid);
+      cloth.liked_users = [...new Set(cloth.liked_users)]; // 중복 제거
+      cloth.likes = cloth.liked_users.length;
+      user.liked_cloths = [...new Set(user.liked_clothes)]; // 중복 제거
+      await ClothModel.updateCloth(req.params.clothid, cloth);
+      await UserModel.updateUser(req.params.userid, user);
+      res.json(cloth);
   } catch (error) {
-    res.status(500).send('Error fetching clothes');
+      console.log(error);
+      res.status(500).send('Error fetching cloth or user');
   }
 };
-
