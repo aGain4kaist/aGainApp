@@ -4,24 +4,23 @@ const { admin } = require('../config/firebaseAdmin');
 
 const bucket = admin.storage().bucket();
 
-async function edit_party(party, latitude, longitude)
-{
-    const distance = getDistance(
-      latitude,
-      longitude,
-      party.location[0],
-      party.location[1]
-    );
-    const file = bucket.file(party.image);
-    const signedUrls = await file.getSignedUrl({
-      action: 'read',
-      expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
-    });
-    party.image = signedUrls[0];
-    party.date = [format_date(party.date[0]), format_date(party.date[1])];
-    party.distance = distance;
-    return party;
-    /*
+async function edit_party(party, latitude, longitude) {
+  const distance = getDistance(
+    latitude,
+    longitude,
+    party.location[0],
+    party.location[1]
+  );
+  const file = bucket.file(party.image);
+  const signedUrls = await file.getSignedUrl({
+    action: 'read',
+    expires: '03-09-2500', // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
+  });
+  party.image = signedUrls[0];
+  party.date = [format_date(party.date[0]), format_date(party.date[1])];
+  party.distance = distance;
+  return party;
+  /*
     file.getSignedUrl({
       action: 'read',
       expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
@@ -42,10 +41,13 @@ exports.getAllParties = async (req, res) => {
     const parties = await PartyModel.getAllParties();
     const { latitude, longitude } = req.query;
 
-    const items = parties
-      .map(async party => await edit_party(party, latitude, longitude));
-    Promise.all(items)
-      .then(result => {result.sort((a,b) => a.distance - b.distance); res.json(result);});
+    const items = parties.map(
+      async (party) => await edit_party(party, latitude, longitude)
+    );
+    Promise.all(items).then((result) => {
+      result.sort((a, b) => a.distance - b.distance);
+      res.json(result);
+    });
   } catch (error) {
     console.log(error);
 
@@ -61,7 +63,6 @@ exports.getPartyById = async (req, res) => {
 
       const item = await edit_party(party, latitude, longitude);
       res.json(item);
-
     } else {
       res.status(404).send('Party not found');
     }
@@ -82,4 +83,3 @@ exports.getClothesOfParty = async (req, res) => {
     res.status(500).send('Error fetching clothes');
   }
 };
-
