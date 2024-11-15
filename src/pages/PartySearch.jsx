@@ -50,12 +50,11 @@ function PartySearch() {
 
   return (
     <>
-      {/* WILL ADD HEADER BACK HERE LATER
       <Flex direction="column" height="100vh" position="relative">
-      {!isExpanded && (
-        <Header user={user} id="Party-Search" title="파티 찾기" />
-      )}
-    </Flex> */}
+        {!isExpanded && (
+          <Header user={user} id="Party-Search" title="파티 찾기" subtitle={null} />
+        )}
+      </Flex>
       <Box
         flex="1"
         width="100%"

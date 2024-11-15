@@ -125,7 +125,7 @@ function Header({ id, title, subtitle, user }) {
                   justifyContent="center"
                   alignItems="center"
                   gap="10px"
-                  flexShrink="0"
+                  shrink="0"
                   borderRadius="12px"
                   border="1px solid"
                   borderColor="var(--lightlight-Gray, #E8E8E8)"
@@ -137,7 +137,7 @@ function Header({ id, title, subtitle, user }) {
                     icon="ph:magnifying-glass-bold"
                     width="30px"
                     height="30px"
-                    flexShrink="0"
+                    shrink="0"
                   />
                 </Button>
               )}
@@ -191,7 +191,7 @@ function Header({ id, title, subtitle, user }) {
                     transition: 'none',
                   }}
                   _focus={{ boxShadow: 'none' }}
-                  flexShrink="0"
+                  shrink="0"
                 />
               </Button>
             </Flex>
