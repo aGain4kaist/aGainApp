@@ -33,9 +33,9 @@ exports.getUserByID = async (req, res) => {
 exports.getUserTicket = async (req, res) => {
   try {
     const user = await UserModel.getUserbyId(req.params.id);
-    res.json({"ticket": user.tickets});
-  } catch(error) {
+    res.json({ ticket: user.tickets });
+  } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
   }
-}
+};

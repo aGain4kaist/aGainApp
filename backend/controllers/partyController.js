@@ -54,30 +54,30 @@ exports.togglePartyLike = async (req, res) => {
   try {
     const party = await PartyModel.getPartyById(req.params.partyid);
     const user = await UserModel.getUserById(req.params.userid);
-    for (let i = 0; i < cloth.liked_users.length; i++) {
-      if (req.params.userid == cloth.liked_users[i]) {
-        cloth.likes--;
-        cloth.liked_users.splice(i, 1);
-        for (let j = 0; j < user.liked_clothes.length; j++) {
-          if (req.params.clothid == user.liked_clothes[j]) {
-            user.liked_clothes.splice(j, 1);
+    for (let i = 0; i < party.liked_users.length; i++) {
+      if (req.params.userid == party.liked_users[i]) {
+        party.likes--;
+        party.liked_users.splice(i, 1);
+        for (let j = 0; j < user.liked_parties.length; j++) {
+          if (req.params.partyid == user.liked_parties[j]) {
+            user.liked_parties.splice(j, 1);
           }
         }
-        await ClothModel.updateCloth(req.params.clothid, cloth);
+        await PartyModel.updateCloth(req.params.partyid, party);
         await UserModel.updateUser(req.params.userid, user);
-        res.json(cloth);
+        res.json(party);
       }
     }
-    cloth.liked_users.push(req.params.userid);
-    user.liked_clothes.push(req.params.clothid);
-    cloth.liked_users = [...new Set(cloth.liked_users)]; // 중복 제거
-    cloth.likes = cloth.liked_users.length;
-    user.liked_cloths = [...new Set(user.liked_clothes)]; // 중복 제거
-    await ClothModel.updateCloth(req.params.clothid, cloth);
+    party.liked_users.push(req.params.userid);
+    user.liked_parties.push(req.params.partyid);
+    party.liked_users = [...new Set(party.liked_users)]; // 중복 제거
+    party.likes = party.liked_users.length;
+    user.liked_parties = [...new Set(user.liked_parties)]; // 중복 제거
+    await ClothModel.updateCloth(req.params.partyid, party);
     await UserModel.updateUser(req.params.userid, user);
-    res.json(cloth);
+    res.json(party);
   } catch (error) {
     console.log(error);
-    res.status(500).send('Error fetching cloth or user');
+    res.status(500).send('Error fetching party or user');
   }
 };
