@@ -33,7 +33,7 @@ async function getWebUrl(image_path) {
   const file = bucket.file(image_path);
   const signedUrls = await file.getSignedUrl({
     action: 'read',
-    expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
+    expires: '03-09-2500', // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
   });
   return signedUrls[0];
 }
