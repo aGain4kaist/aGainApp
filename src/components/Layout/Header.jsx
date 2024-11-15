@@ -54,7 +54,7 @@ function Header({ id, title, subtitle, user }) {
       case 'MyClothes':
         setIsTitleExpanded(true);
         setBackgroundColor('var(--background-silver, #FAF9FF)');
-        // Clothing-Search일 때 boxShadow를 표시 X
+        // MyClothes일 때 boxShadow를 표시 X
         setBoxShadow('none');
         break;
 
