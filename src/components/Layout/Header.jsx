@@ -51,6 +51,13 @@ function Header({ id, title, subtitle, user }) {
         setBoxShadow('none');
         break;
 
+      case 'MyClothes':
+        setIsTitleExpanded(true);
+        setBackgroundColor('var(--background-silver, #FAF9FF)');
+        // MyClothes일 때 boxShadow를 표시 X
+        setBoxShadow('none');
+        break;
+
       default:
         setIsTitleExpanded(true);
     }
