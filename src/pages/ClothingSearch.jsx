@@ -7,7 +7,7 @@ import { catagoryData } from '../data/categoryData';
 
 function ClothingSearch() {
   return (
-    <Flex direction="column" height="100vh" position="relative">
+    <Flex direction="column" height="100vh" position="relative" bg="var(--background-silver, #FAF9FF)">
       <Header id="Clothing-Search" title="옷 보기" />
 
       <Flex direction="column" bg="var(--background-silver, #FAF9FF)" p="25px">
