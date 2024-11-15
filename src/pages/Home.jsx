@@ -21,7 +21,7 @@ function Home() {
     }
   };
 
-  const navigate = useNavigate();   // to navigate when a party is clicked
+  const navigate = useNavigate(); // to navigate when a party is clicked
 
   useEffect(() => {
     fetchPartyList(); // 컴포넌트가 처음 렌더링될 때 파티 리스트 불러오기
@@ -49,7 +49,7 @@ function Home() {
               <PartyListItem
                 key={party.id}
                 onPartyClick={() => {
-                  navigate("/party", {state : { ...party }})
+                  navigate('/party', { state: { ...party } });
                 }} // to party page
                 party={party}
               />

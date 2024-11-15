@@ -8,9 +8,9 @@ import PartySearchBottomSheet from '../components/PartySearchBottomSheet';
 import { useLocation } from 'react-router-dom';
 
 function PartySearch() {
-  const location = useLocation();   // get the states (paired with useNavigate)
+  const location = useLocation(); // get the states (paired with useNavigate)
   const option = location.state || null;
-  console.log("location.state: ", option);  // debugging
+  console.log('location.state: ', option); // debugging
 
   const { user } = useUser();
   const [isExpanded, setIsExpanded] = useState(option ? true : false);
@@ -55,9 +55,11 @@ function PartySearch() {
 
   // Monitor isExpanded for changes
   useEffect(() => {
-    console.log('Header visibility changed:', !isExpanded ? 'Visible' : 'Hidden');
+    console.log(
+      'Header visibility changed:',
+      !isExpanded ? 'Visible' : 'Hidden'
+    );
   }, [isExpanded]);
-
 
   return (
     <>
