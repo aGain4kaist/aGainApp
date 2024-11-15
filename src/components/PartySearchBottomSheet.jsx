@@ -28,6 +28,7 @@ function PartySearchBottomSheet({
 
   useEffect(() => {
     setSelectedParty(selectedParty);
+    console.log('Selected Party:', selectedParty); // Debugging line
   }, [selectedParty, setSelectedParty]);
 
   useEffect(() => {

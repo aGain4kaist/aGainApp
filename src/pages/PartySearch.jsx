@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import Header from '../components/Layout/Header';
 import { partyListData } from '../data/partyListData';
 import PartySearchBottomSheet from '../components/PartySearchBottomSheet';
+import { useLocation } from 'react-router-dom';
 
 function PartySearch() {
+  const location = useLocation(); // get the states (paired with useNavigate)
+  const option = location.state || null;
+  console.log('location.state: ', option); // debugging
+
   const { user } = useUser();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedParty, setSelectedParty] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(option ? true : false);
+  const [selectedParty, setSelectedParty] = useState(option);
   const [center, setCenter] = useState({
     lat: 36.370379109284,
     lng: 127.36265917051,
@@ -48,14 +53,26 @@ function PartySearch() {
     }
   };
 
+  // Monitor isExpanded for changes
+  useEffect(() => {
+    console.log(
+      'Header visibility changed:',
+      !isExpanded ? 'Visible' : 'Hidden'
+    );
+  }, [isExpanded]);
+
   return (
     <>
-      {/* WILL ADD HEADER BACK HERE LATER
       <Flex direction="column" height="100vh" position="relative">
-      {!isExpanded && (
-        <Header user={user} id="Party-Search" title="파티 찾기" />
-      )}
-    </Flex> */}
+        {!isExpanded && (
+          <Header
+            user={user}
+            id="Party-Search"
+            title="파티 찾기"
+            subtitle={null}
+          />
+        )}
+      </Flex>
       <Box
         flex="1"
         width="100%"
