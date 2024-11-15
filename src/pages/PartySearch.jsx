@@ -52,7 +52,12 @@ function PartySearch() {
     <>
       <Flex direction="column" height="100vh" position="relative">
         {!isExpanded && (
-          <Header user={user} id="Party-Search" title="파티 찾기" subtitle={null} />
+          <Header
+            user={user}
+            id="Party-Search"
+            title="파티 찾기"
+            subtitle={null}
+          />
         )}
       </Flex>
       <Box
