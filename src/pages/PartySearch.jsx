@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useUser } from '../utils/UserContext';
 import KakaoMap from '../utils/KakaoMap';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import Header from '../components/Layout/Header';
 import { partyListData } from '../data/partyListData';
 import PartySearchBottomSheet from '../components/PartySearchBottomSheet';
+import { useLocation } from 'react-router-dom';
 
 function PartySearch() {
+  const location = useLocation();   // get the states (paired with useNavigate)
+  const option = location.state || null;
+  console.log("location.state: ", option);  // debugging
+
   const { user } = useUser();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedParty, setSelectedParty] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(option ? true : false);
+  const [selectedParty, setSelectedParty] = useState(option);
   const [center, setCenter] = useState({
     lat: 36.370379109284,
     lng: 127.36265917051,
@@ -47,6 +52,12 @@ function PartySearch() {
       alert('위치 정보가 지원되지 않는 브라우저입니다.');
     }
   };
+
+  // Monitor isExpanded for changes
+  useEffect(() => {
+    console.log('Header visibility changed:', !isExpanded ? 'Visible' : 'Hidden');
+  }, [isExpanded]);
+
 
   return (
     <>

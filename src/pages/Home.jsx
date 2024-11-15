@@ -3,11 +3,11 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'swiper/css'; // Swiper 기본 스타일
+import { useNavigate } from 'react-router-dom';
 import ClothingSwiper from '../components/ClothingSwiper';
 import Header from '../components/Layout/Header';
 import PartyListItem from '../components/PartyListItem';
 import { clothingItems } from '../data/clothingItems';
-import { partyListData } from '../data/partyListData';
 
 function Home() {
   const [partyList, setPartyList] = useState([]); // 파티 리스트 상태
@@ -20,6 +20,8 @@ function Home() {
       console.error('파티 목록을 불러오는데 실패했습니다:', error);
     }
   };
+
+  const navigate = useNavigate();   // to navigate when a party is clicked
 
   useEffect(() => {
     fetchPartyList(); // 컴포넌트가 처음 렌더링될 때 파티 리스트 불러오기
@@ -46,7 +48,9 @@ function Home() {
               // {partyListData.map((party) => (
               <PartyListItem
                 key={party.id}
-                onPartyClick={() => {}} // temporary empty function
+                onPartyClick={() => {
+                  navigate("/party", {state : { ...party }})
+                }} // to party page
                 party={party}
               />
             ))}
