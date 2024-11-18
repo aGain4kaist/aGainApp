@@ -169,26 +169,26 @@ function AppLayout() {
 
           {/* 중앙에 고정된 등록 버튼 */}
           <Link to="/put-clothes">
-          <IconButton
-            aria-label="옷 넣어두기"
-            icon={
-              <IconifyIcon
-                icon="icon-park-outline:hanger"
-                style={{ fontSize: '40px', color: 'white' }}
-              />
-            }
-            backgroundColor="#411461"
-            position="fixed"
-            bottom="43px"
-            left="50%"
-            transform="translateX(-50%)"
-            borderRadius="full"
-            width="70px"
-            height="70px"
-            zIndex="20"
-            _hover={{ backgroundColor: '#411461' }}
-            _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
-          />
+            <IconButton
+              aria-label="옷 넣어두기"
+              icon={
+                <IconifyIcon
+                  icon="icon-park-outline:hanger"
+                  style={{ fontSize: '40px', color: 'white' }}
+                />
+              }
+              backgroundColor="#411461"
+              position="fixed"
+              bottom="43px"
+              left="50%"
+              transform="translateX(-50%)"
+              borderRadius="full"
+              width="70px"
+              height="70px"
+              zIndex="20"
+              _hover={{ backgroundColor: '#411461' }}
+              _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
+            />
           </Link>
         </Flex>
       </Router>

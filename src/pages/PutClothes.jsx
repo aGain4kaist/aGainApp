@@ -1,8 +1,5 @@
-import React from "react";
+import React from 'react';
 
-function PutClothes () {
-
-    
-}
+function PutClothes() {}
 
 export default PutClothes;
