@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 
@@ -7,14 +7,15 @@ function PartyDetail({ party, onBack }) {
   const startTime = new Date(party.date[0]);
   const endTime = new Date(party.date[1]);
   const formatTime = (date) => `${date.getHours()}시 ~ ${endTime.getHours()}시`;
-  const imageUrl = party.image
-    ? `/src/assets/images/partyImages/${party.image[0]}`
-    : null;
+  const imageUrl = party.image ? party.image : null;
   const [isFavorite, setIsFavorite] = useState(false); // 파티의 좋아요 상태 가져와야됨
   const handleFavClick = (e) => {
     e.stopPropagation(); // Prevent triggering the onPartyClick
     setIsFavorite(!isFavorite);
   };
+  useEffect(() => {
+    console.log(party, 'party');
+  }, []);
   return (
     <Box px="35px" pt="52px" position="relative" zIndex="20">
       {/* 파티 이미지 또는 기본 박스 */}
@@ -48,8 +49,13 @@ function PartyDetail({ party, onBack }) {
       {/* 파티 정보 */}
       <Box>
         <Text color="#411461" fontWeight="semibold">
-          내 위치로부터 ・ {party.distance}km
+          {party.distance !== null && party.distance !== undefined
+            ? party.distance < 1
+              ? `내 위치로부터 ・ ${(party.distance * 1000).toFixed(0)}m`
+              : `내 위치로부터 ・ ${party.distance.toFixed(2)}km`
+            : '거리 정보를 확인할 수 없습니다'}
         </Text>
+
         <Text fontSize="32px" fontWeight={800}>
           {party.name}
         </Text>
@@ -62,7 +68,7 @@ function PartyDetail({ party, onBack }) {
             onClick={handleFavClick}
           />
           <Text fontSize="lg" fontWeight={500}>
-            {party.favs}
+            {party.likes}
           </Text>
         </Flex>
         <Box height="15px"></Box>
