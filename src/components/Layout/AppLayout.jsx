@@ -6,6 +6,7 @@ import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
 import PartySearch from '@/pages/PartySearch';
 import MyClothes from '@/pages/MyClothes';
+import PutClothes from '../../pages/PutClothes';
 
 function AppLayout() {
   return (
@@ -18,6 +19,7 @@ function AppLayout() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/party" element={<PartySearch />} />
+              <Route path="/put-clothes" element={<PutClothes />} />
               <Route path="/clothes" element={<ClothingSearch />} />
               <Route path="/my-clothes" element={<MyClothes />} />
             </Routes>
@@ -91,17 +93,20 @@ function AppLayout() {
                 </Text>
               </Button>
             </Link>
-            <Box width="80px" height="51px">
-              <Box height="34px"></Box>
-              <Text
-                color="#000"
-                fontFamily="'SUIT', sans-serif"
-                fontSize="14px"
-                fontWeight="500"
-              >
-                옷 넣어두기
-              </Text>
-            </Box>
+            <Link to="/put-clothes">
+              <Box width="80px" height="51px">
+                <Box height="34px"></Box>
+                <Text
+                  color="#000"
+                  fontFamily="'SUIT', sans-serif"
+                  fontSize="14px"
+                  fontWeight="500"
+                  justifySelf="center"
+                >
+                  옷 넣어두기
+                </Text>
+              </Box>
+            </Link>
             <Link to="/clothes">
               <Button
                 aria-label="옷 보기"
@@ -163,6 +168,7 @@ function AppLayout() {
           </Flex>
 
           {/* 중앙에 고정된 등록 버튼 */}
+          <Link to="/put-clothes">
           <IconButton
             aria-label="옷 넣어두기"
             icon={
@@ -183,6 +189,7 @@ function AppLayout() {
             _hover={{ backgroundColor: '#411461' }}
             _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
           />
+          </Link>
         </Flex>
       </Router>
     </>
