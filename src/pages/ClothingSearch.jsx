@@ -89,7 +89,7 @@ function ClothingSearch() {
         >
           {CLOTHING_ITEMS[selectedCategory].map((item, index) => (
             <SwiperSlide key={item.id}>
-              <ClothingPost post={dummyPost} hasLikeButton={true} />
+              <ClothingPost post={dummyPost} hasLikeButton={false} />
               {/* <ClothingPost item={item} id='1' /> */}
             </SwiperSlide>
           ))}

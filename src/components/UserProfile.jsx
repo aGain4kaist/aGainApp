@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Text,
-  HStack,
-  Button,
-  useToast,
-} from '@chakra-ui/react';
+import { Box, Text, HStack, Button, useToast } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 
 function UserProfile({ id, user: initialUser }) {
@@ -14,11 +8,11 @@ function UserProfile({ id, user: initialUser }) {
   const toast = useToast();
 
   useEffect(() => {
-    console.log(initialUser)
+    console.log(initialUser);
     if (!initialUser && id) {
       // Fetch user data from the API if not provided directly
       setIsLoading(true);
-      console.log("asdf")
+      console.log('asdf');
       fetch(`http://68.183.225.136:3000/user/${id}`)
         .then((res) => res.json())
         .then((data) => {
@@ -49,11 +43,7 @@ function UserProfile({ id, user: initialUser }) {
   }
 
   return (
-    <Box
-      overflow="hidden"
-      
-      boxShadow="sm"
-    >
+    <Box overflow="hidden" boxShadow="sm">
       <HStack spacing={3} align="center" mb={3}>
         <Button
           as="div"
@@ -61,7 +51,7 @@ function UserProfile({ id, user: initialUser }) {
           backgroundSize="cover"
           backgroundPosition="center"
           borderRadius="50%"
-          padding='0'
+          padding="0"
           lineHeight="0"
           w="30px"
           h="30px"

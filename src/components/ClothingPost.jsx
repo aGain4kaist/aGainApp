@@ -16,13 +16,13 @@ import { FaHeart } from 'react-icons/fa';
 import UserProfile from './UserProfile';
 
 const dummyUser = {
-  id: "admin",
-  username: "admin",
-  profile_picture: "/images/profile.jpg"
-}
+  id: 'admin',
+  username: 'admin',
+  profile_picture: '/images/profile.jpg',
+};
 
 function getPartyName(id) {
-  return "카이스트 본원 파티"
+  return '카이스트 본원 파티';
 }
 
 function ClothingPost({ id, post: initialPost, hasLikeButton }) {
@@ -35,7 +35,7 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
     if (!initialPost && id) {
       // Fetch post data from the API if not provided directly
       setIsLoading(true);
-      console.log("asdf")
+      console.log('asdf');
       fetch(`http://68.183.225.136:3000/cloth/${id}`)
         .then((res) => res.json())
         .then((data) => {
@@ -82,13 +82,9 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
       boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)" // box-shadow 추가
       bg="var(--background-silver, #FFFFFF)"
     >
-
       {/* 사용자 프로필 */}
-      
-      <Box
-        mt='10px'
-        ml='16px'
-      >
+
+      <Box mt="10px" ml="16px">
         <UserProfile user={dummyUser} />
       </Box>
 
@@ -100,14 +96,8 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
         objectFit="contain"
         borderRadius="md"
       />
-      
-      <Flex
-        direction="column"
-        mt="11px"
-        mb="11px"
-        ml="13px"
-        mr="13px"
-      >
+
+      <Flex direction="column" mt="11px" mb="11px" ml="13px" mr="13px">
         {/* 좋아요 버튼 */}
         {hasLikeButton && (
           <Flex direction="row" justifyContent="space-between" width="100%">
@@ -170,6 +160,33 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
           </Flex>
         )}
 
+        {!hasLikeButton && (
+          <Flex direction="row" justifyContent="space-between" alignItems="center" width="100%">
+            <Text
+              color="var(--21-purple-dark, #411461)"
+              fontFamily="SUIT"
+              fontSize="20px"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="normal"
+              mr="8px"
+            >
+              {post.name}
+            </Text>
+            <Text
+              color="var(--subtitle-Gray, #7D7D7D)"
+              textAlign="right"
+              fontFamily="SUIT"
+              fontSize="12px"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="normal"
+            >
+              {post.size}
+            </Text>
+          </Flex>
+        )}
+
         <Text
           color="#000"
           fontFamily="SUIT"
@@ -190,11 +207,14 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
           lineHeight="normal"
           mt="3px"
         >
-          {new Date(post.upload_date).toLocaleDateString('ko-KR', {
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
-          }).replace(/\//g, '년').replace(/(\d+)년 (\d+)월 (\d+)일/, '$1년 $2월 $3일')}
+          {new Date(post.upload_date)
+            .toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+            })
+            .replace(/\//g, '년')
+            .replace(/(\d+)년 (\d+)월 (\d+)일/, '$1년 $2월 $3일')}
         </Text>
       </Flex>
     </Flex>
