@@ -1,6 +1,8 @@
 import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 import React, { useEffect, useState } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/utils/firebaseConfig';
 
 function Header({ id, title, subtitle, user }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
@@ -16,7 +18,14 @@ function Header({ id, title, subtitle, user }) {
   const [boxShadow, setBoxShadow] = useState(
     '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
   );
-
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log('로그아웃되었습니다.');
+    } catch (error) {
+      console.error('로그아웃에 실패했습니다:', error);
+    }
+  };
   const handleSearchButtonClick = () => {
     // 검색 버튼이 눌림: 검색 버튼은 비활성화, 검색창을 표시
     setIsTitleExpanded(false);
@@ -87,7 +96,13 @@ function Header({ id, title, subtitle, user }) {
       >
         {/* 티켓 아이콘과 숫자 */}
         <Flex justifyContent="space-between" alignItems="center" mb="19px">
-          <Image w="39px" h="26px" src="/images/logo.png" alt="logo" />
+          <Image
+            w="39px"
+            h="26px"
+            src="/images/logo.png"
+            alt="logo"
+            onClick={handleLogout}
+          />
 
           <Flex alignItems="center" gap="4px">
             <IconifyIcon

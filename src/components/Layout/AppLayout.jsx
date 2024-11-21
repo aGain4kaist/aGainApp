@@ -6,6 +6,10 @@ import Home from '@/pages/Home';
 import ClothingSearch from '@/pages/ClothingSearch';
 import PartySearch from '@/pages/PartySearch';
 import MyClothes from '@/pages/MyClothes';
+import Login from '@/pages/Login';
+import Signup from '@/pages/Signup';
+import LandingPage from '@/pages/LandingPage';
+import PrivateRoute from '@/components/PrivateRoute';
 
 function AppLayout() {
   return (
@@ -16,10 +20,44 @@ function AppLayout() {
           {/* 페이지별로 헤더와 바디를 관리하게 됨 */}
           <Box flex="1" overflow="auto">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/party" element={<PartySearch />} />
-              <Route path="/clothes" element={<ClothingSearch />} />
-              <Route path="/my-clothes" element={<MyClothes />} />
+              {/* 랜딩 페이지 - 앱 시작 시 로드 */}
+              <Route path="/" element={<LandingPage />} />
+              {/* 로그인 및 회원가입 페이지는 보호되지 않음 */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              {/* 보호된 페이지 */}
+              <Route
+                path="/home"
+                element={
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/party"
+                element={
+                  <PrivateRoute>
+                    <PartySearch />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/clothes"
+                element={
+                  <PrivateRoute>
+                    <ClothingSearch />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/my-clothes"
+                element={
+                  <PrivateRoute>
+                    <MyClothes />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </Box>
 

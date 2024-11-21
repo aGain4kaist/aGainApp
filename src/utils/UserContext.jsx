@@ -1,20 +1,27 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/utils/firebaseConfig'; // Firebase 초기화 파일
 
-// 1. Context 생성
 const UserContext = createContext();
 
-// 2. Context Provider 작성
-export function UserProvider({ children }) {
-  const [user, setUser] = useState(null); // 유저 정보 상태
+export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, loading }}>
       {children}
     </UserContext.Provider>
   );
-}
+};
 
-// 3. Context Consumer 훅
-export function useUser() {
-  return useContext(UserContext);
-}
+export const useUser = () => useContext(UserContext);
