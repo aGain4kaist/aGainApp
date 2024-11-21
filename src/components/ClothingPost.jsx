@@ -161,7 +161,12 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
         )}
 
         {!hasLikeButton && (
-          <Flex direction="row" justifyContent="space-between" alignItems="center" width="100%">
+          <Flex
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
             <Text
               color="var(--21-purple-dark, #411461)"
               fontFamily="SUIT"
