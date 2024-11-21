@@ -50,6 +50,19 @@ exports.getPartyById = async (req, res) => {
   }
 };
 
+exports.getPartyLike = async (req, res) => {
+  try {
+    const party = await PartyModel.getPartyById(req.params.partyid);
+    if (party) {
+      const item = await edit_party(party);
+      res.json({"likes": item.likes, "liked_users": item.liked_users});
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error fetching party');
+  }
+};
+
 exports.togglePartyLike = async (req, res) => {
   try {
     const party = await PartyModel.getPartyById(req.params.partyid);

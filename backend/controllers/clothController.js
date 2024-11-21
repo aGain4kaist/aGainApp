@@ -79,6 +79,19 @@ exports.getClothByUserID = async (req, res) => {
   }
 };
 
+exports.getClothLike = async (req, res) => {
+  try { 
+    const cloth = await ClothModel.getClothByID(req.params.clothid);
+    if (cloth) {
+      const item = await edit_cloth(cloth);
+      res.json({"likes": item.likes, "liked_users": item.liked_users});
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error fetching cloth');
+  }
+};
+
 exports.toggleClothLike = async (req, res) => {
   try {
     const cloth = await ClothModel.getClothByID(req.params.clothid);
