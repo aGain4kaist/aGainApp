@@ -95,7 +95,7 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
         src={post.image}
         alt={post.name}
         maxH="240px"
-        objectFit="contain"
+        objectFit="cover"
         borderRadius="md"
       />
 
@@ -208,7 +208,7 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
         <Text
           color="var(--21-purple, #7C31B4)"
           fontFamily="SUIT"
-          fontSize="12px"
+          fontSize="11px"
           fontStyle="normal"
           fontWeight="700"
           lineHeight="normal"
