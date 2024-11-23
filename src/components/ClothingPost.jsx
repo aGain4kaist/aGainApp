@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 import UserProfile from './UserProfile';
+import axios from 'axios';
 
 const dummyUser = {
   id: 'admin',
@@ -36,14 +37,13 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
       // Fetch post data from the API if not provided directly
       setIsLoading(true);
       console.log('asdf');
-      fetch(`http://68.183.225.136:3000/cloth/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setPost(data);
-          setLikes(data.likes);
+      const fetchPost = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/cloth/${id}'); // API 호출
+          setPost(response.data);
+          setLikes(response.data.likes);
           setIsLoading(false);
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error('Error fetching post:', error); // 에러 상세 출력
           toast({
             title: 'Failed to load post',
@@ -53,7 +53,9 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
             isClosable: true,
           });
           setIsLoading(false);
-        });
+        }
+      };
+      fetchPost();
     }
   }, [id, initialPost, toast]);
 
@@ -212,14 +214,9 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
           lineHeight="normal"
           mt="3px"
         >
-          {new Date(post.upload_date)
-            .toLocaleDateString('ko-KR', {
-              year: 'numeric',
-              month: 'numeric',
-              day: 'numeric',
-            })
-            .replace(/\//g, '년')
-            .replace(/(\d+)년 (\d+)월 (\d+)일/, '$1년 $2월 $3일')}
+          {new Date(post.upload_date).getFullYear()}년{' '}
+          {new Date(post.upload_date).getMonth()}월{' '}
+          {new Date(post.upload_date).getDate()}일
         </Text>
       </Flex>
     </Flex>
