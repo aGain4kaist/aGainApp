@@ -14,9 +14,6 @@ import {
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 // 커스텀 BackIcon
 const BackIcon = (props) => (
   <Icon
@@ -77,13 +74,7 @@ function PutClothes() {
       width="100%"
     >
       {/* 상단 헤더 */}
-      <Flex
-        align="center"
-        width="100%"
-        mb="55px"
-        mt="50px"
-        ml="30px"
-      >
+      <Flex align="center" width="100%" mb="55px" mt="50px" ml="30px">
         <Button
           onClick={() => navigate(-1)} // 뒤로가기 버튼 동작
           variant="ghost"
@@ -93,12 +84,8 @@ function PutClothes() {
         >
           <BackIcon /> {/* 커스텀 BackIcon 적용 */}
         </Button>
-        
-        <Text
-          textAlign="center"
-          fontSize="24px"
-          fontWeight="700"
-        >
+
+        <Text textAlign="center" fontSize="24px" fontWeight="700">
           옷 넣어두기
         </Text>
       </Flex>
@@ -135,7 +122,11 @@ function PutClothes() {
         paddingBottom="20px" // 스크롤 시 하단 여백 확보
       >
         {/* 옷 별명 */}
-        <Flex mb="50px" flexDirection={{ base: "column", sm: "row" }} alignItems="flex-start">
+        <Flex
+          mb="50px"
+          flexDirection={{ base: 'column', sm: 'row' }}
+          alignItems="flex-start"
+        >
           <Text
             fontFamily="SUIT"
             fontSize="20px"
@@ -143,8 +134,8 @@ function PutClothes() {
             fontWeight="700"
             lineHeight="normal"
             color="var(--21-purple-dark, #411461)"
-            mr={{ base: "0", sm: "53px" }}
-            mb={{ base: "10px", sm: "0" }}
+            mr={{ base: '0', sm: '53px' }}
+            mb={{ base: '10px', sm: '0' }}
           >
             옷 별명
           </Text>
@@ -153,12 +144,12 @@ function PutClothes() {
             borderRadius="12px"
             bg="#FFFFFF"
             fontSize="14px"
-            width={{ base: "100%", sm: "252px" }}
+            width={{ base: '100%', sm: '252px' }}
             height="32px"
             flexShrink={0}
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
-            ml={{ base: "0", sm: "auto" }}
+            ml={{ base: '0', sm: 'auto' }}
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
@@ -248,7 +239,7 @@ function PutClothes() {
         {/* 카테고리 */}
         <Flex
           mb="24px"
-          flexDirection={{ base: "column", sm: "row" }}
+          flexDirection={{ base: 'column', sm: 'row' }}
           alignItems="flex-start"
           width="100%"
         >
@@ -259,15 +250,15 @@ function PutClothes() {
             fontWeight="700"
             lineHeight="normal"
             color="var(--21-purple-dark, #411461)"
-            mr={{ base: "0", sm: "53px" }}
-            mb={{ base: "10px", sm: "0" }}
-            width={{ base: "100%", sm: "auto" }}
+            mr={{ base: '0', sm: '53px' }}
+            mb={{ base: '10px', sm: '0' }}
+            width={{ base: '100%', sm: 'auto' }}
           >
             카테고리
           </Text>
           <Select
-            width={{ base: "100%", sm: "229px" }}
-            ml={{ base: "0", sm: "auto" }}
+            width={{ base: '100%', sm: '229px' }}
+            ml={{ base: '0', sm: 'auto' }}
             placeholder="카테고리를 선택하세요"
             borderRadius="25px"
             fontSize="14px"
@@ -287,7 +278,7 @@ function PutClothes() {
         {/* 옷 사이즈 */}
         <Flex
           mb="24px"
-          flexDirection={{ base: "column", sm: "row" }}
+          flexDirection={{ base: 'column', sm: 'row' }}
           alignItems="flex-start"
           width="100%"
         >
@@ -298,15 +289,15 @@ function PutClothes() {
             fontWeight="700"
             lineHeight="normal"
             color="var(--21-purple-dark, #411461)"
-            mr={{ base: "0", sm: "53px" }}
-            mb={{ base: "10px", sm: "0" }}
-            width={{ base: "100%", sm: "auto" }}
+            mr={{ base: '0', sm: '53px' }}
+            mb={{ base: '10px', sm: '0' }}
+            width={{ base: '100%', sm: 'auto' }}
           >
             옷 사이즈
           </Text>
           <Select
             placeholder="사이즈를 선택하세요"
-            width={{ base: "100%", sm: "229px" }}
+            width={{ base: '100%', sm: '229px' }}
             borderRadius="25px"
             fontSize="14px"
             height="32px"
@@ -314,7 +305,7 @@ function PutClothes() {
             bg="#FFFFFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
-            ml={{ base: "0", sm: "auto" }}
+            ml={{ base: '0', sm: 'auto' }}
           >
             <option value="small">S</option>
             <option value="medium">M</option>
@@ -326,7 +317,7 @@ function PutClothes() {
         {/* 사이즈 리뷰 */}
         <Flex
           mb="15px"
-          flexDirection={{ base: "column", sm: "row" }}
+          flexDirection={{ base: 'column', sm: 'row' }}
           alignItems="flex-start"
           width="100%"
         >
@@ -337,9 +328,9 @@ function PutClothes() {
             fontWeight="700"
             lineHeight="normal"
             color="var(--21-purple-dark, #411461)"
-            mr={{ base: "0", sm: "53px" }}
-            mb={{ base: "10px", sm: "0" }}
-            width={{ base: "100%", sm: "auto" }}
+            mr={{ base: '0', sm: '53px' }}
+            mb={{ base: '10px', sm: '0' }}
+            width={{ base: '100%', sm: 'auto' }}
           >
             사이즈 리뷰
           </Text>
@@ -351,7 +342,7 @@ function PutClothes() {
             bg="#FFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
-            width={{ base: "100%", sm: "auto" }}
+            width={{ base: '100%', sm: 'auto' }}
           >
             <Text
               fontFamily="SUIT"
@@ -367,16 +358,14 @@ function PutClothes() {
             </Text>
             <Input
               ml="auto"
-              width={{ base: "70%", sm: "229px" }}
+              width={{ base: '70%', sm: '229px' }}
               type="number"
               step="1"
               min="0"
-              mr={{ base: "0", sm: "auto" }}
+              mr={{ base: '0', sm: 'auto' }}
               placeholder="키를 입력하세요 (단위: cm)"
               value={height} // 키 상태 변수 연결
               onChange={(e) => setHeight(e.target.value)}
-
-
               borderRadius="25px"
               bg="#FFF"
               fontSize="14px"
@@ -384,8 +373,8 @@ function PutClothes() {
               border="none"
               flexShrink={0}
               _focus={{
-                outline: "none",
-                boxShadow: "0px 2px 4px 1px rgba(0, 0, 0, 0.15)",
+                outline: 'none',
+                boxShadow: '0px 2px 4px 1px rgba(0, 0, 0, 0.15)',
               }}
             />
           </Flex>
@@ -394,20 +383,19 @@ function PutClothes() {
         {/* 몸무게 */}
         <Flex
           mb="24px"
-          flexDirection={{ base: "column", sm: "row" }}
+          flexDirection={{ base: 'column', sm: 'row' }}
           alignItems="flex-start"
           width="100%"
           ml="auto"
         >
-          
           <Flex
             alignItems="center"
-            ml={{ base: "0", sm: "auto" }}
+            ml={{ base: '0', sm: 'auto' }}
             borderRadius="25px"
             bg="#FFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
-            width={{ base: "100%", sm: "auto" }}
+            width={{ base: '100%', sm: 'auto' }}
           >
             <Text
               fontFamily="SUIT"
@@ -423,14 +411,13 @@ function PutClothes() {
             </Text>
             <Input
               ml="auto"
-              width={{ base: "70%", sm: "229px" }}
+              width={{ base: '70%', sm: '229px' }}
               type="number"
               step="1"
               min="0"
               placeholder="몸무게를 입력하세요 (단위: kg)"
               value={weight} // 몸무게 상태 변수 연결
               onChange={(e) => setWeight(e.target.value)}
-
               borderRadius="25px"
               bg="#FFF"
               fontSize="14px"
@@ -438,14 +425,11 @@ function PutClothes() {
               border="none"
               flexShrink={0}
               _focus={{
-                outline: "none",
-                boxShadow: "0px 2px 4px 1px rgba(0, 0, 0, 0.15)",
+                outline: 'none',
+                boxShadow: '0px 2px 4px 1px rgba(0, 0, 0, 0.15)',
               }}
             />
           </Flex>
-
-
-
         </Flex>
 
         <Text
@@ -469,11 +453,10 @@ function PutClothes() {
           프로필 사이즈 가져오기
         </Text>
 
-
         {/* 체감 사이즈 */}
         <Flex
           mb="24px"
-          flexDirection={{ base: "column", sm: "row" }}
+          flexDirection={{ base: 'column', sm: 'row' }}
           alignItems="flex-start"
           width="100%"
         >
@@ -484,15 +467,15 @@ function PutClothes() {
             fontWeight="700"
             lineHeight="normal"
             color="var(--21-purple-dark, #411461)"
-            mr={{ base: "0", sm: "53px" }}
-            mb={{ base: "10px", sm: "0" }}
-            width={{ base: "100%", sm: "auto" }}
+            mr={{ base: '0', sm: '53px' }}
+            mb={{ base: '10px', sm: '0' }}
+            width={{ base: '100%', sm: 'auto' }}
           >
             체감 사이즈
           </Text>
           <Select
             placeholder="사이즈를 선택하세요"
-            width={{ base: "100%", sm: "229px" }}
+            width={{ base: '100%', sm: '229px' }}
             borderRadius="25px"
             fontSize="14px"
             height="32px"
@@ -500,7 +483,7 @@ function PutClothes() {
             bg="#FFFFFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
-            ml={{ base: "0", sm: "auto" }}
+            ml={{ base: '0', sm: 'auto' }}
           >
             <option value="small">작음</option>
             <option value="fit">딱 맞음</option>
@@ -508,17 +491,8 @@ function PutClothes() {
           </Select>
         </Flex>
 
-
-
-
         {/* 하단 버튼 */}
-        <Flex
-          justify="flex-end"
-          width="100%"
-          mt="55px"
-          mb="100px"
-          gap="15px"
-        >
+        <Flex justify="flex-end" width="100%" mt="55px" mb="100px" gap="15px">
           <Button
             onClick={() => navigate(-1)}
             width="124px"
@@ -549,7 +523,6 @@ function PutClothes() {
           >
             완료하기
           </Button>
-
         </Flex>
       </Flex>
     </Flex>
