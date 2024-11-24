@@ -180,7 +180,7 @@ function MyClothes() {
               fontSize="14px"
               fontWeight="400"
             >
-              > 전체 보기
+              전체 보기
             </Text>
           </Box>
         )}
@@ -255,7 +255,7 @@ function MyClothes() {
               fontSize="14px"
               fontWeight="400"
             >
-              > 전체 보기
+              전체 보기
             </Text>
           </Box>
         )}
