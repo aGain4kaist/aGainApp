@@ -1,21 +1,8 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import {
-  Box,
-  Text,
-  Flex,
-  Input,
-  Icon as ChakraIcon,
-  Image,
-  Button,
-  InputGroup,
-  InputRightAddon,
-  InputRightElement,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
-import { MdiTicketOutline } from '@iconify/icons-mdi/ticket';
-import { FaTicketAlt } from 'react-icons/fa';
-import { SearchIcon } from '@chakra-ui/icons';
+import React, { useEffect, useState } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/utils/firebaseConfig';
 
 function Header({ id, title, subtitle, user }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
@@ -27,6 +14,18 @@ function Header({ id, title, subtitle, user }) {
   );
   const [textColor, setTextColor] = useState('var(--21-purple-dark, #411461)');
 
+  // boxShadow 상태 추가
+  const [boxShadow, setBoxShadow] = useState(
+    '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
+  );
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log('로그아웃되었습니다.');
+    } catch (error) {
+      console.error('로그아웃에 실패했습니다:', error);
+    }
+  };
   const handleSearchButtonClick = () => {
     // 검색 버튼이 눌림: 검색 버튼은 비활성화, 검색창을 표시
     setIsTitleExpanded(false);
@@ -51,7 +50,23 @@ function Header({ id, title, subtitle, user }) {
       case 'Party-Search':
         setIsTitleExpanded(true);
         setIsSearchButtonExpanded(true);
+
         break;
+
+      case 'Clothing-Search':
+        setIsTitleExpanded(true);
+        setBackgroundColor('var(--background-silver, #FAF9FF)');
+        // Clothing-Search일 때 boxShadow를 표시 X
+        setBoxShadow('none');
+        break;
+
+      case 'MyClothes':
+        setIsTitleExpanded(true);
+        setBackgroundColor('var(--background-silver, #FAF9FF)');
+        // MyClothes일 때 boxShadow를 표시 X
+        setBoxShadow('none');
+        break;
+
       default:
         setIsTitleExpanded(true);
     }
@@ -63,12 +78,12 @@ function Header({ id, title, subtitle, user }) {
     <Box
       zIndex="2"
       bg="transparent"
-      boxShadow="0px 4px 4px 0px rgba(0, 0, 0, 0.25)"
+      // boxShadow 상태를 적용
+      boxShadow={boxShadow}
       background={backgroundColor}
-      //padding="px"
       borderBottomRadius="xl"
       borderRadius="0px 0px 30px 30px"
-      backdropFilter="backdrop-filter: blur(25px)"
+      backdropFilter="blur(25px)"
       position="relative"
     >
       <Flex
@@ -81,7 +96,13 @@ function Header({ id, title, subtitle, user }) {
       >
         {/* 티켓 아이콘과 숫자 */}
         <Flex justifyContent="space-between" alignItems="center" mb="19px">
-          <Image w="39px" h="26px" src="/images/logo.png" alt="logo" />
+          <Image
+            w="39px"
+            h="26px"
+            src="/images/logo.png"
+            alt="logo"
+            onClick={handleLogout}
+          />
 
           <Flex alignItems="center" gap="4px">
             <IconifyIcon
@@ -125,7 +146,7 @@ function Header({ id, title, subtitle, user }) {
                   justifyContent="center"
                   alignItems="center"
                   gap="10px"
-                  flexShrink="0"
+                  shrink="0"
                   borderRadius="12px"
                   border="1px solid"
                   borderColor="var(--lightlight-Gray, #E8E8E8)"
@@ -137,7 +158,7 @@ function Header({ id, title, subtitle, user }) {
                     icon="ph:magnifying-glass-bold"
                     width="30px"
                     height="30px"
-                    flexShrink="0"
+                    shrink="0"
                   />
                 </Button>
               )}
@@ -191,7 +212,7 @@ function Header({ id, title, subtitle, user }) {
                     transition: 'none',
                   }}
                   _focus={{ boxShadow: 'none' }}
-                  flexShrink="0"
+                  shrink="0"
                 />
               </Button>
             </Flex>

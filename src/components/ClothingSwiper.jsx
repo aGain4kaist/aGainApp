@@ -12,7 +12,7 @@ function ClothingSwiper({ items }) {
       <Swiper spaceBetween={20} slidesPerView="auto">
         {items.map((item) => (
           <SwiperSlide key={item.id} style={{ width: '150px' }}>
-            <Box mt={1}></Box>
+            <Box mt={2}></Box>
             <Box
               bg="white"
               borderRadius="20px"
@@ -67,7 +67,7 @@ function ClothingSwiper({ items }) {
               </Text>
               {/* 'weight, height' 데이터가 있을시 "키 몸무게 ˑ 사이즈 __함", 'foot' 데이터가 있을시 "신발 사이즈 __mm", 아무것도 없을시 '사이즈 비공개 */}
             </Box>
-            <Box mt={1}></Box>
+            <Box mt={2}></Box>
           </SwiperSlide>
         ))}
       </Swiper>

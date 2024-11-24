@@ -3,7 +3,6 @@ import { Box, IconButton, Image, Button } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
-import { partyListData } from '../data/partyListData';
 import PartyDetail from './PartyDetail';
 import {
   useBottomSheet,
@@ -23,11 +22,12 @@ function PartySearchBottomSheet({
   handlePartyClick,
   clearSelection,
   goToCurrentLocation,
+  partyList,
 }) {
   const { sheetRef, contentRef } = useBottomSheet(setIsExpanded, selectedParty);
-
   useEffect(() => {
     setSelectedParty(selectedParty);
+    console.log('Selected Party:', selectedParty); // Debugging line
   }, [selectedParty, setSelectedParty]);
 
   useEffect(() => {
@@ -125,7 +125,7 @@ function PartySearchBottomSheet({
               }}
               flex="1" // To take up remaining space within the MotionBox
             >
-              {partyListData.map((party) => (
+              {partyList.map((party) => (
                 <PartyListItem
                   key={party.id}
                   onPartyClick={handlePartyClick}
