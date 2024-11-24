@@ -20,7 +20,7 @@ function LandingPage() {
       align="center"
       justify="center"
       height="100vh"
-      bg="pink.50"
+      bg="var(--background-silver, #FAF9FF)"
     >
       <Image
         src="/images/landing_logo.png"

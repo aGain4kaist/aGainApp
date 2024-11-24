@@ -14,9 +14,11 @@ import {
   IconButton,
   InputGroup,
   InputRightElement,
+  Divider,
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import { Image } from '@chakra-ui/react';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -43,9 +45,10 @@ function Login() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      navigate('/');
+      navigate('/home'); // 성공 시 홈으로 이동
     } catch (error) {
-      alert('구글 로그인에 실패했습니다.');
+      console.error('구글 로그인 오류:', error);
+      alert('구글 로그인에 실패했습니다. ' + (error.message || ''));
     }
   };
 
@@ -55,13 +58,17 @@ function Login() {
       align="center"
       justify="center"
       height="100vh"
-      bg="pink.50"
+      bg="var(--background-silver, #FAF9FF)"
     >
       <Box mb={8} textAlign="center">
-        <Text fontSize="4xl" fontWeight="bold" color="purple.600">
-          21% Party
-        </Text>
-        <Text fontSize="lg" color="gray.500">
+        <Image
+          src="/images/landing_logo.png"
+          alt="21% Party Logo"
+          width="147px"
+          height="98px"
+          mb={4}
+        />
+        <Text fontSize="xl" fontWeight="semibold" color="purple.700">
           모두의 지속가능한 옷장
         </Text>
       </Box>
@@ -71,21 +78,25 @@ function Login() {
         bg="white"
         p={8}
         borderRadius="md"
-        boxShadow="lg"
+        boxShadow="xl"
       >
         <Input
           placeholder="아이디"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           mb={4}
+          bg="gray.100"
+          focusBorderColor="purple.500"
         />
-        <InputGroup size="md">
+        <InputGroup size="md" mb={4}>
           <Input
             pr="4.5rem"
             type={showPassword ? 'text' : 'password'}
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            bg="gray.100"
+            focusBorderColor="purple.500"
           />
           <InputRightElement width="4.5rem">
             <IconButton
@@ -94,26 +105,48 @@ function Login() {
               icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
               onClick={() => setShowPassword(!showPassword)}
               variant="ghost"
+              _hover={{ bg: 'transparent' }}
             />
           </InputRightElement>
         </InputGroup>
-        <Button colorScheme="purple" width="100%" mt={6} onClick={handleLogin}>
+        <Button
+          // colorScheme="purple"
+          background="var(--21-purple-dark, #411461)"
+          width="100%"
+          mt={4}
+          onClick={handleLogin}
+          size="lg"
+          fontWeight="bold"
+          color="var(--background-silver, #FAF9FF);"
+        >
           로그인
         </Button>
-        <Text mt={4} textAlign="center">
+        <Text mt={4} textAlign="center" color="gray.600">
           아직 계정이 없으신가요?{' '}
-          <Button variant="link" onClick={() => navigate('/signup')}>
+          <Button
+            variant="link"
+            color="var(--21-purple-dark, #411461)"
+            onClick={() => navigate('/signup')}
+          >
             회원가입
           </Button>
         </Text>
-        <Text mt={4} textAlign="center" color="gray.500">
+        <Divider my={6} />
+        <Text mb={2} textAlign="center" color="gray.500">
           SNS 계정으로 간편 로그인
         </Text>
         <Button
           colorScheme="gray"
           width="100%"
-          mt={2}
           onClick={handleGoogleLogin}
+          variant="outline"
+          leftIcon={
+            <Image
+              src="/images/google_logo.png"
+              alt="Google Logo"
+              width="20px"
+            />
+          }
         >
           Google 로그인
         </Button>
