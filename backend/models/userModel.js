@@ -6,7 +6,7 @@ const UserModel = {
     return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   },
 
-  async getUserbyId(id) {
+  async getUserById(id) {
     const doc = await db.collection('User').doc(id).get();
     return doc.exists ? { id: doc.id, ...doc.data() } : null;
   },

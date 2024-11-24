@@ -22,7 +22,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserByID = async (req, res) => {
   try {
-    const user = await UserModel.getUserbyId(req.params.id);
+    const user = await UserModel.getUserById(req.params.id);
     res.json(await edit_user(user));
   } catch (error) {
     console.log(error);
@@ -32,7 +32,7 @@ exports.getUserByID = async (req, res) => {
 
 exports.getUserTicket = async (req, res) => {
   try {
-    const user = await UserModel.getUserbyId(req.params.id);
+    const user = await UserModel.getUserById(req.params.id);
     res.json({ ticket: user.tickets });
   } catch (error) {
     console.log(error);

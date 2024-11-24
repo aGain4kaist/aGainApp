@@ -80,11 +80,11 @@ exports.getClothByUserID = async (req, res) => {
 };
 
 exports.getClothLike = async (req, res) => {
-  try { 
+  try {
     const cloth = await ClothModel.getClothByID(req.params.clothid);
     if (cloth) {
       const item = await edit_cloth(cloth);
-      res.json({"likes": item.likes, "liked_users": item.liked_users});
+      res.json({ likes: item.likes, liked_users: item.liked_users });
     }
   } catch (error) {
     console.log(error);

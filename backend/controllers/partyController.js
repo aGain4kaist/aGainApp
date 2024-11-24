@@ -55,7 +55,7 @@ exports.getPartyLike = async (req, res) => {
     const party = await PartyModel.getPartyById(req.params.partyid);
     if (party) {
       const item = await edit_party(party);
-      res.json({"likes": item.likes, "liked_users": item.liked_users});
+      res.json({ likes: item.likes, liked_users: item.liked_users });
     }
   } catch (error) {
     console.log(error);

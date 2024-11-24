@@ -15,10 +15,10 @@
 
 # API 간단한 설명
 
-- /party/ :  존재하는 모든 파티들의 정보를 현 위치로부터 거리가 가까운 순서대로 json 형식으로 반환합니다.
+- /party/ : 존재하는 모든 파티들의 정보를 현 위치로부터 거리가 가까운 순서대로 json 형식으로 반환합니다.
 - /party/:id : id가 매개변수 "id"인 파티의 정보를 json 형식으로 반환합니다.
-- /party/like/:userid/:partyid : 매개변수 "userid"를 id로 가지는 유저가 매개변수 "partyid"를 id로 가지는 파티에 좋아요를 누릅니다. 이미 눌렀다면 취소합니다. 
-이후 매개변수 "partyid"를 id로 가지는 파티의 정보를 json 형식으로 반환합니다.
+- /party/like/:userid/:partyid : 매개변수 "userid"를 id로 가지는 유저가 매개변수 "partyid"를 id로 가지는 파티에 좋아요를 누릅니다. 이미 눌렀다면 취소합니다.
+  이후 매개변수 "partyid"를 id로 가지는 파티의 정보를 json 형식으로 반환합니다.
 
 - /user/ : 존재하는 모든 유저들을 json 형식으로 반환합니다.
 - /user/:id : id가 매개변수 "id"인 유저의 정보를 json 형식으로 반환합니다.
@@ -28,5 +28,5 @@
 - /cloth/:id : id가 매개변수 "id"인 옷의 정보를 json 형식으로 반환합니다.
 - /cloth/party/:id : id가 매개변수 "id"인 파티에 등록된 모든 옷을 최신순으로 정렬하여 json 형식으로 반환합니다.
 - /cloth/user/:id : id가 매개변수 "id"인 유저가 등록한 모든 옷을 최신순으로 정렬하여 json 형식으로 반환합니다.
-- /cloth/like/:userid/:clothid : 매개변수 "userid"를 id로 가지는 유저가 매개변수 "clothid"를 id로 가지는 옷에 좋아요를 누릅니다. 이미 눌렀다면 취소합니다. 
-이후 매개변수 "clothid"를 id로 가지는 옷의 정보를 json 형식으로 반환합니다.
+- /cloth/like/:userid/:clothid : 매개변수 "userid"를 id로 가지는 유저가 매개변수 "clothid"를 id로 가지는 옷에 좋아요를 누릅니다. 이미 눌렀다면 취소합니다.
+  이후 매개변수 "clothid"를 id로 가지는 옷의 정보를 json 형식으로 반환합니다.
