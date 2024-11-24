@@ -25,7 +25,6 @@ function PartySearchBottomSheet({
   goToCurrentLocation,
   partyList,
 }) {
-
   const { sheetRef, contentRef } = useBottomSheet(setIsExpanded, selectedParty);
 
   useEffect(() => {
@@ -52,7 +51,6 @@ function PartySearchBottomSheet({
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
 
   useEffect(() => {
     if (!sheetRef.current) {

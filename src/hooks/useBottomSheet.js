@@ -21,7 +21,6 @@ export function useBottomSheet(setIsExpanded, selectedParty) {
     isContentAreaTouched: false, // 컨텐츠 영역을 터치하고 있음을 기록
   });
 
-  
   const canUserMoveBottomSheet = () => {
     // Prevent movement if there is a selected party
     if (selectedParty) {
