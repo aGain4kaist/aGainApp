@@ -5,6 +5,7 @@ import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
 import { partyListData } from '../data/partyListData';
 import PartyDetail from './PartyDetail';
+import UploadClothes from './UploadClothes';
 import {
   useBottomSheet,
   MAX_Y,
@@ -106,7 +107,7 @@ function PartySearchBottomSheet({
         left="0"
         right="0"
         borderTopRadius="30px"
-        bg="white"
+        bg="var(--background-silver, #FAF9FF)"
         boxShadow="0px -10px 70px 0px rgba(0, 0, 0, 0.25)"
         h={`${BOTTOM_SHEET_HEIGHT}px`}
         // transition="transform 5s ease-out"
