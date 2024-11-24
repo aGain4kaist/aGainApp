@@ -25,24 +25,57 @@ function PartySearchBottomSheet({
   goToCurrentLocation,
   partyList,
 }) {
+
   const { sheetRef, contentRef } = useBottomSheet(setIsExpanded, selectedParty);
+
   useEffect(() => {
     setSelectedParty(selectedParty);
     console.log('Selected Party:', selectedParty); // Debugging line
   }, [selectedParty, setSelectedParty]);
 
+  // State to dynamically handle MAX_Y and BOTTOM_SHEET_HEIGHT
+  // because window.innerHeight keeps giving wrong values at initial mounting!!!
+  const [maxY, setMaxY] = useState(MAX_Y);
+  const [bottomSheetH, setBottomSheetH] = useState(BOTTOM_SHEET_HEIGHT);
+
   useEffect(() => {
+    // Recalculate maxY on mount
+    setMaxY(window.innerHeight - 400);
+    setBottomSheetH(window.innerHeight - MIN_Y);
+
+    // Optional: Handle window resize dynamically
+    const handleResize = () => {
+      setMaxY(window.innerHeight - 400);
+      setBottomSheetH(window.innerHeight - MIN_Y);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
+  useEffect(() => {
+    if (!sheetRef.current) {
+      console.log('sheetRef is null or undefined during effect');
+      return;
+    }
+
+    /* console.log('Effect running: isExpanded =', isExpanded);
+    console.log('sheetRef:', sheetRef.current);
+    console.log('MAX_Y:', MAX_Y);
+    console.log('maxY:', maxY); */
+
     if (isExpanded) {
       // Move sheet to expanded position
       sheetRef.current.style.setProperty(
         'transform',
-        `translateY(${MIN_Y - MAX_Y}px)`
+        `translateY(${MIN_Y - maxY}px)`
       );
     } else {
       // Move sheet to collapsed position
       sheetRef.current.style.setProperty('transform', 'translateY(0)');
     }
-  }, [sheetRef, isExpanded]); // Run whenever isExpanded changes
+  }, [sheetRef, isExpanded, maxY]); // Run whenever isExpanded changes
 
   return (
     <>
@@ -103,13 +136,16 @@ function PartySearchBottomSheet({
         flexDirection="column"
         position="fixed"
         zIndex="9"
-        top={MAX_Y}
+        top={maxY}
         left="0"
         right="0"
         borderTopRadius="30px"
         bg="var(--background-silver, #FAF9FF)"
         boxShadow="0px -10px 70px 0px rgba(0, 0, 0, 0.25)"
-        h={`${BOTTOM_SHEET_HEIGHT}px`}
+        h={`${bottomSheetH}px`}
+        style={{
+          transform: `translateY(${maxY}px)`,
+        }}
         // transition="transform 5s ease-out"
       >
         {selectedParty ? (
