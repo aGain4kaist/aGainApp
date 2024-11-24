@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/Layout/Header';
 
 {
-  /* 등록한 옷 더미데이터 */
+  /* 내 옷 더미데이터 */
 }
 const registeredClothes = [
   '../../images/1.jpg',
@@ -40,7 +40,7 @@ function UploadClothes({ party }) {
       >
         {party.name}
       </Text>
-      {/* 등록한 옷 바둑판 배열 */}
+      {/* 내 옷 바둑판 배열 */}
       <Text
         color="var(--21-purple-dark, #411461)"
         fontFamily="SUIT"
