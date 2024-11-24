@@ -9,7 +9,7 @@ import {
   TagCloseButton,
   TagLabel,
   Text,
-  Textarea
+  Textarea,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -154,7 +154,6 @@ function PutClothes() {
             onChange={(e) => setNickname(e.target.value)}
           />
         </Flex>
-
 
         {/* 내 옷의 이야기 */}
         <Text
