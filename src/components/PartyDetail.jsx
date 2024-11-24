@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
+import UploadClothes from './UploadClothes';
 
 function PartyDetail({ party, onBack }) {
   // 파티 시작 및 종료 시간 포맷
