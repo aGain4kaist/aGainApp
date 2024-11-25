@@ -316,17 +316,20 @@ function NavBarAndButton() {
             </Text>
           </Button>
         </Link>
-        <Box width="80px" height="51px">
-          <Box height="34px"></Box>
-          <Text
-            color="#000"
-            fontFamily="'SUIT', sans-serif"
-            fontSize="14px"
-            fontWeight="500"
-          >
-            옷 넣어두기
-          </Text>
-        </Box>
+        <Link to="/put-clothes">
+          <Box width="80px" height="51px">
+            <Box height="34px"></Box>
+            <Text
+              color="#000"
+              fontFamily="'SUIT', sans-serif"
+              fontSize="14px"
+              fontWeight="500"
+              textAlign='center'
+            >
+              옷 넣어두기
+            </Text>
+          </Box>
+        </Link>
         <Link to="/clothes">
           <Button
             aria-label="옷 보기"
@@ -355,28 +358,6 @@ function NavBarAndButton() {
               옷 보기
             </Text>
           </Button>
-        </Link>
-        <Link to="/put-clothes">
-          <IconButton
-            aria-label="옷 넣어두기"
-            icon={
-              <IconifyIcon
-                icon="icon-park-outline:hanger"
-                style={{ fontSize: '40px', color: 'white' }}
-              />
-            }
-            backgroundColor="#411461"
-            position="fixed"
-            bottom="43px"
-            left="50%"
-            transform="translateX(-50%)"
-            borderRadius="full"
-            width="70px"
-            height="70px"
-            zIndex="20"
-            _hover={{ backgroundColor: '#411461' }}
-            _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
-          />
         </Link>
         <Link to="/my-clothes">
           <Button
@@ -410,26 +391,28 @@ function NavBarAndButton() {
       </Flex>
 
       {/* 중앙에 고정된 등록 버튼 */}
-      <IconButton
-        aria-label="옷 넣어두기"
-        icon={
-          <IconifyIcon
-            icon="icon-park-outline:hanger"
-            style={{ fontSize: '40px', color: 'white' }}
-          />
-        }
-        backgroundColor="#411461"
-        position="fixed"
-        bottom="43px"
-        left="50%"
-        transform="translateX(-50%)"
-        borderRadius="full"
-        width="70px"
-        height="70px"
-        zIndex="20"
-        _hover={{ backgroundColor: '#411461' }}
-        _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
-      />
+      <Link to="/put-clothes">
+        <IconButton
+          aria-label="옷 넣어두기"
+          icon={
+            <IconifyIcon
+              icon="icon-park-outline:hanger"
+              style={{ fontSize: '40px', color: 'white' }}
+            />
+          }
+          backgroundColor="#411461"
+          position="fixed"
+          bottom="43px"
+          left="50%"
+          transform="translateX(-50%)"
+          borderRadius="full"
+          width="70px"
+          height="70px"
+          zIndex="20"
+          _hover={{ backgroundColor: '#411461' }}
+          _active={{ backgroundColor: '#411461', boxShadow: 'none' }}
+        />
+      </Link>
     </>
   );
 }
