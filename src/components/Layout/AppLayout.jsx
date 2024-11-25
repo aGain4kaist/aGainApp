@@ -92,8 +92,8 @@ function NavBarAndButton() {
   const hiddenPaths = ['/', '/login', '/signup', '/put-clothes'];
 
   // Check if the current path matches any hidden path or pattern
-  const isHidden = 
-    hiddenPaths.includes(location.pathname) || 
+  const isHidden =
+    hiddenPaths.includes(location.pathname) ||
     matchPath('/party/:partyId', location.pathname);
 
   if (isHidden) {
