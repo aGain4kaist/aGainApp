@@ -49,7 +49,7 @@ function Home() {
               <PartyListItem
                 key={party.id}
                 onPartyClick={() => {
-                  navigate('/party', { state: { ...party } });
+                  navigate(`/party/${party.id}`);
                 }} // to party page
                 party={party}
               />

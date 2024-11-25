@@ -5,6 +5,7 @@ import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
 import PartyDetail from './PartyDetail';
 import UploadClothes from './UploadClothes';
+import { useNavigate } from 'react-router-dom';
 import {
   useBottomSheet,
   MAX_Y,
@@ -26,6 +27,8 @@ function PartySearchBottomSheet({
   partyList,
 }) {
   const { sheetRef, contentRef } = useBottomSheet(setIsExpanded, selectedParty);
+
+  const navigate = useNavigate(); // to navigate when a party is clicked
 
   useEffect(() => {
     setSelectedParty(selectedParty);
@@ -157,13 +160,16 @@ function PartySearchBottomSheet({
               sx={{
                 WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
                 padding: '0 32px', // Optional padding for inner content
+                paddingBottom: '100px',
               }}
               flex="1" // To take up remaining space within the MotionBox
             >
               {partyList.map((party) => (
                 <PartyListItem
                   key={party.id}
-                  onPartyClick={handlePartyClick}
+                  onPartyClick={() => {
+                    navigate(`/party/${party.id}`);
+                  }} // to party page
                   party={party}
                 />
               ))}
