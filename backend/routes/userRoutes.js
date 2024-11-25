@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const {
   getAllUsers,
-  getUserById,
-  getUsersByPartyID,
+  getUserByID,
+  getUserTicket,
 } = require('../controllers/userController');
 
 router.get('/', getAllUsers);
-router.get('/:id', getUserbyID);
-router.get('/party/:id', getUserbyPartyID);
+router.get('/:id', getUserByID);
+router.get('/ticket/:id', getUserTicket);
 
 module.exports = router;
