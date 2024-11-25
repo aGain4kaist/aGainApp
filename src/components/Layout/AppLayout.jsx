@@ -17,6 +17,7 @@ import Signup from '@/pages/Signup';
 import LandingPage from '@/pages/LandingPage';
 import PrivateRoute from '@/components/PrivateRoute';
 import PutClothes from '../../pages/PutClothes';
+import KeywordExtractor from '../KeywordExtractor';
 
 function AppLayout() {
   return (
@@ -29,6 +30,7 @@ function AppLayout() {
             <Routes>
               {/* 랜딩 페이지 - 앱 시작 시 로드 */}
               <Route path="/" element={<LandingPage />} />
+              <Route path="/test" element={<KeywordExtractor />} />
               {/* 로그인 및 회원가입 페이지는 보호되지 않음 */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
