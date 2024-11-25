@@ -324,7 +324,7 @@ function NavBarAndButton() {
               fontFamily="'SUIT', sans-serif"
               fontSize="14px"
               fontWeight="500"
-              textAlign='center'
+              textAlign="center"
             >
               옷 넣어두기
             </Text>
