@@ -21,31 +21,67 @@ const registeredClothes = [
 function PartyDetailPage() {
   const { partyId } = useParams(); // routing 후 parameter로 파티 아이디 받음
 
-  const [partyDetails, setPartyDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false); // 파티의 좋아요 상태 가져와야됨
   // 랜더링 상태 변화 ('info', 'all-clothes', 'register-mine')
   const [currentView, setCurrentView] = useState('info'); // Default view
 
+  // '내 옷 등록하기'에서 특정 옷이 선택되었는지 확인
+  const [selectedClothesMine, setSelectedClothesMine] = useState(null); // default null selected
+  // '모든 등록된 옷 보기'에서 특정 옷이 선택되었는지 확인
+  const [selectedClothesAll, setSelectedClothesAll] = useState(null); // default null selected
+
+  // data to fetch
+  const [partyDetails, setPartyDetails] = useState(null);
+  const [partyAllClothes, setPartyAllClothes] = useState(null);
+  const [userAllClothes, setUserAllClothes] = useState(null);
+
   const navigate = useNavigate();
 
-  const fetchPartyDetail = async (id) => {
+  const fetchPartyDetailandClothes = async (id) => {
     try {
-      const response = await axios.get(
-        `http://68.183.225.136:3000/party/${id}`
-      );
-      console.log(response.data); // got the data
-      setPartyDetails(response.data); // Save the data to state
+      const detailResponse = await axios.get(`http://68.183.225.136:3000/party/${id}`);
+      const clothesResponse = await axios.get(`http://68.183.225.136:3000/cloth/party/${id}`); // 파티 id
+      
+      console.log("party detail fetched: ", detailResponse.data); // got the data
+      console.log("party clothes fetched: ", clothesResponse.data); // got the data
+      
+      setPartyDetails(detailResponse.data); // Save the data to state
+      setPartyAllClothes(clothesResponse.data);
       setIsLoading(false); // Update loading state
     } catch (error) {
-      console.error('파티 정보를 불러오는데 실패했습니다:', error);
+      console.error('파티 정보 혹은 등록된 옷을 불러오는데 실패했습니다:', error);
       setIsLoading(false); // Even on error, stop the loading state
     }
   };
 
-  // Fetch party details on mount
+  /* const fetchPartyAllClothes = async (id) => {
+    try {
+      const response = await axios.get(`http://68.183.225.136:3000/cloth/party/${id}`); // 파티 id
+      console.log("party clothes fetched:", response.data);
+      setPartyAllClothes(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('파티에 등록된 옷을 불러오는데 실패했습니다:', error);
+      setIsLoading(false); // Even on error, stop the loading state
+    }
+  } */
+
+  const fetchUserAllClothes = async (id) => {
+    try {
+      const response = await axios.get(`http://68.183.225.136:3000/cloth/user/${id}`); // 유저 id
+      console.log("user's clothes fetched:", response.data);
+      setUserAllClothes(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('유저의 등록된 옷을 불러오는데 실패했습니다:', error);
+      setIsLoading(false); // Even on error, stop the loading state
+    }
+  }
+
+  // Fetch party details & party clothes on mount
   useEffect(() => {
-    fetchPartyDetail(partyId);
+    fetchPartyDetailandClothes(partyId);
   }, [partyId]);
 
   if (isLoading) {
@@ -82,6 +118,26 @@ function PartyDetailPage() {
   const startDate = new Date(date[0]);
   const endDate = new Date(date[1]);
   const formatTime = (date) => `${date.getHours()}시 ~ ${endDate.getHours()}시`;
+
+  // 전체 옷 보기에서 오른쪽 화살표 누르기
+  const handleNextSelectedClothesAll = () => {
+    if (!partyAllClothes || partyAllClothes.length === 0) return; // Prevent errors on empty array
+  
+    const cur = partyAllClothes.indexOf(selectedClothesAll); // Use indexOf for arrays
+    const next = (cur + 1) % partyAllClothes.length; // Correctly access array length
+  
+    setSelectedClothesAll(partyAllClothes[next]);
+  };
+
+  // 전체 옷 보기에서 오른쪽 화살표 누르기
+  const handlePriorSelectedClothesAll = () => {
+    if (!partyAllClothes || partyAllClothes.length === 0) return; // Prevent errors on empty array
+  
+    const cur = partyAllClothes.indexOf(selectedClothesAll); // Use indexOf for arrays
+    const prior = (cur - 1 + partyAllClothes.length) % partyAllClothes.length; // Correctly access array length
+  
+    setSelectedClothesAll(partyAllClothes[prior]);
+  };
 
   const renderContent = () => {
     switch (currentView) {
@@ -144,6 +200,7 @@ function PartyDetailPage() {
                     fontWeight="600"
                     lineHeight="normal"
                   >
+                    {/* distance 값이 파티 db에 없음. 프런트에서 직접 계산해야 함. 수정 요함 */}
                     {partyDetails.distance !== null &&
                     partyDetails.distance !== undefined
                       ? partyDetails.distance < 1
@@ -286,7 +343,7 @@ function PartyDetailPage() {
                   fontWeight="500"
                   lineHeight="normal"
                 >
-                  등록된 옷 확인하기
+                  모든 등록된 옷 보기
                 </Text>
               </Button>
               <Button
@@ -338,35 +395,111 @@ function PartyDetailPage() {
             >
               파티에 등록된 옷
             </Text>
-            <Flex direction="column" overflowY="auto" m="-10px">
-              <Grid
-                templateColumns="repeat(3, 1fr)"
-                //   columnGap="20px"
-                rowGap="20px"
-                justifyItems="center"
-                mb="50px"
-                mt="12px"
+            { selectedClothesAll==null ?
+              /* default: no clothes clicked */
+              (<Flex direction="column" overflowY="auto" m="-10px">
+                <Grid
+                  templateColumns="repeat(3, 1fr)"
+                  //   columnGap="20px"
+                  rowGap="20px"
+                  justifyItems="center"
+                  mb="50px"
+                  mt="12px"
+                >
+                  {partyAllClothes.map((clothes) => (
+                    <Box
+                      key={clothes.id}
+                      width="100px"
+                      height="100px"
+                      borderRadius="20px"
+                      overflow="hidden"
+                      filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
+                      onClick={() => setSelectedClothesAll(clothes)}
+                    >
+                      <Image
+                        src={clothes.image}
+                        alt={`Clothes ${clothes.id}`}
+                        objectFit="cover"
+                        width="100%"
+                        height="100%"
+                      />
+                    </Box>
+                  ))}
+                </Grid>
+              </Flex>)
+            :
+            /* when specific clothes clicked */
+            (<Flex
+                direction="column"
+                gap="60px"
+                alignItems="center"
               >
-                {registeredClothes.map((src, index) => (
+                <Flex
+                  direction="column"
+                  gap="25px"
+                  alignItems="center"
+                  alignSelf="stretch"
+                >
                   <Box
-                    key={index}
-                    width="100px"
-                    height="100px"
-                    borderRadius="20px"
-                    overflow="hidden"
-                    filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
+                    h="350px"
+                    alignSelf="stretch"
+                    boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
+                    backgroundColor="gray.500"
                   >
-                    <Image
-                      src={src}
-                      alt={`Clothes ${index}`}
-                      objectFit="cover"
-                      width="100%"
-                      height="100%"
-                    />
+                    <Text color="black">
+                      { selectedClothesAll.name }
+                    </Text>
                   </Box>
-                ))}
-              </Grid>
-            </Flex>
+                  {/* L-R control button */}
+                  <Flex
+                    w="110px"
+                    h="50px"
+                    py="8px"
+                    px="10px"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    borderRadius="25px"
+                    background="white"
+                    boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
+                  >
+                    <IconifyIcon
+                      icon={ 'bx:left-arrow' }
+                      style={{ width: '30px', height: '30px', color: '#7C31B4' }}
+                      onClick={handlePriorSelectedClothesAll}
+                    />
+                    <IconifyIcon
+                      icon={ 'bx:right-arrow' }
+                      style={{ width: '30px', height: '30px', color: '#7C31B4' }}
+                      onClick={handleNextSelectedClothesAll}
+                    />
+                  </Flex>
+                </Flex>
+                <Button
+                  w="200px"
+                  h="50px"
+                  px="52px"
+                  py="12px"
+                  justifyContent="center"
+                  alignItems="center"
+                  borderRadius="25px"
+                  background="var(--21-purple, #7C31B4)"
+                  boxShadow="0px 2px 4px 2px rgba(0, 0, 0, 0.25)"
+                  backdropFilter="blur(25px)"
+                >
+                  <Text
+                    color="white"
+                    textAlign="center"
+                    fontFamily="SUIT"
+                    fontSize="20px"
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="normal"
+                  >
+                    등록하기
+                  </Text>
+                </Button>
+              </Flex>
+            )}
           </Flex>
         );
       case 'register-mine':
@@ -380,7 +513,6 @@ function PartyDetailPage() {
             >
               {name}
             </Text>
-            {/* 내 옷 바둑판 배열 */}
             <Text
               color="var(--21-purple-dark, #411461)"
               fontFamily="SUIT"
@@ -389,35 +521,68 @@ function PartyDetailPage() {
             >
               내 옷 등록하기
             </Text>
-            <Flex direction="column" overflowY="auto" m="-10px">
-              <Grid
-                templateColumns="repeat(3, 1fr)"
-                //   columnGap="20px"
-                rowGap="20px"
-                justifyItems="center"
-                mb="50px"
-                mt="12px"
+            { selectedClothesMine==null ?
+              /* default: no clothes clicked */
+              (<Flex direction="column" overflowY="auto" m="-10px">
+                <Grid
+                  templateColumns="repeat(3, 1fr)"
+                  //   columnGap="20px"
+                  rowGap="20px"
+                  justifyItems="center"
+                  mb="50px"
+                  mt="12px"
+                >
+                  {registeredClothes.map((src, index) => (
+                    <Box
+                      key={index}
+                      width="100px"
+                      height="100px"
+                      borderRadius="20px"
+                      overflow="hidden"
+                      filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
+                      onClick={() => setSelectedClothesMine(index)}
+                    >
+                      <Image
+                        src={src}
+                        alt={`Clothes ${index}`}
+                        objectFit="cover"
+                        width="100%"
+                        height="100%"
+                      />
+                    </Box>
+                  ))}
+                </Grid>
+              </Flex>)
+              : 
+              /* when specific clothes clicked */
+              (
+              <Flex
+                direction="column"
+                gap="60px"
               >
-                {registeredClothes.map((src, index) => (
+                <Flex
+                  direction="column"
+                  gap="25px"
+                >
                   <Box
-                    key={index}
-                    width="100px"
-                    height="100px"
-                    borderRadius="20px"
-                    overflow="hidden"
-                    filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
+                    w="200px"
+                    h="100px"
+                    backgroundColor="gray.500"
                   >
-                    <Image
-                      src={src}
-                      alt={`Clothes ${index}`}
-                      objectFit="cover"
-                      width="100%"
-                      height="100%"
-                    />
+                    <Text color="black">
+                      { selectedClothesMine }
+                    </Text>
                   </Box>
-                ))}
-              </Grid>
-            </Flex>
+                  {/* L-R control button */}
+                  <Flex>
+                    button
+                  </Flex>
+                </Flex>
+                <Button>
+                  등록하기
+                </Button>
+              </Flex>
+              )}
           </Flex>
         );
       default:
@@ -445,10 +610,19 @@ function PartyDetailPage() {
           onClick={() => {
             if (currentView === 'info') {
               navigate(-1);
-            } else {
-              setCurrentView('info');
-            }
-          }}
+            } else if (currentView === 'register-mine') {
+              if (selectedClothesMine==null) {
+                setCurrentView('info');
+              } else {
+                setSelectedClothesMine(null);
+              }
+            } else if (currentView === 'all-clothes') {
+              if (selectedClothesAll==null) {
+                setCurrentView('info');
+              } else {
+                setSelectedClothesAll(null);
+              }
+          }}}
         />
       </Flex>
 
