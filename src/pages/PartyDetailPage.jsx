@@ -429,49 +429,50 @@ function PartyDetailPage() {
             {selectedClothesAll == null ? (
               /* default: no clothes clicked */
               partyAllClothes.length === 0 ? (
-              <Text
-                alignItems="center"
-                alignSelf="stretch"
-                textAlign="center"
-                fontFamily="SUIT"
-                fontSize="20px"
-                fontWeight="700"
-                color="#7D7D7D"
-                pt="80px"
-              >
-                아직 파티에 등록된 옷이 없어요
-              </Text>) 
-              :
-              (<Flex direction="column" overflowY="auto" m="-10px">
-                <Grid
-                  templateColumns="repeat(3, 1fr)"
-                  //   columnGap="20px"
-                  rowGap="20px"
-                  justifyItems="center"
-                  mb="50px"
-                  mt="12px"
+                <Text
+                  alignItems="center"
+                  alignSelf="stretch"
+                  textAlign="center"
+                  fontFamily="SUIT"
+                  fontSize="20px"
+                  fontWeight="700"
+                  color="#7D7D7D"
+                  pt="80px"
                 >
-                  {partyAllClothes.map((clothes) => (
-                    <Box
-                      key={clothes.id}
-                      width="100px"
-                      height="100px"
-                      borderRadius="20px"
-                      overflow="hidden"
-                      filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
-                      onClick={() => setSelectedClothesAll(clothes)}
-                    >
-                      <Image
-                        src={clothes.image}
-                        alt={`Clothes ${clothes.id}`}
-                        objectFit="cover"
-                        width="100%"
-                        height="100%"
-                      />
-                    </Box>
-                  ))}
-                </Grid>
-              </Flex>)
+                  아직 파티에 등록된 옷이 없어요
+                </Text>
+              ) : (
+                <Flex direction="column" overflowY="auto" m="-10px">
+                  <Grid
+                    templateColumns="repeat(3, 1fr)"
+                    //   columnGap="20px"
+                    rowGap="20px"
+                    justifyItems="center"
+                    mb="50px"
+                    mt="12px"
+                  >
+                    {partyAllClothes.map((clothes) => (
+                      <Box
+                        key={clothes.id}
+                        width="100px"
+                        height="100px"
+                        borderRadius="20px"
+                        overflow="hidden"
+                        filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
+                        onClick={() => setSelectedClothesAll(clothes)}
+                      >
+                        <Image
+                          src={clothes.image}
+                          alt={`Clothes ${clothes.id}`}
+                          objectFit="cover"
+                          width="100%"
+                          height="100%"
+                        />
+                      </Box>
+                    ))}
+                  </Grid>
+                </Flex>
+              )
             ) : (
               /* when specific clothes clicked */
               <Flex direction="column" gap="60px" alignItems="center">
@@ -547,49 +548,50 @@ function PartyDetailPage() {
             {selectedClothesMine == null ? (
               /* default: no clothes clicked */
               userAllClothes.length === 0 ? (
-              <Text
-                alignItems="center"
-                alignSelf="stretch"
-                textAlign="center"
-                fontFamily="SUIT"
-                fontSize="20px"
-                fontWeight="700"
-                color="#7D7D7D"
-                pt="80px"
-              >
-                아직 내 옷장에 넣어둔 옷이 없어요
-              </Text>) 
-              : 
-              (<Flex direction="column" overflowY="auto" m="-10px">
-                <Grid
-                  templateColumns="repeat(3, 1fr)"
-                  //   columnGap="20px"
-                  rowGap="20px"
-                  justifyItems="center"
-                  mb="50px"
-                  mt="12px"
+                <Text
+                  alignItems="center"
+                  alignSelf="stretch"
+                  textAlign="center"
+                  fontFamily="SUIT"
+                  fontSize="20px"
+                  fontWeight="700"
+                  color="#7D7D7D"
+                  pt="80px"
                 >
-                  {userAllClothes.map((clothes) => (
-                    <Box
-                      key={clothes.id}
-                      width="100px"
-                      height="100px"
-                      borderRadius="20px"
-                      overflow="hidden"
-                      filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
-                      onClick={() => setSelectedClothesMine(clothes)}
-                    >
-                      <Image
-                        src={clothes.image}
-                        alt={`Clothes ${clothes.id}`}
-                        objectFit="cover"
-                        width="100%"
-                        height="100%"
-                      />
-                    </Box>
-                  ))}
-                </Grid>
-              </Flex>)
+                  아직 내 옷장에 넣어둔 옷이 없어요
+                </Text>
+              ) : (
+                <Flex direction="column" overflowY="auto" m="-10px">
+                  <Grid
+                    templateColumns="repeat(3, 1fr)"
+                    //   columnGap="20px"
+                    rowGap="20px"
+                    justifyItems="center"
+                    mb="50px"
+                    mt="12px"
+                  >
+                    {userAllClothes.map((clothes) => (
+                      <Box
+                        key={clothes.id}
+                        width="100px"
+                        height="100px"
+                        borderRadius="20px"
+                        overflow="hidden"
+                        filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
+                        onClick={() => setSelectedClothesMine(clothes)}
+                      >
+                        <Image
+                          src={clothes.image}
+                          alt={`Clothes ${clothes.id}`}
+                          objectFit="cover"
+                          width="100%"
+                          height="100%"
+                        />
+                      </Box>
+                    ))}
+                  </Grid>
+                </Flex>
+              )
             ) : (
               /* when specific clothes clicked */
               <Flex direction="column" gap="60px" alignItems="center">
