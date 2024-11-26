@@ -1,4 +1,5 @@
 const { db } = require('../config/firebaseAdmin');
+const multer = require('multer');
 
 const UserModel = {
   async getAllUsers() {
