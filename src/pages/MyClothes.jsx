@@ -1,6 +1,10 @@
-import { Avatar, Box, Flex, Grid, Image, Text } from '@chakra-ui/react';
-import React from 'react';
-import Header from '../components/Layout/Header';
+// src/pages/MyClothes.jsx
+
+import { Avatar, Box, Link as ChakraLink, Flex, Grid, Image, Text } from '@chakra-ui/react';
+import axios from 'axios'; // axios 임포트
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // useNavigate 임포트
+import Header, { handleLogout } from '../components/Layout/Header';
 
 // 등록한 옷 더미데이터
 const registeredClothes = [
@@ -32,7 +36,9 @@ const notregisteredClothes = [
 ];
 
 function MyClothes() {
+  const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
   const maxItems = 12;
+  const navigate = useNavigate(); // useNavigate 훅 초기화
 
   const displayRegisteredClothes =
     registeredClothes.length > maxItems
@@ -43,6 +49,34 @@ function MyClothes() {
     notregisteredClothes.length > maxItems
       ? notregisteredClothes.slice(0, maxItems - 1)
       : notregisteredClothes;
+
+  useEffect(() => {
+    // 사용자 데이터 가져오기 함수
+    const fetchUserData = async () => {
+      try {
+        // 사용자 ID를 임의로 '1'로 지정
+        const userId = '1';
+
+        /*
+        실제 ID 적용시
+        const userId = auth.currentUser ? auth.currentUser.uid : null;
+
+        if (userId) {
+          // 사용자 데이터 가져오기
+        } else {
+          // 로그인되지 않은 경우 처리
+        }
+        */
+
+        const response = await axios.get(`http://68.183.225.136:3000/user/${userId}`);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <Flex
@@ -59,57 +93,79 @@ function MyClothes() {
       <Flex align="center" mb="33px" ml="25px">
         <Avatar
           size="lg"
-          src="/images/profile.jpg"
+          src={userData ? userData.profile_picture : '/images/profile.jpg'}
           width="84px"
           height="86.4px"
           flexShrink={0}
         />
-        <Box ml="15px">
+        <Box ml="15px" flex="1">
+        <Flex align="center">
           <Text
             fontFamily="SUIT"
             color="var(--Labels-Primary, #000)"
             fontSize="24px"
             fontWeight="700"
           >
-            again
-          </Text>
+            {userData ? userData.username : '사용자 이름'}
+            </Text>
+            <Text
+            mt="8px"
+            ml="10px"
+            color="var(--subtitle-Gray, #7D7D7D)"
+            fontFamily="SUIT"
+            fontSize="11px"
+            fontWeight="700"
+            textDecoration="underline"
+            cursor="pointer"
+            onClick={handleLogout}
+      >
+        로그아웃 하기
+      </Text>
+      </Flex>
+          
           <Text
             fontFamily="SUIT"
             color="var(--Labels-Primary, #000)"
             fontSize="16px"
             fontWeight="500"
-            mb="10px"
+            mb="5px"
             width="262px"
           >
-            대전 거주 중인 대학생입니다 :)
-            <br />
-            계절마다 옷장이 넘쳐서 정리하고 싶어요
+            {userData ? userData.description : '사용자 소개'}
           </Text>
           {/* 좋아요와 즐겨찾기 아이콘 */}
           <Flex align="center" gap="3px">
             <Image src="/heart_outline.svg" w="20px" h="20px" />
-            <Text
-              fontFamily="SUIT"
-              color="var(--Labels-Primary, #000)"
-              fontSize="14px"
-              fontWeight="400"
-              mr="16px"
-            >
-              좋아요 한 옷
-            </Text>
+            <ChakraLink as={Link} to="/liked-clothes">
+              <Text
+                fontFamily="SUIT"
+                color="var(--Labels-Primary, #000)"
+                fontSize="14px"
+                fontWeight="400"
+                mr="16px"
+              >
+                좋아요 한 옷
+              </Text>
+            </ChakraLink>
             <Image src="/star_outline.svg" w="20px" h="20px" />
-
-            <Text
-              fontFamily="SUIT"
-              color="var(--Labels-Primary, #000)"
-              fontSize="14px"
-              fontWeight="400"
-            >
-              즐겨찾기 한 파티
-            </Text>
+            {/* 즐겨찾기 한 파티를 클릭하면 LikedPartiesPage로 이동 */}
+            <ChakraLink as={Link} to="/liked-parties">
+              <Text
+                fontFamily="SUIT"
+                color="var(--Labels-Primary, #000)"
+                fontSize="14px"
+                fontWeight="400"
+                cursor="pointer"
+                _hover={{ textDecoration: 'underline' }}
+              >
+                즐겨찾기 한 파티
+              </Text>
+            </ChakraLink>
           </Flex>
         </Box>
       </Flex>
+
+
 
       {/* 파티에 등록한 옷 바둑판 배열 */}
       <Text

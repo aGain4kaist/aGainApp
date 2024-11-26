@@ -11,6 +11,7 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
+import axios from 'axios'; // axios 임포트
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,13 +44,35 @@ function PutClothes() {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
 
-  //키워드 (추후 AI 사용) 더미데이터
+  // 키워드 (추후 AI 사용) 더미데이터
   const dummyKeywords = ['따뜻한', '부드러운', '베이지 색', '니트', '남성복'];
 
-  //프로필 키, 몸무게의 더미데이터
-  const handleProfileSizeClick = () => {
-    setHeight('180');
-    setWeight('70');
+  // 프로필 키, 몸무게 가져오기 함수
+  const handleProfileSizeClick = async () => {
+    try {
+      // 사용자 ID를 임의로 '1'로 설정
+      const userId = '1';
+
+      // 백엔드에서 사용자 데이터 가져오기
+      const response = await axios.get(`http://68.183.225.136:3000/user/${userId}`);
+
+      if (response.data) {
+        const { height, weight } = response.data;
+
+        // height와 weight가 존재하는지 확인
+        if (height && weight) {
+          setHeight(height);
+          setWeight(weight);
+          console.log('프로필 사이즈 가져오기 성공: 키와 몸무게가 자동으로 입력되었습니다.');
+        } else {
+          console.warn('데이터 부족: 사용자의 키나 몸무게 정보가 없습니다.');
+        }
+      } else {
+        console.error('데이터 없음: 사용자 데이터를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('사용자 데이터를 가져오는 중 오류 발생:', error);
+    }
   };
 
   // 키워드 추출 버튼 동작
@@ -461,7 +484,7 @@ function PutClothes() {
         </Flex>
 
         {/* 하단 버튼 */}
-        <Flex justify="flex-end" width="100%" mt="55px" mb="100px" gap="15px">
+        <Flex justify="flex-end" width="100%" mt="55px" mb="50px" gap="15px">
           <Button
             onClick={() => navigate(-1)}
             width="124px"
@@ -489,6 +512,19 @@ function PutClothes() {
             fontWeight="700"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.25)"
             backdropFilter="blur(25px)"
+            onClick={() => {
+              // 완료하기 버튼 클릭 시 동작 구현
+              // 예: 옷 등록 API 호출
+              // toast({
+              //   title: '옷 등록 완료',
+              //   description: '옷이 성공적으로 등록되었습니다.',
+              //   status: 'success',
+              //   duration: 3000,
+              //   isClosable: true,
+              // });
+              console.log('옷이 성공적으로 등록되었습니다.');
+              navigate('/'); // 홈 페이지로 이동
+            }}
           >
             완료하기
           </Button>
