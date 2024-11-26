@@ -1,22 +1,24 @@
-import React from 'react';
-import { Box, Flex, Button, IconButton, Text } from '@chakra-ui/react';
+import PrivateRoute from '@/components/PrivateRoute';
+import ClothingSearch from '@/pages/ClothingSearch';
+import Home from '@/pages/Home';
+import LandingPage from '@/pages/LandingPage';
+import LikedClothesPage from '@/pages/LikedClothesPage';
+import LikedPartiesPage from '@/pages/LikedPartiesPage';
+import Login from '@/pages/Login';
+import MyClothes from '@/pages/MyClothes';
+import PartySearch from '@/pages/PartySearch';
+import Signup from '@/pages/Signup';
+import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
+import React from 'react';
 import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
   Link,
+  Route,
+  BrowserRouter as Router,
+  Routes,
   useLocation,
   matchPath,
 } from 'react-router-dom';
-import Home from '@/pages/Home';
-import ClothingSearch from '@/pages/ClothingSearch';
-import PartySearch from '@/pages/PartySearch';
-import MyClothes from '@/pages/MyClothes';
-import Login from '@/pages/Login';
-import Signup from '@/pages/Signup';
-import LandingPage from '@/pages/LandingPage';
-import PrivateRoute from '@/components/PrivateRoute';
 import PutClothes from '../../pages/PutClothes';
 import PartyDetailPage from '../../pages/PartyDetailPage';
 
@@ -78,6 +80,24 @@ function AppLayout() {
                 }
               />
               <Route path="/put-clothes" element={<PutClothes />} />
+
+              <Route
+                path="/liked-parties"
+                element={
+                  <PrivateRoute>
+                    <LikedPartiesPage />
+                  </PrivateRoute>
+                }
+              />
+
+              <Route
+                path="/liked-clothes"
+                element={
+                  <PrivateRoute>
+                    <LikedClothesPage />
+                  </PrivateRoute>
+                }
+              />
             </Routes>
           </Box>
           <NavBarAndButton />
@@ -89,8 +109,15 @@ function AppLayout() {
 
 function NavBarAndButton() {
   const location = useLocation();
-  const hiddenPaths = ['/', '/login', '/signup', '/put-clothes'];
-
+  const hiddenPaths = [
+    '/',
+    '/login',
+    '/signup',
+    '/put-clothes',
+    '/liked-parties',
+    '/liked-clothes',
+  ];
+  
   // Check if the current path matches any hidden path or pattern
   const isHidden =
     hiddenPaths.includes(location.pathname) ||
