@@ -1,6 +1,14 @@
 // src/pages/MyClothes.jsx
 
-import { Avatar, Box, Link as ChakraLink, Flex, Grid, Image, Text } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Link as ChakraLink,
+  Flex,
+  Grid,
+  Image,
+  Text,
+} from '@chakra-ui/react';
 import axios from 'axios'; // axios 임포트
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate 임포트
@@ -68,7 +76,9 @@ function MyClothes() {
         }
         */
 
-        const response = await axios.get(`http://68.183.225.136:3000/user/${userId}`);
+        const response = await axios.get(
+          `http://68.183.225.136:3000/user/${userId}`
+        );
         setUserData(response.data);
       } catch (error) {
         console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
@@ -99,30 +109,30 @@ function MyClothes() {
           flexShrink={0}
         />
         <Box ml="15px" flex="1">
-        <Flex align="center">
-          <Text
-            fontFamily="SUIT"
-            color="var(--Labels-Primary, #000)"
-            fontSize="24px"
-            fontWeight="700"
-          >
-            {userData ? userData.username : '사용자 이름'}
+          <Flex align="center">
+            <Text
+              fontFamily="SUIT"
+              color="var(--Labels-Primary, #000)"
+              fontSize="24px"
+              fontWeight="700"
+            >
+              {userData ? userData.username : '사용자 이름'}
             </Text>
             <Text
-            mt="8px"
-            ml="10px"
-            color="var(--subtitle-Gray, #7D7D7D)"
-            fontFamily="SUIT"
-            fontSize="11px"
-            fontWeight="700"
-            textDecoration="underline"
-            cursor="pointer"
-            onClick={handleLogout}
-      >
-        로그아웃 하기
-      </Text>
-      </Flex>
-          
+              mt="8px"
+              ml="10px"
+              color="var(--subtitle-Gray, #7D7D7D)"
+              fontFamily="SUIT"
+              fontSize="11px"
+              fontWeight="700"
+              textDecoration="underline"
+              cursor="pointer"
+              onClick={handleLogout}
+            >
+              로그아웃 하기
+            </Text>
+          </Flex>
+
           <Text
             fontFamily="SUIT"
             color="var(--Labels-Primary, #000)"
@@ -164,8 +174,6 @@ function MyClothes() {
           </Flex>
         </Box>
       </Flex>
-
-
 
       {/* 파티에 등록한 옷 바둑판 배열 */}
       <Text

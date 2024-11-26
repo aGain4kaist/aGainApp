@@ -68,27 +68,25 @@ function AppLayout() {
                 }
               />
               <Route path="/put-clothes" element={<PutClothes />} />
-              
+
               <Route
-              path="/liked-parties"
-              element={
-                <PrivateRoute>
-                  <LikedPartiesPage />
-                </PrivateRoute>
-              }
-            />
+                path="/liked-parties"
+                element={
+                  <PrivateRoute>
+                    <LikedPartiesPage />
+                  </PrivateRoute>
+                }
+              />
 
-            <Route
-              path="/liked-clothes"
-              element={
-                <PrivateRoute>
-                  <LikedClothesPage />
-                </PrivateRoute>
-              }
-            />
-
-
-          </Routes>
+              <Route
+                path="/liked-clothes"
+                element={
+                  <PrivateRoute>
+                    <LikedClothesPage />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
           </Box>
           <NavBarAndButton />
 
@@ -262,7 +260,13 @@ function AppLayout() {
 
 function NavBarAndButton() {
   const location = useLocation();
-  const hiddenPaths = ['/', '/login', '/signup', '/put-clothes', '/liked-parties'];
+  const hiddenPaths = [
+    '/',
+    '/login',
+    '/signup',
+    '/put-clothes',
+    '/liked-parties',
+  ];
 
   if (hiddenPaths.includes(location.pathname)) {
     return null;

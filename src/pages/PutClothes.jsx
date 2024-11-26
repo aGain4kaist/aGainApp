@@ -54,7 +54,9 @@ function PutClothes() {
       const userId = '1';
 
       // 백엔드에서 사용자 데이터 가져오기
-      const response = await axios.get(`http://68.183.225.136:3000/user/${userId}`);
+      const response = await axios.get(
+        `http://68.183.225.136:3000/user/${userId}`
+      );
 
       if (response.data) {
         const { height, weight } = response.data;
@@ -63,7 +65,9 @@ function PutClothes() {
         if (height && weight) {
           setHeight(height);
           setWeight(weight);
-          console.log('프로필 사이즈 가져오기 성공: 키와 몸무게가 자동으로 입력되었습니다.');
+          console.log(
+            '프로필 사이즈 가져오기 성공: 키와 몸무게가 자동으로 입력되었습니다.'
+          );
         } else {
           console.warn('데이터 부족: 사용자의 키나 몸무게 정보가 없습니다.');
         }

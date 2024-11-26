@@ -6,9 +6,6 @@ import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 export const handleLogout = async () => {
   try {
     await signOut(auth);
@@ -17,8 +14,6 @@ export const handleLogout = async () => {
     console.error('로그아웃에 실패했습니다:', error);
   }
 };
-
-
 
 function Header({ id, title, subtitle }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
@@ -38,8 +33,6 @@ function Header({ id, title, subtitle }) {
     '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'
   );
 
-
-
   const handleSearchButtonClick = () => {
     // 검색 버튼이 눌림: 검색 버튼은 비활성화, 검색창을 표시
     setIsTitleExpanded(false);
@@ -55,12 +48,11 @@ function Header({ id, title, subtitle }) {
   };
 
   useEffect(() => {
-
     //임시로 userID를 1로 설정.
-    
+
     const userId = 1;
 
-/*
+    /*
 UID를 추후에 로그인 정보에서 가져올시
 
 

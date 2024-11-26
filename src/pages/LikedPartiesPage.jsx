@@ -9,11 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 // 커스텀 BackIcon 컴포넌트 정의
 const BackIcon = (props) => (
-  <IconifyIcon
-    icon="bx:arrow-back"
-    style={{ fontSize: '24px' }}
-    {...props}
-  />
+  <IconifyIcon icon="bx:arrow-back" style={{ fontSize: '24px' }} {...props} />
 );
 
 function LikedPartiesPage() {
@@ -27,7 +23,9 @@ function LikedPartiesPage() {
         const userId = '1'; // 실제 사용자 ID로 대체 필요
 
         // 사용자 데이터 가져오기
-        const userResponse = await axios.get(`http://68.183.225.136:3000/user/${userId}`);
+        const userResponse = await axios.get(
+          `http://68.183.225.136:3000/user/${userId}`
+        );
         const likedPartyIds = userResponse.data.liked_parties;
 
         if (likedPartyIds && likedPartyIds.length > 0) {
