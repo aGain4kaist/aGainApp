@@ -4,23 +4,23 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const BackIcon = (props) => (
-    <Icon
-      width="11px"
-      height="20px"
-      viewBox="0 0 11 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M10 19L1 10L10 1"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Icon>
-  );
+  <Icon
+    width="11px"
+    height="20px"
+    viewBox="0 0 11 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M10 19L1 10L10 1"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Icon>
+);
 
 function LikedClothesPage() {
   const [likedClothes, setLikedClothes] = useState([]);

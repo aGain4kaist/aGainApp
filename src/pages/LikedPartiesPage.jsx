@@ -7,24 +7,23 @@ import { useNavigate } from 'react-router-dom';
 // 커스텀 BackIcon 컴포넌트 정의
 // 커스텀 BackIcon
 const BackIcon = (props) => (
-    <Icon
-      width="11px"
-      height="20px"
-      viewBox="0 0 11 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
-      <path
-        d="M10 19L1 10L10 1"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Icon>
-  );
-
+  <Icon
+    width="11px"
+    height="20px"
+    viewBox="0 0 11 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      d="M10 19L1 10L10 1"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Icon>
+);
 
 function LikedPartiesPage() {
   const [likedParties, setLikedParties] = useState([]);
