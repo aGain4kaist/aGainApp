@@ -56,7 +56,7 @@ function LikedClothesPage() {
 
   // 커스텀 헤더 컴포넌트
   const CustomHeader = () => (
-    <Flex align="center" width="100%" mb="10px" mt="50px" ml="30px">
+    <Flex align="center"  mb="10px" mt="40px" ml="30px">
       <Button
         onClick={() => navigate(-1)}
         variant="ghost"
@@ -77,6 +77,8 @@ function LikedClothesPage() {
     <Flex
       direction="column"
       height="100vh"
+      overflowY="auto"
+      pb={100}
       bg="var(--background-silver, #FAF9FF)"
     >
       {/* 상단 커스텀 헤더 */}

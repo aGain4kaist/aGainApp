@@ -92,6 +92,25 @@ function PutClothes() {
     }
   };
 
+  const CustomHeader = () => (
+    <Flex  mb="55px" mt="45px" ml="30px" alignSelf="flex-start">
+      <Button
+        onClick={() => navigate(-1)}
+        variant="ghost"
+        color="#000000"
+        left="0"
+        padding="0"
+      >
+        <BackIcon />
+      </Button>
+
+      <Text textAlign="center" fontSize="24px" fontWeight="700">
+        옷 넣어두기
+      </Text>
+    </Flex>
+  );
+
+
   return (
     <Flex
       direction="column"
@@ -99,23 +118,11 @@ function PutClothes() {
       bg="var(--background-silver, #FAF9FF)"
       minHeight="100vh"
       width="100%"
+      
     >
       {/* 상단 헤더 */}
-      <Flex align="center" width="100%" mb="55px" mt="50px" ml="30px">
-        <Button
-          onClick={() => navigate(-1)}
-          variant="ghost"
-          color="#000000"
-          left="0"
-          padding="0"
-        >
-          <BackIcon />
-        </Button>
+      <CustomHeader />
 
-        <Text textAlign="center" fontSize="24px" fontWeight="700">
-          옷 넣어두기
-        </Text>
-      </Flex>
 
       {/* 이미지 업로드 */}
       <Flex

@@ -266,6 +266,7 @@ function NavBarAndButton() {
     '/signup',
     '/put-clothes',
     '/liked-parties',
+    '/liked-clothes',
   ];
 
   if (hiddenPaths.includes(location.pathname)) {
