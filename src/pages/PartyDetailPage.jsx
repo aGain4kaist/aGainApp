@@ -40,17 +40,24 @@ function PartyDetailPage() {
 
   const fetchPartyDetailandClothes = async (id) => {
     try {
-      const detailResponse = await axios.get(`http://68.183.225.136:3000/party/${id}`);
-      const clothesResponse = await axios.get(`http://68.183.225.136:3000/cloth/party/${id}`); // 파티 id
-      
-      console.log("party detail fetched: ", detailResponse.data); // got the data
-      console.log("party clothes fetched: ", clothesResponse.data); // got the data
-      
+      const detailResponse = await axios.get(
+        `http://68.183.225.136:3000/party/${id}`
+      );
+      const clothesResponse = await axios.get(
+        `http://68.183.225.136:3000/cloth/party/${id}`
+      ); // 파티 id
+
+      console.log('party detail fetched: ', detailResponse.data); // got the data
+      console.log('party clothes fetched: ', clothesResponse.data); // got the data
+
       setPartyDetails(detailResponse.data); // Save the data to state
       setPartyAllClothes(clothesResponse.data);
       setIsLoading(false); // Update loading state
     } catch (error) {
-      console.error('파티 정보 혹은 등록된 옷을 불러오는데 실패했습니다:', error);
+      console.error(
+        '파티 정보 혹은 등록된 옷을 불러오는데 실패했습니다:',
+        error
+      );
       setIsLoading(false); // Even on error, stop the loading state
     }
   };
@@ -69,7 +76,9 @@ function PartyDetailPage() {
 
   const fetchUserAllClothes = async (id) => {
     try {
-      const response = await axios.get(`http://68.183.225.136:3000/cloth/user/${id}`); // 유저 id
+      const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/${id}`
+      ); // 유저 id
       console.log("user's clothes fetched:", response.data);
       setUserAllClothes(response.data);
       setIsLoading(false);
@@ -77,7 +86,7 @@ function PartyDetailPage() {
       console.error('유저의 등록된 옷을 불러오는데 실패했습니다:', error);
       setIsLoading(false); // Even on error, stop the loading state
     }
-  }
+  };
 
   // Fetch party details & party clothes on mount
   useEffect(() => {
@@ -122,20 +131,20 @@ function PartyDetailPage() {
   // 전체 옷 보기에서 오른쪽 화살표 누르기
   const handleNextSelectedClothesAll = () => {
     if (!partyAllClothes || partyAllClothes.length === 0) return; // Prevent errors on empty array
-  
+
     const cur = partyAllClothes.indexOf(selectedClothesAll); // Use indexOf for arrays
     const next = (cur + 1) % partyAllClothes.length; // Correctly access array length
-  
+
     setSelectedClothesAll(partyAllClothes[next]);
   };
 
   // 전체 옷 보기에서 오른쪽 화살표 누르기
   const handlePriorSelectedClothesAll = () => {
     if (!partyAllClothes || partyAllClothes.length === 0) return; // Prevent errors on empty array
-  
+
     const cur = partyAllClothes.indexOf(selectedClothesAll); // Use indexOf for arrays
     const prior = (cur - 1 + partyAllClothes.length) % partyAllClothes.length; // Correctly access array length
-  
+
     setSelectedClothesAll(partyAllClothes[prior]);
   };
 
@@ -395,9 +404,9 @@ function PartyDetailPage() {
             >
               파티에 등록된 옷
             </Text>
-            { selectedClothesAll==null ?
+            {selectedClothesAll == null ? (
               /* default: no clothes clicked */
-              (<Flex direction="column" overflowY="auto" m="-10px">
+              <Flex direction="column" overflowY="auto" m="-10px">
                 <Grid
                   templateColumns="repeat(3, 1fr)"
                   //   columnGap="20px"
@@ -426,14 +435,10 @@ function PartyDetailPage() {
                     </Box>
                   ))}
                 </Grid>
-              </Flex>)
-            :
-            /* when specific clothes clicked */
-            (<Flex
-                direction="column"
-                gap="60px"
-                alignItems="center"
-              >
+              </Flex>
+            ) : (
+              /* when specific clothes clicked */
+              <Flex direction="column" gap="60px" alignItems="center">
                 <Flex
                   direction="column"
                   gap="25px"
@@ -446,9 +451,7 @@ function PartyDetailPage() {
                     boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
                     backgroundColor="gray.500"
                   >
-                    <Text color="black">
-                      { selectedClothesAll.name }
-                    </Text>
+                    <Text color="black">{selectedClothesAll.name}</Text>
                   </Box>
                   {/* L-R control button */}
                   <Flex
@@ -463,13 +466,21 @@ function PartyDetailPage() {
                     boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
                   >
                     <IconifyIcon
-                      icon={ 'bx:left-arrow' }
-                      style={{ width: '30px', height: '30px', color: '#7C31B4' }}
+                      icon={'bx:left-arrow'}
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        color: '#7C31B4',
+                      }}
                       onClick={handlePriorSelectedClothesAll}
                     />
                     <IconifyIcon
-                      icon={ 'bx:right-arrow' }
-                      style={{ width: '30px', height: '30px', color: '#7C31B4' }}
+                      icon={'bx:right-arrow'}
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        color: '#7C31B4',
+                      }}
                       onClick={handleNextSelectedClothesAll}
                     />
                   </Flex>
@@ -521,9 +532,9 @@ function PartyDetailPage() {
             >
               내 옷 등록하기
             </Text>
-            { selectedClothesMine==null ?
+            {selectedClothesMine == null ? (
               /* default: no clothes clicked */
-              (<Flex direction="column" overflowY="auto" m="-10px">
+              <Flex direction="column" overflowY="auto" m="-10px">
                 <Grid
                   templateColumns="repeat(3, 1fr)"
                   //   columnGap="20px"
@@ -552,37 +563,20 @@ function PartyDetailPage() {
                     </Box>
                   ))}
                 </Grid>
-              </Flex>)
-              : 
+              </Flex>
+            ) : (
               /* when specific clothes clicked */
-              (
-              <Flex
-                direction="column"
-                gap="60px"
-              >
-                <Flex
-                  direction="column"
-                  gap="25px"
-                >
-                  <Box
-                    w="200px"
-                    h="100px"
-                    backgroundColor="gray.500"
-                  >
-                    <Text color="black">
-                      { selectedClothesMine }
-                    </Text>
+              <Flex direction="column" gap="60px">
+                <Flex direction="column" gap="25px">
+                  <Box w="200px" h="100px" backgroundColor="gray.500">
+                    <Text color="black">{selectedClothesMine}</Text>
                   </Box>
                   {/* L-R control button */}
-                  <Flex>
-                    button
-                  </Flex>
+                  <Flex>button</Flex>
                 </Flex>
-                <Button>
-                  등록하기
-                </Button>
+                <Button>등록하기</Button>
               </Flex>
-              )}
+            )}
           </Flex>
         );
       default:
@@ -611,18 +605,19 @@ function PartyDetailPage() {
             if (currentView === 'info') {
               navigate(-1);
             } else if (currentView === 'register-mine') {
-              if (selectedClothesMine==null) {
+              if (selectedClothesMine == null) {
                 setCurrentView('info');
               } else {
                 setSelectedClothesMine(null);
               }
             } else if (currentView === 'all-clothes') {
-              if (selectedClothesAll==null) {
+              if (selectedClothesAll == null) {
                 setCurrentView('info');
               } else {
                 setSelectedClothesAll(null);
               }
-          }}}
+            }
+          }}
         />
       </Flex>
 
