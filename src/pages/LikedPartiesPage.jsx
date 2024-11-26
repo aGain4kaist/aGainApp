@@ -1,16 +1,30 @@
-// src/pages/LikedPartiesPage.jsx
-
 import PartyListItem from '@/components/PartyListItem';
-import { Box, Button, Flex, Grid, Text } from '@chakra-ui/react';
-import { Icon as IconifyIcon } from '@iconify/react';
+import { Box, Button, Flex, Grid, Icon, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 커스텀 BackIcon 컴포넌트 정의
+// 커스텀 BackIcon
 const BackIcon = (props) => (
-  <IconifyIcon icon="bx:arrow-back" style={{ fontSize: '24px' }} {...props} />
-);
+    <Icon
+      width="11px"
+      height="20px"
+      viewBox="0 0 11 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M10 19L1 10L10 1"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Icon>
+  );
+
 
 function LikedPartiesPage() {
   const [likedParties, setLikedParties] = useState([]);
@@ -41,7 +55,7 @@ function LikedPartiesPage() {
           setLikedParties([]);
         }
       } catch (error) {
-        console.error('즐겨찾기한 파티를 가져오는 중 오류 발생:', error);
+        console.error('즐겨찾기 한 파티를 가져오는 중 오류 발생:', error);
       } finally {
         setLoading(false);
       }
@@ -75,7 +89,7 @@ function LikedPartiesPage() {
       </Button>
 
       <Text textAlign="center" fontSize="24px" fontWeight="700">
-        즐겨찾기한 파티
+        즐겨찾기 한 파티
       </Text>
     </Flex>
   );
@@ -124,7 +138,7 @@ function LikedPartiesPage() {
         ) : (
           <Box textAlign="center" mt="50px">
             <Text fontSize="18px" color="gray.500">
-              즐겨찾기한 파티가 없습니다.
+              즐겨찾기 한 파티가 없습니다.
             </Text>
           </Box>
         )}

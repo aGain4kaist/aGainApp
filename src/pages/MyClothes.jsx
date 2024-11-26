@@ -12,41 +12,39 @@ import {
 import axios from 'axios'; // axios 임포트
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate 임포트
-import Header, { handleLogout } from '../components/Layout/Header';
-
-// 등록한 옷 더미데이터
-const registeredClothes = [
-  '/images/register1.jpg',
-  '/images/register2.jpg',
-  '/images/register3.jpg',
-  '/images/register4.jpg',
-  '/images/register5.jpg',
-  '/images/register6.jpg',
-];
-
-// 교환받은 옷 더미데이터
-const notregisteredClothes = [
-  '/images/notregister1.jpg',
-  '/images/notregister2.jpg',
-  '/images/notregister3.jpg',
-  '/images/notregister4.jpg',
-  '/images/notregister5.jpg',
-  '/images/notregister1.jpg',
-  '/images/notregister2.jpg',
-  '/images/notregister3.jpg',
-  '/images/notregister4.jpg',
-  '/images/notregister5.jpg',
-  '/images/notregister1.jpg',
-  '/images/notregister2.jpg',
-  '/images/notregister3.jpg',
-  '/images/notregister4.jpg',
-  '/images/notregister5.jpg',
-];
+import Header from '../components/Layout/Header';
 
 function MyClothes() {
   const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
   const maxItems = 12;
   const navigate = useNavigate(); // useNavigate 훅 초기화
+
+  const registeredClothes = [
+    '/images/register1.jpg',
+    '/images/register2.jpg',
+    '/images/register3.jpg',
+    '/images/register4.jpg',
+    '/images/register5.jpg',
+    '/images/register6.jpg',
+  ];
+
+  const notregisteredClothes = [
+    '/images/notregister1.jpg',
+    '/images/notregister2.jpg',
+    '/images/notregister3.jpg',
+    '/images/notregister4.jpg',
+    '/images/notregister5.jpg',
+    '/images/notregister1.jpg',
+    '/images/notregister2.jpg',
+    '/images/notregister3.jpg',
+    '/images/notregister4.jpg',
+    '/images/notregister5.jpg',
+    '/images/notregister1.jpg',
+    '/images/notregister2.jpg',
+    '/images/notregister3.jpg',
+    '/images/notregister4.jpg',
+    '/images/notregister5.jpg',
+  ];
 
   const displayRegisteredClothes =
     registeredClothes.length > maxItems
@@ -88,6 +86,15 @@ function MyClothes() {
     fetchUserData();
   }, []);
 
+  // 로그아웃 핸들러 함수
+  const handleLogout = () => {
+    // 예시로 로컬 스토리지에서 토큰 제거
+    // 실제 구현 시, 인증 상태를 관리하는 로직에 맞게 수정
+    localStorage.removeItem('authToken');
+    // 로그인 페이지로 이동
+    navigate('/login');
+  };
+
   return (
     <Flex
       direction="column"
@@ -117,19 +124,6 @@ function MyClothes() {
               fontWeight="700"
             >
               {userData ? userData.username : '로딩 중...'}
-            </Text>
-            <Text
-              mt="8px"
-              ml="10px"
-              color="var(--subtitle-Gray, #7D7D7D)"
-              fontFamily="SUIT"
-              fontSize="11px"
-              fontWeight="700"
-              textDecoration="underline"
-              cursor="pointer"
-              onClick={handleLogout}
-            >
-              로그아웃 하기
             </Text>
           </Flex>
 
@@ -236,7 +230,9 @@ function MyClothes() {
             backgroundColor="#FAF9FF"
             onClick={() => {
               // 전체보기 동작
+              navigate('/registered-clothes'); // 예시: 전체 등록된 옷 페이지로 이동
             }}
+            cursor="pointer"
           >
             <Text
               fontFamily="SUIT"
@@ -311,7 +307,9 @@ function MyClothes() {
             backgroundColor="#FAF9FF"
             onClick={() => {
               // 전체보기 동작
+              navigate('/not-registered-clothes'); // 예시: 전체 교환받은 옷 페이지로 이동
             }}
+            cursor="pointer"
           >
             <Text
               fontFamily="SUIT"
@@ -324,6 +322,22 @@ function MyClothes() {
           </Box>
         )}
       </Grid>
+
+      {/* 로그아웃 링크 추가 */}
+      <Text
+        mt="50px"
+        ml="20px"
+        mb="30px"
+        color="var(--subtitle-Gray, #7D7D7D)"
+        fontFamily="SUIT"
+        fontSize="12px"
+        fontWeight="700"
+        textDecoration="underline"
+        cursor="pointer"
+        onClick={handleLogout}
+      >
+        로그아웃 하기
+      </Text>
     </Flex>
   );
 }
