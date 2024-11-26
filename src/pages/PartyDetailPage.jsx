@@ -19,8 +19,7 @@ const registeredClothes = [
 ];
 
 function PartyDetailPage() {
-  
-  const { partyId } = useParams();    // routing 후 parameter로 파티 아이디 받음
+  const { partyId } = useParams(); // routing 후 parameter로 파티 아이디 받음
 
   const [partyDetails, setPartyDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

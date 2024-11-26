@@ -1,7 +1,6 @@
 /* ------------ DO NOT USE THIS COMPONENT ANYMORE --------------- */
 /* ---- USING PartyDetailPage.jsx INSTEAD ------- */
 
-
 // import { React, useState, useEffect } from 'react';
 // import { Box, Flex, Text, Button, Image } from '@chakra-ui/react';
 // import { Icon as IconifyIcon } from '@iconify/react';
