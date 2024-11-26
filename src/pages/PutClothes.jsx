@@ -93,7 +93,7 @@ function PutClothes() {
   };
 
   const CustomHeader = () => (
-    <Flex  mb="55px" mt="45px" ml="30px" alignSelf="flex-start">
+    <Flex mb="55px" mt="45px" ml="30px" alignSelf="flex-start">
       <Button
         onClick={() => navigate(-1)}
         variant="ghost"
@@ -110,7 +110,6 @@ function PutClothes() {
     </Flex>
   );
 
-
   return (
     <Flex
       direction="column"
@@ -118,11 +117,9 @@ function PutClothes() {
       bg="var(--background-silver, #FAF9FF)"
       minHeight="100vh"
       width="100%"
-      
     >
       {/* 상단 헤더 */}
       <CustomHeader />
-
 
       {/* 이미지 업로드 */}
       <Flex
