@@ -52,6 +52,8 @@ function PartyDetailPage() {
 
       setPartyDetails(detailResponse.data); // Save the data to state
       setPartyAllClothes(clothesResponse.data);
+      // MUST CHANGE AFTER USER CONTEXT IS CREATED!!! 현재 내 옷 등록하기의 옷도 전부 파티 옷 데이터로 둠!!!
+      setUserAllClothes(clothesResponse.data);
       setIsLoading(false); // Update loading state
     } catch (error) {
       console.error(
@@ -138,7 +140,7 @@ function PartyDetailPage() {
     setSelectedClothesAll(partyAllClothes[next]);
   };
 
-  // 전체 옷 보기에서 오른쪽 화살표 누르기
+  // 전체 옷 보기에서 왼쪽 화살표 누르기
   const handlePriorSelectedClothesAll = () => {
     if (!partyAllClothes || partyAllClothes.length === 0) return; // Prevent errors on empty array
 
@@ -146,6 +148,26 @@ function PartyDetailPage() {
     const prior = (cur - 1 + partyAllClothes.length) % partyAllClothes.length; // Correctly access array length
 
     setSelectedClothesAll(partyAllClothes[prior]);
+  };
+
+  // 내 옷 등록하기에서 오른쪽 화살표 누르기
+  const handleNextSelectedClothesMine = () => {
+    if (!userAllClothes || userAllClothes.length === 0) return; // Prevent errors on empty array
+
+    const cur = userAllClothes.indexOf(selectedClothesMine); // Use indexOf for arrays
+    const next = (cur + 1) % userAllClothes.length; // Correctly access array length
+
+    setSelectedClothesMine(userAllClothes[next]);
+  };
+
+  // 내 옷 등록하기에서 왼쪽 화살표 누르기
+  const handlePriorSelectedClothesMine = () => {
+    if (!userAllClothes || userAllClothes.length === 0) return; // Prevent errors on empty array
+
+    const cur = userAllClothes.indexOf(selectedClothesMine); // Use indexOf for arrays
+    const prior = (cur - 1 + userAllClothes.length) % userAllClothes.length; // Correctly access array length
+
+    setSelectedClothesMine(userAllClothes[prior]);
   };
 
   const renderContent = () => {
@@ -406,7 +428,21 @@ function PartyDetailPage() {
             </Text>
             {selectedClothesAll == null ? (
               /* default: no clothes clicked */
-              <Flex direction="column" overflowY="auto" m="-10px">
+              partyAllClothes.length === 0 ? (
+              <Text
+                alignItems="center"
+                alignSelf="stretch"
+                textAlign="center"
+                fontFamily="SUIT"
+                fontSize="20px"
+                fontWeight="700"
+                color="#7D7D7D"
+                pt="80px"
+              >
+                아직 파티에 등록된 옷이 없어요
+              </Text>) 
+              :
+              (<Flex direction="column" overflowY="auto" m="-10px">
                 <Grid
                   templateColumns="repeat(3, 1fr)"
                   //   columnGap="20px"
@@ -435,7 +471,7 @@ function PartyDetailPage() {
                     </Box>
                   ))}
                 </Grid>
-              </Flex>
+              </Flex>)
             ) : (
               /* when specific clothes clicked */
               <Flex direction="column" gap="60px" alignItems="center">
@@ -485,30 +521,6 @@ function PartyDetailPage() {
                     />
                   </Flex>
                 </Flex>
-                <Button
-                  w="200px"
-                  h="50px"
-                  px="52px"
-                  py="12px"
-                  justifyContent="center"
-                  alignItems="center"
-                  borderRadius="25px"
-                  background="var(--21-purple, #7C31B4)"
-                  boxShadow="0px 2px 4px 2px rgba(0, 0, 0, 0.25)"
-                  backdropFilter="blur(25px)"
-                >
-                  <Text
-                    color="white"
-                    textAlign="center"
-                    fontFamily="SUIT"
-                    fontSize="20px"
-                    fontStyle="normal"
-                    fontWeight="700"
-                    lineHeight="normal"
-                  >
-                    등록하기
-                  </Text>
-                </Button>
               </Flex>
             )}
           </Flex>
@@ -534,7 +546,21 @@ function PartyDetailPage() {
             </Text>
             {selectedClothesMine == null ? (
               /* default: no clothes clicked */
-              <Flex direction="column" overflowY="auto" m="-10px">
+              userAllClothes.length === 0 ? (
+              <Text
+                alignItems="center"
+                alignSelf="stretch"
+                textAlign="center"
+                fontFamily="SUIT"
+                fontSize="20px"
+                fontWeight="700"
+                color="#7D7D7D"
+                pt="80px"
+              >
+                아직 내 옷장에 넣어둔 옷이 없어요
+              </Text>) 
+              : 
+              (<Flex direction="column" overflowY="auto" m="-10px">
                 <Grid
                   templateColumns="repeat(3, 1fr)"
                   //   columnGap="20px"
@@ -543,19 +569,19 @@ function PartyDetailPage() {
                   mb="50px"
                   mt="12px"
                 >
-                  {registeredClothes.map((src, index) => (
+                  {userAllClothes.map((clothes) => (
                     <Box
-                      key={index}
+                      key={clothes.id}
                       width="100px"
                       height="100px"
                       borderRadius="20px"
                       overflow="hidden"
                       filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
-                      onClick={() => setSelectedClothesMine(index)}
+                      onClick={() => setSelectedClothesMine(clothes)}
                     >
                       <Image
-                        src={src}
-                        alt={`Clothes ${index}`}
+                        src={clothes.image}
+                        alt={`Clothes ${clothes.id}`}
                         objectFit="cover"
                         width="100%"
                         height="100%"
@@ -563,18 +589,80 @@ function PartyDetailPage() {
                     </Box>
                   ))}
                 </Grid>
-              </Flex>
+              </Flex>)
             ) : (
               /* when specific clothes clicked */
-              <Flex direction="column" gap="60px">
-                <Flex direction="column" gap="25px">
-                  <Box w="200px" h="100px" backgroundColor="gray.500">
-                    <Text color="black">{selectedClothesMine}</Text>
+              <Flex direction="column" gap="60px" alignItems="center">
+                <Flex
+                  direction="column"
+                  gap="25px"
+                  alignItems="center"
+                  alignSelf="stretch"
+                >
+                  <Box
+                    h="350px"
+                    alignSelf="stretch"
+                    boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
+                    backgroundColor="gray.500"
+                  >
+                    <Text color="black">{selectedClothesMine.name}</Text>
                   </Box>
                   {/* L-R control button */}
-                  <Flex>button</Flex>
+                  <Flex
+                    w="110px"
+                    h="50px"
+                    py="8px"
+                    px="10px"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    borderRadius="25px"
+                    background="white"
+                    boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
+                  >
+                    <IconifyIcon
+                      icon={'bx:left-arrow'}
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        color: '#7C31B4',
+                      }}
+                      onClick={handlePriorSelectedClothesMine}
+                    />
+                    <IconifyIcon
+                      icon={'bx:right-arrow'}
+                      style={{
+                        width: '30px',
+                        height: '30px',
+                        color: '#7C31B4',
+                      }}
+                      onClick={handleNextSelectedClothesMine}
+                    />
+                  </Flex>
                 </Flex>
-                <Button>등록하기</Button>
+                <Button
+                  w="200px"
+                  h="50px"
+                  px="52px"
+                  py="12px"
+                  justifyContent="center"
+                  alignItems="center"
+                  borderRadius="25px"
+                  background="var(--21-purple, #7C31B4)"
+                  boxShadow="0px 2px 4px 2px rgba(0, 0, 0, 0.25)"
+                  backdropFilter="blur(25px)"
+                >
+                  <Text
+                    color="white"
+                    textAlign="center"
+                    fontFamily="SUIT"
+                    fontSize="20px"
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="normal"
+                  >
+                    등록하기
+                  </Text>
+                </Button>
               </Flex>
             )}
           </Flex>
