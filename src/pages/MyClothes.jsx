@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Grid, Image, Text } from '@chakra-ui/react';
 import React from 'react';
-import Header from '../components/Layout/Header';
+import Header, { handleLogout } from '../components/Layout/Header';
 
 // 등록한 옷 더미데이터
 const registeredClothes = [
@@ -56,7 +56,7 @@ function MyClothes() {
       <Header id="MyClothes" title="내 옷장" />
 
       {/* 프로필 섹션 */}
-      <Flex align="center" mb="33px" ml="25px">
+      <Flex align="center" mb="5px" ml="25px">
         <Avatar
           size="lg"
           src="/images/profile.jpg"
@@ -78,7 +78,7 @@ function MyClothes() {
             color="var(--Labels-Primary, #000)"
             fontSize="16px"
             fontWeight="500"
-            mb="10px"
+            mb="5px"
             width="262px"
           >
             대전 거주 중인 대학생입니다 :)
@@ -107,9 +107,28 @@ function MyClothes() {
             >
               즐겨찾기 한 파티
             </Text>
+            
+
           </Flex>
+          
         </Box>
+        
       </Flex>
+      <Text
+              mb="31px"
+              ml="125px"
+              color="var(--subtitle-Gray, #7D7D7D)"
+              textAlign="left"
+              fontFamily="SUIT"
+              fontSize="12px"
+              fontWeight="700"
+              textDecoration="underline"
+              cursor="pointer"
+              onClick={handleLogout}
+            >
+              로그아웃 하기
+            </Text>
+      
 
       {/* 파티에 등록한 옷 바둑판 배열 */}
       <Text
