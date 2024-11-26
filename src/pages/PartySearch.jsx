@@ -24,7 +24,7 @@ function PartySearch() {
   // 파티 리스트를 불러오는 함수
   const fetchPartyList = async (latitude, longitude) => {
     try {
-      const response = await axios.get('http://localhost:3000/party', {
+      const response = await axios.get('http://68.183.225.136:3000/party', {
         params: {
           latitude: latitude,
           longitude: longitude,
@@ -35,6 +35,7 @@ function PartySearch() {
       console.error('파티 목록을 불러오는데 실패했습니다:', error);
     }
   };
+
   // 컴포넌트가 처음 렌더링될 때 현재 위치로 이동
   useEffect(() => {
     goToCurrentLocation();
