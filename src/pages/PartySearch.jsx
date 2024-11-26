@@ -35,6 +35,7 @@ function PartySearch() {
       console.error('파티 목록을 불러오는데 실패했습니다:', error);
     }
   };
+  
   // 컴포넌트가 처음 렌더링될 때 현재 위치로 이동
   useEffect(() => {
     goToCurrentLocation();

@@ -3,8 +3,6 @@ import { Box, IconButton, Image, Button } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import PartySearchBottomSheetHeader from './PartySearchBottomSheetHeader';
 import PartyListItem from '../components/PartyListItem';
-import PartyDetail from './PartyDetail';
-import UploadClothes from './UploadClothes';
 import { useNavigate } from 'react-router-dom';
 import {
   useBottomSheet,
@@ -80,32 +78,6 @@ function PartySearchBottomSheet({
 
   return (
     <>
-      {selectedParty && (
-        <Button
-          w="50px"
-          h="50px"
-          alignContent="center"
-          justifyContent="center"
-          position="absolute"
-          bottom="calc(80vh + 70px)"
-          left="10px"
-          onClick={clearSelection}
-          borderRadius="full"
-          bg="white"
-          boxShadow="md"
-          zIndex="10"
-          aria-label="뒤로 가기"
-          m="10px"
-          p="0px"
-        >
-          <IconifyIcon
-            icon={'material-symbols:arrow-back'}
-            style={{ color: '#7C31B4' }}
-            width="30px"
-            height="30px"
-          />
-        </Button>
-      )}
       {!isExpanded && (
         <Button
           w="50px"
@@ -149,33 +121,29 @@ function PartySearchBottomSheet({
         }}
         // transition="transform 5s ease-out"
       >
-        {selectedParty ? (
-          <PartyDetail party={selectedParty} onBack={clearSelection} />
-        ) : (
-          <>
-            <PartySearchBottomSheetHeader />
-            <Box
-              ref={contentRef}
-              overflow="auto"
-              sx={{
-                WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
-                padding: '0 32px', // Optional padding for inner content
-                paddingBottom: '100px',
-              }}
-              flex="1" // To take up remaining space within the MotionBox
-            >
-              {partyList.map((party) => (
-                <PartyListItem
-                  key={party.id}
-                  onPartyClick={() => {
-                    navigate(`/party/${party.id}`);
-                  }} // to party page
-                  party={party}
-                />
-              ))}
-            </Box>
-          </>
-        )}
+        <>
+          <PartySearchBottomSheetHeader />
+          <Box
+            ref={contentRef}
+            overflow="auto"
+            sx={{
+              WebkitOverflowScrolling: 'touch', // For smooth scrolling on iOS
+              padding: '0 32px', // Optional padding for inner content
+              paddingBottom: '100px',
+            }}
+            flex="1" // To take up remaining space within the MotionBox
+          >
+            {partyList.map((party) => (
+              <PartyListItem
+                key={party.id}
+                onPartyClick={() => {
+                  navigate(`/party/${party.id}`);
+                }} // to party page
+                party={party}
+              />
+            ))}
+          </Box>
+        </>
       </MotionBox>
     </>
   );
