@@ -139,7 +139,7 @@ exports.uploadCloth = async (req, res) => {
       return res.status(400).send({ error: 'No JSON data provided.' });
     }
     const id = ClothModel.createCloth(jsonData);
-    const fileName = `${"cloth/cloth"}${id}${path.extname(fileInfo.originalName)}`;
+    const fileName = `${'cloth/cloth'}${id}${path.extname(fileInfo.originalName)}`;
     const fileUpload = bucket.file(fileName);
     const stream = fileUpload.createWriteStream({
       metadata: {
@@ -161,8 +161,8 @@ exports.uploadCloth = async (req, res) => {
         fileUrl: publicUrl,
       });
     });
-  } catch(error) {
-      console.log(error);
-      res.status(500).send('Failed to process json data.');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Failed to process json data.');
   }
 };

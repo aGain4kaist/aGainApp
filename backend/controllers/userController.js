@@ -55,7 +55,7 @@ exports.uploadUser = async (req, res) => {
       return res.status(400).send({ error: 'No JSON data provided.' });
     }
     const id = UserModel.createUser(jsonData);
-    const fileName = `${"user/user"}${id}${path.extname(fileInfo.originalName)}`;
+    const fileName = `${'user/user'}${id}${path.extname(fileInfo.originalName)}`;
     const fileUpload = bucket.file(fileName);
     const stream = fileUpload.createWriteStream({
       metadata: {
@@ -77,8 +77,8 @@ exports.uploadUser = async (req, res) => {
         fileUrl: publicUrl,
       });
     });
-  } catch(error) {
-      console.log(error);
-      res.status(500).send('Failed to process json data.');
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Failed to process json data.');
   }
 };
