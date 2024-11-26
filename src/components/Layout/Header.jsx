@@ -1,8 +1,21 @@
+import { auth } from '@/utils/firebaseConfig';
 import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
+import axios from 'axios';
+import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Header({ id, title, subtitle, user }) {
+export const handleLogout = async () => {
+  try {
+    await signOut(auth);
+    console.log('로그아웃되었습니다.');
+  } catch (error) {
+    console.error('로그아웃에 실패했습니다:', error);
+  }
+};
+
+function Header({ id, title, subtitle }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
   const [isSearchBoxExpanded, setIsSearchBoxExpanded] = useState(false);
   const [isTitleExpanded, setIsTitleExpanded] = useState(false);
@@ -11,6 +24,9 @@ function Header({ id, title, subtitle, user }) {
     'var(--background-silver, #FAF9FF)'
   );
   const [textColor, setTextColor] = useState('var(--21-purple-dark, #411461)');
+  const [ticketCount, setTicketCount] = useState(0); // 티켓 개수 상태 추가
+
+  const navigate = useNavigate(); // 로그아웃 후 리다이렉션을 위해 추가
 
   // boxShadow 상태 추가
   const [boxShadow, setBoxShadow] = useState(
@@ -22,6 +38,7 @@ function Header({ id, title, subtitle, user }) {
     setIsTitleExpanded(false);
     setIsSearchBoxExpanded(true);
   };
+
   const handleSearchBoxBlur = () => {
     if (searchBoxInputValue.trim() === '') {
       // 검색창 입력이 끝남: 아무것도 입력하지 않은 경우는 검색창 비활성화 후 버튼 표시
@@ -31,7 +48,62 @@ function Header({ id, title, subtitle, user }) {
   };
 
   useEffect(() => {
-    console.log(id);
+    //임시로 userID를 1로 설정.
+
+    const userId = 1;
+
+    /*
+UID를 추후에 로그인 정보에서 가져올시
+
+
+const fetchUserTicket = async () => {
+      const currentUser = auth.currentUser;
+
+      if (currentUser) {
+        try {
+          const userId = currentUser.uid;
+
+          // 사용자 티켓 정보를 백엔드에서 가져오기
+          const response = await axios.get(
+            `http://68.183.225.136:3000/user/ticket/${userId}`
+          );
+
+          if (response.data && response.data.ticket !== undefined) {
+            setTicketCount(response.data.ticket);
+          } else {
+            console.error('사용자 티켓 정보를 가져올 수 없습니다.');
+          }
+        } catch (error) {
+          console.error('사용자 티켓 정보를 가져오는 중 오류 발생:', error);
+        }
+      } else {
+        console.error('로그인된 사용자가 없습니다.');
+        // 로그인 페이지로 리다이렉션
+        navigate('/login');
+      }
+    };
+*/
+
+    // 로그인된 사용자 티켓 정보 가져오기
+    const fetchUserTicket = async () => {
+      try {
+        // 사용자 티켓 정보를 백엔드에서 가져오기
+        const response = await axios.get(
+          `http://68.183.225.136:3000/user/ticket/${userId}`
+        );
+
+        if (response.data && response.data.ticket !== undefined) {
+          setTicketCount(response.data.ticket);
+        } else {
+          console.error('사용자 티켓 정보를 가져올 수 없습니다.');
+        }
+      } catch (error) {
+        console.error('사용자 티켓 정보를 가져오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchUserTicket();
+
     switch (id) {
       case 'Home':
         setIsTitleExpanded(true);
@@ -41,29 +113,23 @@ function Header({ id, title, subtitle, user }) {
       case 'Party-Search':
         setIsTitleExpanded(true);
         setIsSearchButtonExpanded(true);
-
         break;
-
       case 'Clothing-Search':
         setIsTitleExpanded(true);
         setBackgroundColor('var(--background-silver, #FAF9FF)');
         // Clothing-Search일 때 boxShadow를 표시 X
         setBoxShadow('none');
         break;
-
       case 'MyClothes':
         setIsTitleExpanded(true);
         setBackgroundColor('var(--background-silver, #FAF9FF)');
         // MyClothes일 때 boxShadow를 표시 X
         setBoxShadow('none');
         break;
-
       default:
         setIsTitleExpanded(true);
     }
-
-    return () => {};
-  }, []);
+  }, [id, navigate]);
 
   return (
     <Box
@@ -87,7 +153,13 @@ function Header({ id, title, subtitle, user }) {
       >
         {/* 티켓 아이콘과 숫자 */}
         <Flex justifyContent="space-between" alignItems="center" mb="19px">
-          <Image w="39px" h="26px" src="/images/logo.png" alt="logo" />
+          <Image
+            w="39px"
+            h="26px"
+            src="/images/logo.png"
+            alt="logo"
+            onClick={handleLogout}
+          />
 
           <Flex alignItems="center" gap="4px">
             <IconifyIcon
@@ -103,7 +175,7 @@ function Header({ id, title, subtitle, user }) {
               fontWeight="600"
               color="gray.500"
             >
-              {user ? user.ticketCount : 0}
+              {ticketCount}
             </Text>
           </Flex>
         </Flex>

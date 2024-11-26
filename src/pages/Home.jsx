@@ -14,7 +14,7 @@ function Home() {
   // 파티 리스트를 불러오는 함수
   const fetchPartyList = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/party'); // API 호출
+      const response = await axios.get('http://68.183.225.136:3000/party'); // API 호출
       setPartyList(response.data); // 응답 데이터를 상태에 저장
     } catch (error) {
       console.error('파티 목록을 불러오는데 실패했습니다:', error);
@@ -49,7 +49,7 @@ function Home() {
               <PartyListItem
                 key={party.id}
                 onPartyClick={() => {
-                  navigate('/party', { state: { ...party } });
+                  navigate(`/party/${party.id}`);
                 }} // to party page
                 party={party}
               />

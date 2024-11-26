@@ -2,6 +2,8 @@ const PartyModel = require('../models/partyModel');
 const userModel = require('../models/userModel');
 const { getDistance, format_date, getWebUrl } = require('../utils/helpers');
 
+const bucket = admin.storage().bucket();
+
 async function edit_party(party, latitude, longitude) {
   const distance = getDistance(
     latitude,
