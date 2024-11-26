@@ -24,7 +24,7 @@ function PartySearch() {
   // 파티 리스트를 불러오는 함수
   const fetchPartyList = async (latitude, longitude) => {
     try {
-      const response = await axios.get('http://localhost:3000/party', {
+      const response = await axios.get('http://68.183.225.136:3000/party', {
         params: {
           latitude: latitude,
           longitude: longitude,
