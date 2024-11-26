@@ -117,7 +117,7 @@ function NavBarAndButton() {
     '/liked-parties',
     '/liked-clothes',
   ];
-  
+
   // Check if the current path matches any hidden path or pattern
   const isHidden =
     hiddenPaths.includes(location.pathname) ||
