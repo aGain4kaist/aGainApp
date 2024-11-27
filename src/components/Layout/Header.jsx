@@ -192,6 +192,7 @@ const fetchUserTicket = async () => {
                 fontWeight="800"
                 lineHeight="normal"
                 color={textColor}
+                mt="20px"
               >
                 {title}
               </Text>
