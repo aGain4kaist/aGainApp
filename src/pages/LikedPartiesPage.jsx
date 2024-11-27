@@ -71,7 +71,7 @@ function LikedPartiesPage() {
 
   // 파티 아이템 클릭 시 상세 페이지로 이동
   const handlePartyClick = (party) => {
-    navigate('/party', { state: { ...party } });
+    navigate(`/party/${party.id}`);
   };
 
   // 커스텀 헤더 컴포넌트

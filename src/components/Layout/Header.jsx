@@ -226,17 +226,8 @@ const fetchUserTicket = async () => {
         </div>
 
         {/* 서브타이틀 */}
-        {subtitle && (
-          <Text
-            fontSize="18px"
-            color={textColor}
-            fontFamily="suit"
-            fontStyle="normal"
-            mb={4}
-          >
-            {subtitle}
-          </Text>
-        )}
+        {subtitle}
+        
         {/* 검색 바 */}
 
         <div>
