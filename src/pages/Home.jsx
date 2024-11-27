@@ -70,7 +70,7 @@ function Home() {
             fontFamily="suit"
             fontStyle="normal"
           >
-            21%와 함께 지금까지 물 {' '}
+            21%와 함께 지금까지 물{' '}
             <Text as="span" fontWeight="700">
               <CountUp end={savedWater} duration={3} />L
             </Text>
