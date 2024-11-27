@@ -11,8 +11,7 @@ function Logout() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
-      logout(); // set user to null
+      await logout(); 
 
       navigate('/login');
       console.log('로그아웃되었습니다.');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/utils/firebaseConfig';
+import { auth, db } from '@/utils/firebaseConfig';
+import { doc, setDoc } from 'firebase/firestore';
 import {
   Box,
   Button,
@@ -17,6 +18,7 @@ import { Image } from '@chakra-ui/react';
 
 function Signup() {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +31,29 @@ function Signup() {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = userCredential;
+
+      // Save user data to Firestore(db)
+      const userDocRef = doc(db, 'User', user.uid);
+      await setDoc(userDocRef, {
+        id: user.uid,
+        username,
+        description: '모두의 지속가능한 옷장',
+        exchanges: 0,
+        height: 170,
+        weight: 60,
+        length: 260,
+        liked_clothes: [],
+        liked_parties: [],
+        my_clothes: [],
+        profile_picture: '',
+        show_body_size: true,
+        tickets: 0,
+      });
+
+      console.log('User signed up and saved to Firestore db!');
+
       navigate('/'); // 회원가입 후 홈으로 리다이렉션
     } catch (error) {
       let message = '회원가입에 실패했습니다.';
@@ -74,6 +98,14 @@ function Signup() {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          mb={4}
+          bg="gray.100"
+          focusBorderColor="purple.500"
+        />
+        <Input
+          placeholder="닉네임"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           mb={4}
           bg="gray.100"
           focusBorderColor="purple.500"

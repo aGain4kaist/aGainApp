@@ -62,7 +62,7 @@ function Home() {
     <Flex direction="column" height="100vh" position="relative">
       <Header
         id="Home"
-        title={`안녕하세요, ${user.displayName}님!`}
+        title={`안녕하세요, ${user.username}님!`}
         subtitle={
           <Text
             fontSize="18px"

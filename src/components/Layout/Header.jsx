@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../utils/UserContext';
 
-export const handleLogout = async () => {
+/* export const handleLogout = async () => {
   const { logout } = useUser();
   try {
     await signOut(auth);
@@ -15,7 +15,7 @@ export const handleLogout = async () => {
   } catch (error) {
     console.error('로그아웃에 실패했습니다:', error);
   }
-};
+}; */
 
 function Header({ id, title, subtitle }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
@@ -28,6 +28,7 @@ function Header({ id, title, subtitle }) {
   const [textColor, setTextColor] = useState('var(--21-purple-dark, #411461)');
   const [ticketCount, setTicketCount] = useState(0); // 티켓 개수 상태 추가
 
+  const { user } = useUser();
   const navigate = useNavigate(); // 로그아웃 후 리다이렉션을 위해 추가
 
   // boxShadow 상태 추가

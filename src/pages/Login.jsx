@@ -4,7 +4,8 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import { auth } from '@/utils/firebaseConfig';
+import { auth, db } from '@/utils/firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { useUser } from '../utils/UserContext';
 import {
   Box,
@@ -25,19 +26,37 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
-  // 유저 context에 추가
-  const { login } = useUser();
-
   const handleLogin = async () => {
+    setLoading(true);
+
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log('email login handled: ', response);
-      login(response.user); // setUser
+      const { user } = response;
 
-      navigate('/home'); // 로그인 후 홈으로 리다이렉션
+      // Reference to Firestore document for the user
+      const userDocRef = doc(db, 'User', user.uid);
+
+      // Fetch user document from Firestore
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        // Return existing user data
+        console.log('User document found:', userDoc.data());
+        // Set user context and navigate
+        setUser({ id: user.uid, ...userDoc.data() });
+        navigate('/home'); // 로그인 후 홈으로 리다이렉션
+
+        // return { id: user.uid, ...userDoc.data() };
+      } else {
+        // User is authenticated but no Firestore data exists (shouldn't happen in this flow)
+        throw new Error('User data not found in Firestore. Please contact support.');
+      } 
+
     } catch (error) {
       let message = '로그인에 실패했습니다.';
       if (error.code === 'auth/user-not-found') {
@@ -46,20 +65,56 @@ function Login() {
         message = '비밀번호가 잘못되었습니다.';
       }
       alert(message);
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
+    setLoading(true);
+
     try {
       const response = await signInWithPopup(auth, provider);
-      console.log('google login handled: ', response);
-      login(response.user); // setUser
+      const { user } = response;
 
+      // Check if user already exists in Firestore
+      const userDocRef = doc(db, 'User', user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        // Save user data to Firestore
+        await setDoc(userDocRef, {
+          id: user.uid,
+          username: user.displayName || 'again',
+          description: '모두의 지속가능한 옷장',
+          exchanges: 0,
+          height: 170,
+          weight: 60,
+          length: 260,
+          liked_clothes: [],
+          liked_parties: [],
+          my_clothes: [],
+          profile_picture: '',
+          show_body_size: true,
+          tickets: 0,
+        });
+        
+      }
+
+      console.log('구글 로그인 성공!');
+
+      // Set user context and navigate
+      const updatedUser = (await getDoc(userDocRef)).data();
+      setUser({ id: user.uid, ...updatedUser });
       navigate('/home'); // 성공 시 홈으로 이동
+      
     } catch (error) {
       console.error('구글 로그인 오류:', error);
       alert('구글 로그인에 실패했습니다. ' + (error.message || ''));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,7 +147,7 @@ function Login() {
         boxShadow="xl"
       >
         <Input
-          placeholder="아이디"
+          placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           mb={4}
