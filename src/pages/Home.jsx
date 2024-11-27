@@ -8,6 +8,7 @@ import ClothingSwiper from '../components/ClothingSwiper';
 import Header from '../components/Layout/Header';
 import PartyListItem from '../components/PartyListItem';
 import { clothingItems } from '../data/clothingItems';
+import { useUser } from '../utils/UserContext';
 
 function Home() {
   const [partyList, setPartyList] = useState([]); // 파티 리스트 상태
@@ -27,11 +28,13 @@ function Home() {
     fetchPartyList(); // 컴포넌트가 처음 렌더링될 때 파티 리스트 불러오기
   }, []);
 
+  const { user } = useUser(); // user context 정보
+
   return (
     <Flex direction="column" height="100vh" position="relative">
       <Header
         id="Home"
-        title="안녕하세요, again님!"
+        title={`안녕하세요, ${user.displayName}님!`}
         subtitle="21%와 함께 지금까지 물 2,000L를 절약했어요."
       />
       {/* <Box className="home-page" bg="gray.100" minH="260vh" p="25px"> */}

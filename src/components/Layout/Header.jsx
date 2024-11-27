@@ -5,8 +5,10 @@ import axios from 'axios';
 import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../../utils/UserContext';
 
 export const handleLogout = async () => {
+  const { logout } = useUser();
   try {
     await signOut(auth);
     console.log('로그아웃되었습니다.');
@@ -158,7 +160,7 @@ const fetchUserTicket = async () => {
             h="26px"
             src="/images/logo.png"
             alt="logo"
-            onClick={handleLogout}
+            //onClick={handleLogout}  // Logout component 생성됨
           />
 
           <Flex alignItems="center" gap="4px">

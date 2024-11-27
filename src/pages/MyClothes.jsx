@@ -1,5 +1,4 @@
 // src/pages/MyClothes.jsx
-
 import {
   Avatar,
   Box,
@@ -13,6 +12,7 @@ import axios from 'axios'; // axios 임포트
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate 임포트
 import Header from '../components/Layout/Header';
+import Logout from '../components/Logout';
 
 function MyClothes() {
   const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
@@ -85,15 +85,6 @@ function MyClothes() {
 
     fetchUserData();
   }, []);
-
-  // 로그아웃 핸들러 함수
-  const handleLogout = () => {
-    // 예시로 로컬 스토리지에서 토큰 제거
-    // 실제 구현 시, 인증 상태를 관리하는 로직에 맞게 수정
-    localStorage.removeItem('authToken');
-    // 로그인 페이지로 이동
-    navigate('/login');
-  };
 
   return (
     <Flex
@@ -324,20 +315,7 @@ function MyClothes() {
       </Grid>
 
       {/* 로그아웃 링크 추가 */}
-      <Text
-        mt="50px"
-        ml="20px"
-        mb="30px"
-        color="var(--subtitle-Gray, #7D7D7D)"
-        fontFamily="SUIT"
-        fontSize="12px"
-        fontWeight="700"
-        textDecoration="underline"
-        cursor="pointer"
-        onClick={handleLogout}
-      >
-        로그아웃 하기
-      </Text>
+      <Logout />
     </Flex>
   );
 }
