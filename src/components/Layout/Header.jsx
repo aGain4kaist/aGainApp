@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../utils/UserContext';
 
 export const handleLogout = async () => {
-  const {logout} = useUser();
+  const { logout } = useUser();
   try {
     await signOut(auth);
     console.log('로그아웃되었습니다.');

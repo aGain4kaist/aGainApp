@@ -86,7 +86,6 @@ function MyClothes() {
     fetchUserData();
   }, []);
 
-
   return (
     <Flex
       direction="column"

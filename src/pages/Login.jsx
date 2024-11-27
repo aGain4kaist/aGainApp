@@ -34,7 +34,7 @@ function Login() {
   const handleLogin = async () => {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log("email login handled: ", response);
+      console.log('email login handled: ', response);
       login(response.user); // setUser
 
       navigate('/home'); // 로그인 후 홈으로 리다이렉션
@@ -53,7 +53,7 @@ function Login() {
     const provider = new GoogleAuthProvider();
     try {
       const response = await signInWithPopup(auth, provider);
-      console.log("google login handled: ", response);
+      console.log('google login handled: ', response);
       login(response.user); // setUser
 
       navigate('/home'); // 성공 시 홈으로 이동
