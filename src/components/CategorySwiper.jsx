@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 function CategorySwiper({ items }) {
   return (
     <Box mt={0}>
-      <Text fontSize="24px" fontWeight="bold" mb={4} style={{ color: 'black' }}>
+      <Text fontSize="24px" fontWeight="bold" style={{ color: 'black' }}>
         카테고리로 찾기
       </Text>
       <Swiper spaceBetween={20} slidesPerView="auto">
