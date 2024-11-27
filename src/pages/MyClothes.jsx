@@ -13,13 +13,17 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // useNavigate 임포트
 import Header from '../components/Layout/Header';
 import Logout from '../components/Logout';
+import { useUser } from '../utils/UserContext';
 
 function MyClothes() {
-  const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
   const maxItems = 12;
+
+  const { user, userClothes } = useUser();
+  //const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
+
   const navigate = useNavigate(); // useNavigate 훅 초기화
 
-  const registeredClothes = [
+  /* const registeredClothes = [
     '/images/register1.jpg',
     '/images/register2.jpg',
     '/images/register3.jpg',
@@ -44,35 +48,25 @@ function MyClothes() {
     '/images/notregister3.jpg',
     '/images/notregister4.jpg',
     '/images/notregister5.jpg',
-  ];
+  ]; */
 
+  // 현재 등록된 옷 / 등록안된 옷 구분 없음 똑같이 한번에 불러온 userClothes 똑같이 적용
   const displayRegisteredClothes =
-    registeredClothes.length > maxItems
-      ? registeredClothes.slice(0, maxItems - 1)
-      : registeredClothes;
+    userClothes.length > maxItems
+      ? userClothes.slice(0, maxItems - 1)
+      : userClothes;
 
   const displaynotregisteredClothes =
-    notregisteredClothes.length > maxItems
-      ? notregisteredClothes.slice(0, maxItems - 1)
-      : notregisteredClothes;
+    userClothes.length > maxItems
+      ? userClothes.slice(0, maxItems - 1)
+      : userClothes;
 
-  useEffect(() => {
+  /* useEffect(() => {
     // 사용자 데이터 가져오기 함수
     const fetchUserData = async () => {
       try {
         // 사용자 ID를 임의로 '1'로 지정
         const userId = '1';
-
-        /*
-        실제 ID 적용시
-        const userId = auth.currentUser ? auth.currentUser.uid : null;
-
-        if (userId) {
-          // 사용자 데이터 가져오기
-        } else {
-          // 로그인되지 않은 경우 처리
-        }
-        */
 
         const response = await axios.get(
           `http://68.183.225.136:3000/user/${userId}`
@@ -84,7 +78,7 @@ function MyClothes() {
     };
 
     fetchUserData();
-  }, []);
+  }, []); */
 
   return (
     <Flex
@@ -101,7 +95,7 @@ function MyClothes() {
       <Flex align="center" mb="33px" ml="25px">
         <Avatar
           size="lg"
-          src={userData ? userData.profile_picture : '/images/loading_user.jpg'}
+          src={ user ? user.profile_picture : '/images/loading_user.jpg'}
           width="84px"
           height="86.4px"
           flexShrink={0}
@@ -114,7 +108,7 @@ function MyClothes() {
               fontSize="24px"
               fontWeight="700"
             >
-              {userData ? userData.username : '로딩 중...'}
+              { user ? user.username : '로딩 중...'}
             </Text>
           </Flex>
 
@@ -126,7 +120,7 @@ function MyClothes() {
             mb="5px"
             width="262px"
           >
-            {userData ? userData.description : '로딩 중...'}
+            { user ? user.description : '로딩 중...'}
           </Text>
           {/* 좋아요와 즐겨찾기 아이콘 */}
           <Flex align="center" gap="3px">
@@ -190,9 +184,9 @@ function MyClothes() {
         justifyItems="center"
         mb="33px"
       >
-        {displayRegisteredClothes.map((src, index) => (
+        {displayRegisteredClothes.map((clothes) => (
           <Box
-            key={index}
+            key={clothes.id}
             width="90px"
             height="90px"
             borderRadius="20px"
@@ -200,15 +194,15 @@ function MyClothes() {
             filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
           >
             <Image
-              src={src}
-              alt={`Clothes ${index}`}
+              src={clothes.image}
+              alt={`Clothes ${clothes.id}`}
               objectFit="cover"
               width="100%"
               height="100%"
             />
           </Box>
         ))}
-        {registeredClothes.length > maxItems && (
+        {userClothes.length > maxItems && (
           <Box
             key="view-all-registered"
             width="90px"
@@ -237,7 +231,7 @@ function MyClothes() {
         )}
       </Grid>
 
-      {/* 교환 받은 옷 바둑판 배열 */}
+      {/* 아직 파티에 등록하지 않은 옷 바둑판 배열 */}
       <Text
         ml="25px"
         color="var(--Labels-Primary, #000)"
@@ -267,9 +261,9 @@ function MyClothes() {
         justifyItems="center"
         mb="33px"
       >
-        {displaynotregisteredClothes.map((src, index) => (
+        {displaynotregisteredClothes.map((clothes) => (
           <Box
-            key={index}
+            key={clothes.id}
             width="90px"
             height="90px"
             borderRadius="20px"
@@ -277,15 +271,15 @@ function MyClothes() {
             filter="drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))"
           >
             <Image
-              src={src}
-              alt={`notregistered Clothes ${index}`}
+              src={clothes.image}
+              alt={`notregistered Clothes ${clothes.id}`}
               objectFit="cover"
               width="100%"
               height="100%"
             />
           </Box>
         ))}
-        {notregisteredClothes.length > maxItems && (
+        {userClothes.length > maxItems && (
           <Box
             key="view-all-notregestered"
             width="90px"

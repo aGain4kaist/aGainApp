@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import { auth, db } from '@/utils/firebaseConfig';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { useUser } from '../utils/UserContext';
+import { useUser, createNewUserWithIncrementedId } from '../utils/UserContext';
 import {
   Box,
   Button,
@@ -26,8 +26,11 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  
   const [loading, setLoading] = useState(false);
-  const { setUser } = useUser();
+  const [userLoaded, setUserLoaded] = useState(false);  // Track when user is fully loaded
+
+  const { user, setUser, fetchUserClothes } = useUser();
 
   const navigate = useNavigate();
 
@@ -48,10 +51,9 @@ function Login() {
         // Return existing user data
         console.log('User document found:', userDoc.data());
         // Set user context and navigate
-        setUser({ id: user.uid, ...userDoc.data() });
-        navigate('/home'); // 로그인 후 홈으로 리다이렉션
+        setUser({ ...userDoc.data() });
 
-        // return { id: user.uid, ...userDoc.data() };
+        navigate('/home'); // 로그인 후 홈으로 리다이렉션
       } else {
         // User is authenticated but no Firestore data exists (shouldn't happen in this flow)
         throw new Error(
@@ -68,9 +70,18 @@ function Login() {
       alert(message);
       console.log(error);
     } finally {
+      setUserLoaded(true);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (user && user.id && userLoaded) {
+      // Fetch user's clothes only if the user is loaded
+      fetchUserClothes(user.id);
+    }
+  }, [user, userLoaded]);  // This runs after the user is loaded and the user state is updated
+
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
@@ -85,29 +96,16 @@ function Login() {
       const userDoc = await getDoc(userDocRef);
 
       if (!userDoc.exists()) {
-        // Save user data to Firestore
-        await setDoc(userDocRef, {
-          id: user.uid,
-          username: user.displayName || 'again',
-          description: '모두의 지속가능한 옷장',
-          exchanges: 0,
-          height: 170,
-          weight: 60,
-          length: 260,
-          liked_clothes: [],
-          liked_parties: [],
-          my_clothes: [],
-          profile_picture: '',
-          show_body_size: true,
-          tickets: 0,
-        });
+        // Create new user in Firestore
+        const newUser = await createNewUserWithIncrementedId(user);
+        setUser(newUser);
       }
 
       console.log('구글 로그인 성공!');
 
       // Set user context and navigate
       const updatedUser = (await getDoc(userDocRef)).data();
-      setUser({ id: user.uid, ...updatedUser });
+      setUser({ ...updatedUser });
       navigate('/home'); // 성공 시 홈으로 이동
     } catch (error) {
       console.error('구글 로그인 오류:', error);

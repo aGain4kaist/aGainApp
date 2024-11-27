@@ -13,10 +13,11 @@ import { useUser } from '../utils/UserContext';
 
 function Home() {
   const [partyList, setPartyList] = useState([]); // 파티 리스트 상태
-  const [tradeCount, setTradeCount] = useState(0); // Trade 횟수 상태
-  const [savedWater, setSavedWater] = useState(0); // 절약한 물 상태
 
   const { user } = useUser(); // user context 정보
+
+  const [tradeCount, setTradeCount] = useState(user.exchanges); // Trade 횟수 상태
+  const [savedWater, setSavedWater] = useState(tradeCount * 291); // 절약한 물 상태
 
   const navigate = useNavigate(); // 라우팅을 위한 navigate 함수
 
@@ -30,33 +31,9 @@ function Home() {
     }
   };
 
-  // Trade 횟수를 불러오는 함수
-  const fetchTradeCount = async () => {
-    const UserId = 1; // 일단 사용자 ID를 1로 지정.
-
-    /*
-    if (!user || !user.id) {
-      console.error('사용자 정보가 없습니다.');
-      return;
-    }
-    */
-
-    try {
-      const response = await axios.get(
-        `http://68.183.225.136:3000/user/trade/${UserId}`
-      ); // API 호출
-      const count = response.data.trades || 0; // trades 필드 사용
-      setTradeCount(count);
-      setSavedWater(count * 291); // 절약한 물 계산
-    } catch (error) {
-      console.error('Trade 횟수를 불러오는데 실패했습니다:', error);
-    }
-  };
-
   useEffect(() => {
     fetchPartyList(); // 컴포넌트가 처음 렌더링될 때 파티 리스트 불러오기
-    fetchTradeCount(); // Trade 횟수 불러오기
-  }, [user]); // user가 변경될 때마다 Trade 횟수 업데이트
+  }, []); 
 
   return (
     <Flex direction="column" height="100vh" position="relative">

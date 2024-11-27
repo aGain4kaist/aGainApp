@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, Flex, Box, Image, Button, Grid } from '@chakra-ui/react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Icon as IconifyIcon } from '@iconify/react/dist/iconify.js';
+import { useUser } from '../utils/UserContext';
 import axios from 'axios';
 
 // 옷 더미 데이터
@@ -20,6 +21,7 @@ const registeredClothes = [
 
 function PartyDetailPage() {
   const { partyId } = useParams(); // routing 후 parameter로 파티 아이디 받음
+  const { user, userClothes } = useUser();
 
   const [isLoading, setIsLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false); // 파티의 좋아요 상태 가져와야됨
@@ -34,7 +36,7 @@ function PartyDetailPage() {
   // data to fetch
   const [partyDetails, setPartyDetails] = useState(null);
   const [partyAllClothes, setPartyAllClothes] = useState(null);
-  const [userAllClothes, setUserAllClothes] = useState(null);
+  const [userAllClothes, setUserAllClothes] = useState(userClothes);  // 로그인 시 이미 fetch 해서 context에 저장함
 
   const navigate = useNavigate();
 
@@ -53,7 +55,7 @@ function PartyDetailPage() {
       setPartyDetails(detailResponse.data); // Save the data to state
       setPartyAllClothes(clothesResponse.data);
       // MUST CHANGE AFTER USER CONTEXT IS CREATED!!! 현재 내 옷 등록하기의 옷도 전부 파티 옷 데이터로 둠!!!
-      setUserAllClothes(clothesResponse.data);
+      //setUserAllClothes(clothesResponse.data);
       setIsLoading(false); // Update loading state
     } catch (error) {
       console.error(
@@ -76,7 +78,7 @@ function PartyDetailPage() {
     }
   } */
 
-  const fetchUserAllClothes = async (id) => {
+  /* const fetchUserAllClothes = async (id) => {
     try {
       const response = await axios.get(
         `http://68.183.225.136:3000/cloth/user/${id}`
@@ -88,7 +90,7 @@ function PartyDetailPage() {
       console.error('유저의 등록된 옷을 불러오는데 실패했습니다:', error);
       setIsLoading(false); // Even on error, stop the loading state
     }
-  };
+  }; */
 
   // Fetch party details & party clothes on mount
   useEffect(() => {

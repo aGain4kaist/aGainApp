@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/utils/firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
   Box,
   Button,
@@ -15,6 +15,7 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { Image } from '@chakra-ui/react';
+import { useUser, createNewUserWithIncrementedId } from '../utils/UserContext';
 
 function Signup() {
   const [email, setEmail] = useState('');
@@ -23,6 +24,8 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleSignup = async () => {
@@ -38,23 +41,15 @@ function Signup() {
       );
       const { user } = userCredential;
 
-      // Save user data to Firestore(db)
+      // Check if user already exists in Firestore
       const userDocRef = doc(db, 'User', user.uid);
-      await setDoc(userDocRef, {
-        id: user.uid,
-        username,
-        description: '모두의 지속가능한 옷장',
-        exchanges: 0,
-        height: 170,
-        weight: 60,
-        length: 260,
-        liked_clothes: [],
-        liked_parties: [],
-        my_clothes: [],
-        profile_picture: '',
-        show_body_size: true,
-        tickets: 0,
-      });
+      const userDoc = await getDoc(userDocRef);
+      
+      if (!userDoc.exists()) {
+        // Create new user in Firestore
+        const newUser = await createNewUserWithIncrementedId(user, username);
+        setUser(newUser);
+      }
 
       console.log('User signed up and saved to Firestore db!');
 
