@@ -227,7 +227,7 @@ const fetchUserTicket = async () => {
 
         {/* 서브타이틀 */}
         {subtitle}
-        
+
         {/* 검색 바 */}
 
         <div>

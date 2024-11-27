@@ -17,7 +17,7 @@ function Home() {
   const [savedWater, setSavedWater] = useState(0); // 절약한 물 상태
 
   const { user } = useUser(); // user context 정보
-  
+
   const navigate = useNavigate(); // 라우팅을 위한 navigate 함수
 
   // 파티 리스트를 불러오는 함수
@@ -41,9 +41,10 @@ function Home() {
     }
     */
 
-
     try {
-      const response = await axios.get(`http://68.183.225.136:3000/user/trade/${UserId}`); // API 호출
+      const response = await axios.get(
+        `http://68.183.225.136:3000/user/trade/${UserId}`
+      ); // API 호출
       const count = response.data.trades || 0; // trades 필드 사용
       setTradeCount(count);
       setSavedWater(count * 291); // 절약한 물 계산
@@ -69,7 +70,8 @@ function Home() {
             fontFamily="suit"
             fontStyle="normal"
           >
-            21%와 함께 지금까지 물 <CountUp end={savedWater} duration={3} /> L를 절약했어요.
+            21%와 함께 지금까지 물 <CountUp end={savedWater} duration={3} /> L를
+            절약했어요.
           </Text>
         }
       />
