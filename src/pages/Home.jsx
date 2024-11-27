@@ -33,7 +33,7 @@ function Home() {
 
   useEffect(() => {
     fetchPartyList(); // 컴포넌트가 처음 렌더링될 때 파티 리스트 불러오기
-  }, []); 
+  }, []);
 
   return (
     <Flex direction="column" height="100vh" position="relative">

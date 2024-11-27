@@ -26,7 +26,10 @@ const createDefaultUser = (firebaseUser, username, userId) => ({
 });
 
 // Function to create a new user with auto-incremented ID
-export const createNewUserWithIncrementedId = async (firebaseUser, username) => {
+export const createNewUserWithIncrementedId = async (
+  firebaseUser,
+  username
+) => {
   const counterDocRef = doc(db, 'counters', 'userIdCounter'); // A document to track the last used ID
   const counterDoc = await getDoc(counterDocRef);
 
@@ -35,7 +38,7 @@ export const createNewUserWithIncrementedId = async (firebaseUser, username) => 
   if (counterDoc.exists()) {
     // Increment the user ID based on the last value in the counter
     newUserId = counterDoc.data().lastUserId + 1;
-    
+
     // Update the counter document
     await updateDoc(counterDocRef, { lastUserId: newUserId });
   } else {
@@ -55,17 +58,19 @@ export const createNewUserWithIncrementedId = async (firebaseUser, username) => 
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userClothes, setUserClothes] = useState([]);   // 유저가 넣어둔 옷들 (지금 api가 등록된 옷/안등록된 옷 구분을 안 함)
+  const [userClothes, setUserClothes] = useState([]); // 유저가 넣어둔 옷들 (지금 api가 등록된 옷/안등록된 옷 구분을 안 함)
   const [loading, setLoading] = useState(true);
-  const [userLoaded, setUserLoaded] = useState(false);  // Track when user is fully loaded
+  const [userLoaded, setUserLoaded] = useState(false); // Track when user is fully loaded
 
   // Function to fetch user's clothes
   const fetchUserClothes = async (userId) => {
     try {
       //const response = await axios.get(`http://68.183.225.136:3000/cloth/user/${userId}`);
-      const response = await axios.get(`http://68.183.225.136:3000/cloth/user/1`);  // 1번을 제외한 api가 터짐 (코드500)
+      const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/1`
+      ); // 1번을 제외한 api가 터짐 (코드500)
 
-      console.log("user clothes fetched: ", response.data);
+      console.log('user clothes fetched: ', response.data);
       setUserClothes(response.data);
     } catch (error) {
       console.error('Error fetching user clothes:', error);
@@ -90,7 +95,6 @@ export const UserProvider = ({ children }) => {
             const newUser = await createNewUserWithIncrementedId(firebaseUser);
             setUser(newUser);
           }
-
         } catch (error) {
           console.error('Error fetching or creating user:', error);
           alert('사용자 정보를 불러오는 데 실패했습니다.');
@@ -100,7 +104,7 @@ export const UserProvider = ({ children }) => {
         setUser(null);
         setUserClothes([]); // Clear clothes on logout
       }
-      setUserLoaded(true);  // Set userLoaded to true after user data is fetched or logged out
+      setUserLoaded(true); // Set userLoaded to true after user data is fetched or logged out
       setLoading(false);
     });
 
@@ -112,8 +116,7 @@ export const UserProvider = ({ children }) => {
       // Fetch user's clothes only if the user is loaded
       fetchUserClothes(user.id);
     }
-  }, [user, userLoaded]);  // This runs after the user is loaded and the user state is updated
-
+  }, [user, userLoaded]); // This runs after the user is loaded and the user state is updated
 
   const logout = async () => {
     try {
@@ -128,9 +131,10 @@ export const UserProvider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, userClothes, fetchUserClothes, loading, logout }}>
+    <UserContext.Provider
+      value={{ user, setUser, userClothes, fetchUserClothes, loading, logout }}
+    >
       {children}
     </UserContext.Provider>
   );
 };
-

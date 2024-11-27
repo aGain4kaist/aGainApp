@@ -95,7 +95,7 @@ function MyClothes() {
       <Flex align="center" mb="33px" ml="25px">
         <Avatar
           size="lg"
-          src={ user ? user.profile_picture : '/images/loading_user.jpg'}
+          src={user ? user.profile_picture : '/images/loading_user.jpg'}
           width="84px"
           height="86.4px"
           flexShrink={0}
@@ -108,7 +108,7 @@ function MyClothes() {
               fontSize="24px"
               fontWeight="700"
             >
-              { user ? user.username : '로딩 중...'}
+              {user ? user.username : '로딩 중...'}
             </Text>
           </Flex>
 
@@ -120,7 +120,7 @@ function MyClothes() {
             mb="5px"
             width="262px"
           >
-            { user ? user.description : '로딩 중...'}
+            {user ? user.description : '로딩 중...'}
           </Text>
           {/* 좋아요와 즐겨찾기 아이콘 */}
           <Flex align="center" gap="3px">

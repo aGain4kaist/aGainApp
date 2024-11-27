@@ -24,7 +24,7 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
+
   const { setUser } = useUser();
   const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ function Signup() {
       // Check if user already exists in Firestore
       const userDocRef = doc(db, 'User', user.uid);
       const userDoc = await getDoc(userDocRef);
-      
+
       if (!userDoc.exists()) {
         // Create new user in Firestore
         const newUser = await createNewUserWithIncrementedId(user, username);

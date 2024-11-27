@@ -36,7 +36,7 @@ function PartyDetailPage() {
   // data to fetch
   const [partyDetails, setPartyDetails] = useState(null);
   const [partyAllClothes, setPartyAllClothes] = useState(null);
-  const [userAllClothes, setUserAllClothes] = useState(userClothes);  // 로그인 시 이미 fetch 해서 context에 저장함
+  const [userAllClothes, setUserAllClothes] = useState(userClothes); // 로그인 시 이미 fetch 해서 context에 저장함
 
   const navigate = useNavigate();
 

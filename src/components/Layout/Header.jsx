@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../utils/UserContext';
 
-
 function Header({ id, title, subtitle }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
   const [isSearchBoxExpanded, setIsSearchBoxExpanded] = useState(false);
@@ -44,7 +43,6 @@ function Header({ id, title, subtitle }) {
   };
 
   useEffect(() => {
-
     switch (id) {
       case 'Home':
         setIsTitleExpanded(true);

@@ -26,9 +26,9 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const [loading, setLoading] = useState(false);
-  const [userLoaded, setUserLoaded] = useState(false);  // Track when user is fully loaded
+  const [userLoaded, setUserLoaded] = useState(false); // Track when user is fully loaded
 
   const { user, setUser, fetchUserClothes } = useUser();
 
@@ -80,8 +80,7 @@ function Login() {
       // Fetch user's clothes only if the user is loaded
       fetchUserClothes(user.id);
     }
-  }, [user, userLoaded]);  // This runs after the user is loaded and the user state is updated
-
+  }, [user, userLoaded]); // This runs after the user is loaded and the user state is updated
 
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
