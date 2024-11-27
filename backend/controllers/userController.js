@@ -14,6 +14,7 @@ exports.getAllUsers = async (req, res) => {
     const items = await users.map((user) => edit_user(user));
     Promise.all(items).then((result) => {
       res.json(result);
+      return;
     });
   } catch (error) {
     console.log(error);
@@ -25,6 +26,7 @@ exports.getUserByID = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
     res.json(await edit_user(user));
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
@@ -35,6 +37,7 @@ exports.getUserTicket = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
     res.json({ ticket: user.tickets });
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
@@ -45,6 +48,7 @@ exports.getUserExchange = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
     res.json({ trades: user.exchanges });
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
@@ -106,6 +110,8 @@ exports.buyCloth = async (req, res) => {
     owner.exchanges += 1;
     user.exchanges += 1;
     user.tickets -= 1;
+    delete user.id;
+    delete owner.id;
     await UserModel.updateUser(user.id, user);
     await UserModel.updateUser(owner.id, owner);
   } catch (error) {

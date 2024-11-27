@@ -22,9 +22,9 @@ const ClothModel = {
   },
 
   // 특정 파티를 Firestore에서 업데이트하는 메소드
-  async updateCloth(clothData) {
-    const docRef = await db.collection('Cloth').add(clothData, { merge: true });
-    return docRef.id;
+  async updateCloth(id, clothData) {
+    await db.collection('Cloth').doc(id).set(clothData, { merge: true });
+    return { id, ...clothData };
   },
 
   // 특정 파티를 Firestore에서 삭제하는 메소드
