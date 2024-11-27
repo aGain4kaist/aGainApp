@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Button,
   Flex,
@@ -12,8 +13,11 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import axios from 'axios'; // axios 임포트
-import React, { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
+import OpenAI from 'openai';
+import { storage } from '@/utils/firebaseConfig';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 // 커스텀 BackIcon
 const BackIcon = (props) => (
@@ -40,53 +44,98 @@ function PutClothes() {
   const [story, setStory] = useState('');
   const [keywords, setKeywords] = useState([]);
   const [nickname, setNickname] = useState('');
-
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // 키워드 (추후 AI 사용) 더미데이터
-  const dummyKeywords = ['따뜻한', '부드러운', '베이지 색', '니트', '남성복'];
-
-  // 프로필 키, 몸무게 가져오기 함수
-  const handleProfileSizeClick = async () => {
-    try {
-      // 사용자 ID를 임의로 '1'로 설정
-      const userId = '1';
-
-      // 백엔드에서 사용자 데이터 가져오기
-      const response = await axios.get(
-        `http://68.183.225.136:3000/user/${userId}`
-      );
-
-      if (response.data) {
-        const { height, weight } = response.data;
-
-        // height와 weight가 존재하는지 확인
-        if (height && weight) {
-          setHeight(height);
-          setWeight(weight);
-          console.log(
-            '프로필 사이즈 가져오기 성공: 키와 몸무게가 자동으로 입력되었습니다.'
-          );
-        } else {
-          console.warn('데이터 부족: 사용자의 키나 몸무게 정보가 없습니다.');
-        }
-      } else {
-        console.error('데이터 없음: 사용자 데이터를 찾을 수 없습니다.');
-      }
-    } catch (error) {
-      console.error('사용자 데이터를 가져오는 중 오류 발생:', error);
+  // 이미지 선택 핸들러
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(file);
     }
   };
 
-  // 키워드 추출 버튼 동작
-  const handleExtractKeywords = () => {
-    setKeywords(dummyKeywords);
+  // 이미지 업로드 함수 (Firebase Storage 사용)
+  const uploadImageToCloud = async (file) => {
+    try {
+      const storageRef = ref(storage, `images/${file.name}`);
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      return downloadURL;
+    } catch (error) {
+      console.error('이미지 업로드 실패:', error);
+      alert('이미지 업로드에 실패했습니다. 다시 시도해주세요.');
+      return null;
+    }
+  };
+
+  // 키워드 추출 요청 핸들러
+  const handleExtractKeywords = async () => {
+    if (!selectedImage || !nickname || !story) {
+      alert('이미지, 옷 이름, 옷 이야기를 모두 입력해주세요.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+
+      if (!apiKey) {
+        throw new Error('OpenAI API 키가 설정되지 않았습니다.');
+      }
+
+      // Firebase에 이미지를 업로드하고 URL을 얻음
+      const uploadedImageUrl = await uploadImageToCloud(selectedImage);
+      if (!uploadedImageUrl) {
+        throw new Error('이미지 업로드에 실패했습니다.');
+      }
+
+      // OpenAI 인스턴스 생성
+      const openai = new OpenAI({
+        apiKey,
+        dangerouslyAllowBrowser: true, // 브라우저에서 실행 허용
+      });
+
+      // OpenAI API 호출
+      // OpenAI API 호출
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4o-mini',
+        messages: [
+          {
+            role: 'user',
+            content: `I have a clothing item named "${nickname}". Here is the story: "${story}". Provide only 5 Korean adjective keywords related to the clothing's texture, specific qualities, and descriptive imagery. Only respond with the 5 Korean adjectives separated by commas. Do not provide any other explanation or context.`,
+          },
+          {
+            role: 'user',
+            content: `Here is the image of the clothing item: ${uploadedImageUrl}`,
+          },
+        ],
+      });
+
+      const description = completion.choices[0].message.content;
+      const keywordsArray = description.split(',').map((kw) => kw.trim());
+      console.log(description);
+      console.log(keywordsArray);
+      setKeywords(keywordsArray);
+    } catch (error) {
+      console.error('키워드 추출 실패:', error);
+      alert('키워드 추출에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 프로필 사이즈 가져오기
+  const handleProfileSizeClick = () => {
+    setHeight('180');
+    setWeight('70');
   };
 
   // 태그 클릭 시 "내 옷의 이야기"에 추가
   const handleTagClick = (keyword) => {
-    // 중복 키워드 추가 방지
     if (!story.includes(keyword)) {
       setStory((prev) => (prev ? `${prev} ${keyword}` : keyword));
     }
@@ -133,16 +182,35 @@ function PutClothes() {
         flexShrink={0}
         boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
         style={{ backdropFilter: 'blur(25px)' }}
+        onClick={() => document.getElementById('imageInput').click()}
       >
-        <Image
-          src="/camera.png"
-          alt="Camera Icon"
-          boxSize="60px"
-          objectFit="cover"
+        {selectedImage ? (
+          <Image
+            src={URL.createObjectURL(selectedImage)}
+            alt="Selected"
+            height="100%" // 높이와 너비를 컨테이너에 맞게 설정
+            width="100%"
+            objectFit="cover"
+            borderRadius="20px"
+          />
+        ) : (
+          <Image
+            src="/camera.png"
+            alt="Camera Icon"
+            boxSize="60px"
+            objectFit="cover"
+          />
+        )}
+        <Input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: 'none' }}
         />
       </Flex>
 
-      {/* 스크롤 가능한 메인 콘텐츠 */}
+      {/* 메인 콘텐츠 */}
       <Flex
         direction="column"
         px="32px"
@@ -158,7 +226,7 @@ function PutClothes() {
           flexDirection={{ base: 'column', sm: 'row' }}
           alignItems="center"
           width="100%"
-          minHeight="72px" // 최소 높이 설정
+          minHeight="72px"
         >
           <Text
             fontFamily="SUIT"
@@ -166,7 +234,7 @@ function PutClothes() {
             fontWeight="700"
             color="var(--21-purple-dark, #411461)"
             mb={{ base: '10px', sm: '0' }}
-            mr={{ base: '0', sm: '30px' }} // 'sm' 이상에서 30px 간격
+            mr={{ base: '0', sm: '30px' }}
             width={{ base: '100%', sm: 'auto' }}
           >
             옷 별명
@@ -218,6 +286,7 @@ function PutClothes() {
           borderRadius="25px"
           fontSize="14px"
           onClick={handleExtractKeywords}
+          isLoading={isLoading}
         >
           키워드 추출하기
         </Button>
@@ -344,26 +413,23 @@ function PutClothes() {
           alignItems="flex-start"
           width="100%"
         >
-          {/* 라벨 */}
           <Text
             fontFamily="SUIT"
             fontSize="20px"
             fontWeight="700"
             color="var(--21-purple-dark, #411461)"
             mb={{ base: '10px', sm: '0' }}
-            mr={{ base: '0', sm: '30px' }} // 'sm' 이상에서 30px 간격
+            mr={{ base: '0', sm: '30px' }}
             width={{ base: '100%', sm: 'auto' }}
           >
             사이즈 리뷰
           </Text>
 
-          {/* 입력 필드 컨테이너 */}
           <Flex
             direction="column"
             width={{ base: '100%', sm: 'auto' }}
             flex="1"
           >
-            {/* '키' 입력 필드 */}
             <Flex
               alignItems="center"
               borderRadius="25px"
@@ -380,7 +446,7 @@ function PutClothes() {
                 color="#411461"
                 ml="16px"
                 mr="5px"
-                width="70px" // 라벨 너비를 동일하게 설정
+                width="70px"
               >
                 키:
               </Text>
@@ -402,7 +468,6 @@ function PutClothes() {
               />
             </Flex>
 
-            {/* '몸무게' 입력 필드 */}
             <Flex
               alignItems="center"
               borderRadius="25px"
@@ -418,7 +483,7 @@ function PutClothes() {
                 color="#411461"
                 ml="16px"
                 mr="5px"
-                width="70px" // 동일한 라벨 너비
+                width="70px"
               >
                 몸무게:
               </Text>
