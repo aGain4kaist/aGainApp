@@ -72,7 +72,7 @@ function Home() {
           >
             21%와 함께 지금까지 물{' '}
             <Text as="span" fontWeight="700">
-              <CountUp end={savedWater} duration={3} />L
+              <CountUp end={savedWater} duration={1.5} />L
             </Text>
             를 절약했어요.
           </Text>
