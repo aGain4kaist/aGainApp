@@ -1,4 +1,5 @@
 const { db } = require('../config/firebaseAdmin');
+const multer = require('multer');
 
 const PartyModel = {
   // 모든 파티를 Firestore에서 가져오는 메소드

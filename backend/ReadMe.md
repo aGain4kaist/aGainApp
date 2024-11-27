@@ -23,6 +23,7 @@
 - /user/ : 존재하는 모든 유저들을 json 형식으로 반환합니다.
 - /user/:id : id가 매개변수 "id"인 유저의 정보를 json 형식으로 반환합니다.
 - /user/ticket/:id : id가 매개변수 "id"인 유저의 티켓 수를 json 형식으로 반환합니다.
+- /user/upload : POST 메서드를 사용합니다. 유저의 정보와 프로필 사진을 받아 정보는 db에, 프로필 사진은 Firestore에 저장합니다.
 
 - /cloth/ : 존재하는 모든 옷들을 최신순으로 정렬하여 json 형식으로 반환합니다.
 - /cloth/:id : id가 매개변수 "id"인 옷의 정보를 json 형식으로 반환합니다.
@@ -30,3 +31,4 @@
 - /cloth/user/:id : id가 매개변수 "id"인 유저가 등록한 모든 옷을 최신순으로 정렬하여 json 형식으로 반환합니다.
 - /cloth/like/:userid/:clothid : 매개변수 "userid"를 id로 가지는 유저가 매개변수 "clothid"를 id로 가지는 옷에 좋아요를 누릅니다. 이미 눌렀다면 취소합니다.
   이후 매개변수 "clothid"를 id로 가지는 옷의 정보를 json 형식으로 반환합니다.
+- /cloth/upload : POST 메서드를 사용합니다. 옷의 정보와 프로필 사진을 받아 정보는 db에, 프로필 사진은 Firestore에 저장합니다.
