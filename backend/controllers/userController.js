@@ -36,7 +36,7 @@ exports.getUserByID = async (req, res) => {
 exports.getUserTicket = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
-    res.json({ "ticket": user.tickets });
+    res.json({ ticket: user.tickets });
     return;
   } catch (error) {
     console.log(error);
@@ -47,7 +47,7 @@ exports.getUserTicket = async (req, res) => {
 exports.getUserExchange = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
-    res.json({ "trades": user.exchanges });
+    res.json({ trades: user.exchanges });
     return;
   } catch (error) {
     console.log(error);
