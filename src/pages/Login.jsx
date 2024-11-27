@@ -54,9 +54,10 @@ function Login() {
         // return { id: user.uid, ...userDoc.data() };
       } else {
         // User is authenticated but no Firestore data exists (shouldn't happen in this flow)
-        throw new Error('User data not found in Firestore. Please contact support.');
-      } 
-
+        throw new Error(
+          'User data not found in Firestore. Please contact support.'
+        );
+      }
     } catch (error) {
       let message = '로그인에 실패했습니다.';
       if (error.code === 'auth/user-not-found') {
@@ -100,7 +101,6 @@ function Login() {
           show_body_size: true,
           tickets: 0,
         });
-        
       }
 
       console.log('구글 로그인 성공!');
@@ -109,7 +109,6 @@ function Login() {
       const updatedUser = (await getDoc(userDocRef)).data();
       setUser({ id: user.uid, ...updatedUser });
       navigate('/home'); // 성공 시 홈으로 이동
-      
     } catch (error) {
       console.error('구글 로그인 오류:', error);
       alert('구글 로그인에 실패했습니다. ' + (error.message || ''));

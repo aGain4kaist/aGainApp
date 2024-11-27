@@ -31,7 +31,11 @@ function Signup() {
       return;
     }
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const { user } = userCredential;
 
       // Save user data to Firestore(db)

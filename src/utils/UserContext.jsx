@@ -37,26 +37,26 @@ export const UserProvider = ({ children }) => {
 
       if (firebaseUser) {
         try {
-        // Fetch user data from Firestore
-        const userDocRef = doc(db, 'User', firebaseUser.uid);
-        const userDoc = await getDoc(userDocRef);
+          // Fetch user data from Firestore
+          const userDocRef = doc(db, 'User', firebaseUser.uid);
+          const userDoc = await getDoc(userDocRef);
 
-        if (userDoc.exists()) {
-          // Merge Firestore data with Firebase Auth data
-          setUser({ ...firebaseUser, ...userDoc.data() });
-        } else {
-          // Create new user in Firestore
-          const newUser = createDefaultUser(firebaseUser);
+          if (userDoc.exists()) {
+            // Merge Firestore data with Firebase Auth data
+            setUser({ ...firebaseUser, ...userDoc.data() });
+          } else {
+            // Create new user in Firestore
+            const newUser = createDefaultUser(firebaseUser);
 
-          await setDoc(userDocRef, newUser);
-          setUser({ ...firebaseUser, ...newUser });
+            await setDoc(userDocRef, newUser);
+            setUser({ ...firebaseUser, ...newUser });
+          }
+        } catch (error) {
+          console.error('Error fetching or creating user:', error);
+          alert('사용자 정보를 불러오는 데 실패했습니다.');
+          setUser(null); // Fallback to null user on error
         }
-      } catch (error) {
-        console.error('Error fetching or creating user:', error);
-        alert('사용자 정보를 불러오는 데 실패했습니다.');
-        setUser(null); // Fallback to null user on error
-      }
-    } else {
+      } else {
         setUser(null);
       }
       setLoading(false);
@@ -69,7 +69,7 @@ export const UserProvider = ({ children }) => {
     try {
       await auth.signOut();
       setUser(null);
-      console.log("로그아웃 했습니다.");
+      console.log('로그아웃 했습니다.');
     } catch (error) {
       console.error('Error during logout:', error);
       alert('로그아웃에 실패했습니다.');
@@ -105,4 +105,3 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 }; */
-
