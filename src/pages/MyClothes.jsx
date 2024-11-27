@@ -1,38 +1,50 @@
-import { Avatar, Box, Flex, Grid, Image, Text } from '@chakra-ui/react';
-import React from 'react';
+// src/pages/MyClothes.jsx
+import {
+  Avatar,
+  Box,
+  Link as ChakraLink,
+  Flex,
+  Grid,
+  Image,
+  Text,
+} from '@chakra-ui/react';
+import axios from 'axios'; // axios 임포트
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // useNavigate 임포트
 import Header from '../components/Layout/Header';
-
-// 등록한 옷 더미데이터
-const registeredClothes = [
-  '/images/register1.jpg',
-  '/images/register2.jpg',
-  '/images/register3.jpg',
-  '/images/register4.jpg',
-  '/images/register5.jpg',
-  '/images/register6.jpg',
-];
-
-// 교환받은 옷 더미데이터
-const notregisteredClothes = [
-  '/images/notregister1.jpg',
-  '/images/notregister2.jpg',
-  '/images/notregister3.jpg',
-  '/images/notregister4.jpg',
-  '/images/notregister5.jpg',
-  '/images/notregister1.jpg',
-  '/images/notregister2.jpg',
-  '/images/notregister3.jpg',
-  '/images/notregister4.jpg',
-  '/images/notregister5.jpg',
-  '/images/notregister1.jpg',
-  '/images/notregister2.jpg',
-  '/images/notregister3.jpg',
-  '/images/notregister4.jpg',
-  '/images/notregister5.jpg',
-];
+import Logout from '../components/Logout';
 
 function MyClothes() {
+  const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
   const maxItems = 12;
+  const navigate = useNavigate(); // useNavigate 훅 초기화
+
+  const registeredClothes = [
+    '/images/register1.jpg',
+    '/images/register2.jpg',
+    '/images/register3.jpg',
+    '/images/register4.jpg',
+    '/images/register5.jpg',
+    '/images/register6.jpg',
+  ];
+
+  const notregisteredClothes = [
+    '/images/notregister1.jpg',
+    '/images/notregister2.jpg',
+    '/images/notregister3.jpg',
+    '/images/notregister4.jpg',
+    '/images/notregister5.jpg',
+    '/images/notregister1.jpg',
+    '/images/notregister2.jpg',
+    '/images/notregister3.jpg',
+    '/images/notregister4.jpg',
+    '/images/notregister5.jpg',
+    '/images/notregister1.jpg',
+    '/images/notregister2.jpg',
+    '/images/notregister3.jpg',
+    '/images/notregister4.jpg',
+    '/images/notregister5.jpg',
+  ];
 
   const displayRegisteredClothes =
     registeredClothes.length > maxItems
@@ -43,6 +55,36 @@ function MyClothes() {
     notregisteredClothes.length > maxItems
       ? notregisteredClothes.slice(0, maxItems - 1)
       : notregisteredClothes;
+
+  useEffect(() => {
+    // 사용자 데이터 가져오기 함수
+    const fetchUserData = async () => {
+      try {
+        // 사용자 ID를 임의로 '1'로 지정
+        const userId = '1';
+
+        /*
+        실제 ID 적용시
+        const userId = auth.currentUser ? auth.currentUser.uid : null;
+
+        if (userId) {
+          // 사용자 데이터 가져오기
+        } else {
+          // 로그인되지 않은 경우 처리
+        }
+        */
+
+        const response = await axios.get(
+          `http://68.183.225.136:3000/user/${userId}`
+        );
+        setUserData(response.data);
+      } catch (error) {
+        console.error('사용자 정보를 가져오는 데 실패했습니다:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   return (
     <Flex
@@ -59,54 +101,61 @@ function MyClothes() {
       <Flex align="center" mb="33px" ml="25px">
         <Avatar
           size="lg"
-          src="/images/profile.jpg"
+          src={userData ? userData.profile_picture : '/images/loading_user.jpg'}
           width="84px"
           height="86.4px"
           flexShrink={0}
         />
-        <Box ml="15px">
-          <Text
-            fontFamily="SUIT"
-            color="var(--Labels-Primary, #000)"
-            fontSize="24px"
-            fontWeight="700"
-          >
-            again
-          </Text>
+        <Box ml="15px" flex="1">
+          <Flex align="center">
+            <Text
+              fontFamily="SUIT"
+              color="var(--Labels-Primary, #000)"
+              fontSize="24px"
+              fontWeight="700"
+            >
+              {userData ? userData.username : '로딩 중...'}
+            </Text>
+          </Flex>
+
           <Text
             fontFamily="SUIT"
             color="var(--Labels-Primary, #000)"
             fontSize="16px"
             fontWeight="500"
-            mb="10px"
+            mb="5px"
             width="262px"
           >
-            대전 거주 중인 대학생입니다 :)
-            <br />
-            계절마다 옷장이 넘쳐서 정리하고 싶어요
+            {userData ? userData.description : '로딩 중...'}
           </Text>
           {/* 좋아요와 즐겨찾기 아이콘 */}
           <Flex align="center" gap="3px">
             <Image src="/heart_outline.svg" w="20px" h="20px" />
-            <Text
-              fontFamily="SUIT"
-              color="var(--Labels-Primary, #000)"
-              fontSize="14px"
-              fontWeight="400"
-              mr="16px"
-            >
-              좋아요 한 옷
-            </Text>
+            <ChakraLink as={Link} to="/liked-clothes">
+              <Text
+                fontFamily="SUIT"
+                color="var(--Labels-Primary, #000)"
+                fontSize="14px"
+                fontWeight="400"
+                mr="16px"
+              >
+                좋아요 한 옷
+              </Text>
+            </ChakraLink>
             <Image src="/star_outline.svg" w="20px" h="20px" />
-
-            <Text
-              fontFamily="SUIT"
-              color="var(--Labels-Primary, #000)"
-              fontSize="14px"
-              fontWeight="400"
-            >
-              즐겨찾기 한 파티
-            </Text>
+            {/* 즐겨찾기 한 파티를 클릭하면 LikedPartiesPage로 이동 */}
+            <ChakraLink as={Link} to="/liked-parties">
+              <Text
+                fontFamily="SUIT"
+                color="var(--Labels-Primary, #000)"
+                fontSize="14px"
+                fontWeight="400"
+                cursor="pointer"
+                _hover={{ textDecoration: 'underline' }}
+              >
+                즐겨찾기 한 파티
+              </Text>
+            </ChakraLink>
           </Flex>
         </Box>
       </Flex>
@@ -172,7 +221,9 @@ function MyClothes() {
             backgroundColor="#FAF9FF"
             onClick={() => {
               // 전체보기 동작
+              navigate('/registered-clothes'); // 예시: 전체 등록된 옷 페이지로 이동
             }}
+            cursor="pointer"
           >
             <Text
               fontFamily="SUIT"
@@ -247,7 +298,9 @@ function MyClothes() {
             backgroundColor="#FAF9FF"
             onClick={() => {
               // 전체보기 동작
+              navigate('/not-registered-clothes'); // 예시: 전체 교환받은 옷 페이지로 이동
             }}
+            cursor="pointer"
           >
             <Text
               fontFamily="SUIT"
@@ -260,6 +313,9 @@ function MyClothes() {
           </Box>
         )}
       </Grid>
+
+      {/* 로그아웃 링크 추가 */}
+      <Logout />
     </Flex>
   );
 }

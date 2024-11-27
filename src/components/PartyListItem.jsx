@@ -12,7 +12,7 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
     onToggleFavorite(party.id);
   };
   useEffect(() => {
-    console.log(party?.name);
+    // console.log(party?.name);
   }, []);
   return (
     <Flex

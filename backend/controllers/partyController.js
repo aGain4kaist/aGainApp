@@ -1,8 +1,6 @@
 const PartyModel = require('../models/partyModel');
-const { getDistance, format_date } = require('../utils/helpers');
-const { admin } = require('../config/firebaseAdmin');
-
-const bucket = admin.storage().bucket();
+const userModel = require('../models/userModel');
+const { getDistance, format_date, getWebUrl } = require('../utils/helpers');
 
 async function edit_party(party, latitude, longitude) {
   const distance = getDistance(
@@ -11,29 +9,10 @@ async function edit_party(party, latitude, longitude) {
     party.location[0],
     party.location[1]
   );
-  const file = bucket.file(party.image);
-  const signedUrls = await file.getSignedUrl({
-    action: 'read',
-    expires: '03-09-2500', // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
-  });
-  party.image = signedUrls[0];
+  party.image = await getWebUrl(party.image);
   party.date = [format_date(party.date[0]), format_date(party.date[1])];
   party.distance = distance;
   return party;
-  /*
-    file.getSignedUrl({
-      action: 'read',
-      expires: '03-09-2500' // URL의 만료 날짜를 설정하세요 (예: 2500년 3월 9일까지 유효)
-    }).then((signedUrls) => {
-      party.image = signedUrls[0];
-      party.date = [format_date(party.date[0]), format_date(party.date[1])];
-      party.distance = distance;
-      console.log(party);
-      return party;
-    }).catch((error) => {
-      console.error("Error generating URL:", error);
-    });
-    */
 }
 
 exports.getAllParties = async (req, res) => {
@@ -71,15 +50,47 @@ exports.getPartyById = async (req, res) => {
   }
 };
 
-exports.getClothesOfParty = async (req, res) => {
+exports.getPartyLike = async (req, res) => {
   try {
-    const party = await PartyModel.getPartyById(req.params.id);
+    const party = await PartyModel.getPartyById(req.params.partyid);
     if (party) {
-      res.json(party.cloth);
-    } else {
-      res.status(404).send('Party not found');
+      const item = await edit_party(party);
+      res.json({ likes: item.likes, liked_users: item.liked_users });
     }
   } catch (error) {
-    res.status(500).send('Error fetching clothes');
+    console.log(error);
+    res.status(500).send('Error fetching party');
+  }
+};
+
+exports.togglePartyLike = async (req, res) => {
+  try {
+    const party = await PartyModel.getPartyById(req.params.partyid);
+    const user = await UserModel.getUserById(req.params.userid);
+    for (let i = 0; i < party.liked_users.length; i++) {
+      if (req.params.userid == party.liked_users[i]) {
+        party.likes--;
+        party.liked_users.splice(i, 1);
+        for (let j = 0; j < user.liked_parties.length; j++) {
+          if (req.params.partyid == user.liked_parties[j]) {
+            user.liked_parties.splice(j, 1);
+          }
+        }
+        await PartyModel.updateCloth(req.params.partyid, party);
+        await UserModel.updateUser(req.params.userid, user);
+        res.json(party);
+      }
+    }
+    party.liked_users.push(req.params.userid);
+    user.liked_parties.push(req.params.partyid);
+    party.liked_users = [...new Set(party.liked_users)]; // 중복 제거
+    party.likes = party.liked_users.length;
+    user.liked_parties = [...new Set(user.liked_parties)]; // 중복 제거
+    await ClothModel.updateCloth(req.params.partyid, party);
+    await UserModel.updateUser(req.params.userid, user);
+    res.json(party);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Error fetching party or user');
   }
 };

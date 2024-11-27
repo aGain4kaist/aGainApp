@@ -5,6 +5,7 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '@/utils/firebaseConfig';
+import { useUser } from '../utils/UserContext';
 import {
   Box,
   Button,
@@ -24,11 +25,18 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
+
+  // 유저 context에 추가
+  const { login } = useUser();
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log('email login handled: ', response);
+      login(response.user); // setUser
+
       navigate('/home'); // 로그인 후 홈으로 리다이렉션
     } catch (error) {
       let message = '로그인에 실패했습니다.';
@@ -44,7 +52,10 @@ function Login() {
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const response = await signInWithPopup(auth, provider);
+      console.log('google login handled: ', response);
+      login(response.user); // setUser
+
       navigate('/home'); // 성공 시 홈으로 이동
     } catch (error) {
       console.error('구글 로그인 오류:', error);

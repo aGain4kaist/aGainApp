@@ -12,6 +12,8 @@ import {
   Text,
   Textarea,
 } from '@chakra-ui/react';
+import axios from 'axios'; // axios 임포트
+
 import { useNavigate } from 'react-router-dom';
 import OpenAI from 'openai';
 import { storage } from '@/utils/firebaseConfig';
@@ -139,6 +141,24 @@ function PutClothes() {
     }
   };
 
+  const CustomHeader = () => (
+    <Flex mb="55px" mt="45px" ml="30px" alignSelf="flex-start">
+      <Button
+        onClick={() => navigate(-1)}
+        variant="ghost"
+        color="#000000"
+        left="0"
+        padding="0"
+      >
+        <BackIcon />
+      </Button>
+
+      <Text textAlign="center" fontSize="24px" fontWeight="700">
+        옷 넣어두기
+      </Text>
+    </Flex>
+  );
+
   return (
     <Flex
       direction="column"
@@ -148,21 +168,7 @@ function PutClothes() {
       width="100%"
     >
       {/* 상단 헤더 */}
-      <Flex align="center" width="100%" mb="55px" mt="50px" ml="30px">
-        <Button
-          onClick={() => navigate(-1)}
-          variant="ghost"
-          color="#000000"
-          left="0"
-          padding="0"
-        >
-          <BackIcon />
-        </Button>
-
-        <Text textAlign="center" fontSize="24px" fontWeight="700">
-          옷 넣어두기
-        </Text>
-      </Flex>
+      <CustomHeader />
 
       {/* 이미지 업로드 */}
       <Flex
@@ -551,7 +557,7 @@ function PutClothes() {
         </Flex>
 
         {/* 하단 버튼 */}
-        <Flex justify="flex-end" width="100%" mt="55px" mb="100px" gap="15px">
+        <Flex justify="flex-end" width="100%" mt="55px" mb="50px" gap="15px">
           <Button
             onClick={() => navigate(-1)}
             width="124px"
@@ -579,6 +585,19 @@ function PutClothes() {
             fontWeight="700"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.25)"
             backdropFilter="blur(25px)"
+            onClick={() => {
+              // 완료하기 버튼 클릭 시 동작 구현
+              // 예: 옷 등록 API 호출
+              // toast({
+              //   title: '옷 등록 완료',
+              //   description: '옷이 성공적으로 등록되었습니다.',
+              //   status: 'success',
+              //   duration: 3000,
+              //   isClosable: true,
+              // });
+              console.log('옷이 성공적으로 등록되었습니다.');
+              navigate('/'); // 홈 페이지로 이동
+            }}
           >
             완료하기
           </Button>
