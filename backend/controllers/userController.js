@@ -34,7 +34,7 @@ exports.getUserByID = async (req, res) => {
 exports.getUserTicket = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
-    res.json({ "ticket": user.tickets });
+    res.json({ ticket: user.tickets });
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
@@ -44,12 +44,12 @@ exports.getUserTicket = async (req, res) => {
 exports.getUserExchange = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
-    res.json({ "trades": user.exchanges });
+    res.json({ trades: user.exchanges });
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
   }
-}
+};
 
 exports.uploadUser = async (req, res) => {
   try {
@@ -98,7 +98,7 @@ exports.buyCloth = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.user_id);
     const cloth = await ClothModel.getClothByID(req.params.cloth_id);
-    if(user.tickets == 0) {
+    if (user.tickets == 0) {
       res.status(400).send('Not enough tickets.');
     }
     // await ClothModel.deleteCloth(req.params.cloth_id); 교환이 완료된 옷 삭제, 테스트 필요해서 주석처리함.
@@ -112,4 +112,4 @@ exports.buyCloth = async (req, res) => {
     console.log(error);
     res.status(500).send('Error fetching user or cloth.');
   }
-}
+};
