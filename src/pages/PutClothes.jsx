@@ -182,7 +182,8 @@ function PutClothes() {
           <Image
             src={URL.createObjectURL(selectedImage)}
             alt="Selected"
-            boxSize="180px"
+            height="100%" // 높이와 너비를 컨테이너에 맞게 설정
+            width="100%"
             objectFit="cover"
             borderRadius="20px"
           />
