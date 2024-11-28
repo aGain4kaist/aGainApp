@@ -22,24 +22,36 @@ const dummyUser = {
   profile_picture: '/images/profile.jpg',
 };
 
-function getPartyName(id) {
-  return '카이스트 본원 파티';
-}
-
-function ClothingPost({ id, post: initialPost, hasLikeButton }) {
+function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
   const [post, setPost] = useState(initialPost || null);
   const [likes, setLikes] = useState(post?.likes || 0);
+  const [userLikes, setUserLikes] = useState(false);
   const [isLoading, setIsLoading] = useState(!initialPost);
+  const [party, setParty] = useState("");
   const toast = useToast();
+
+  const getUserLikes = async () => {
+    try {
+      const response = await axios.get('http://68.183.225.136:3000/cloth/like/'+post.id); // API 호출
+      setLikes(response.data.likes);
+      setUserLikes(response.data.liked_users.includes(userId))
+      //console.log('getuserlikes');
+      //console.log(response.data.liked_users)
+      //console.log(userId)
+      //console.log(userLikes);
+    } catch (error) {
+      console.error('Error fetching post:', error); // 에러 상세 출력
+      setParty("좋아요 정보를 불러오는데 실패했습니다.");
+    }
+  };
 
   useEffect(() => {
     if (!initialPost && id) {
       // Fetch post data from the API if not provided directly
       setIsLoading(true);
-      console.log('asdf');
       const fetchPost = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/cloth/${id}'); // API 호출
+          const response = await axios.get('http://68.183.225.136:3000/cloth/'+id); // API 호출
           setPost(response.data);
           setLikes(response.data.likes);
           setIsLoading(false);
@@ -57,7 +69,37 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
       };
       fetchPost();
     }
-  }, [id, initialPost, toast]);
+    if(post != null) {
+      const getPartyName = async () => {
+        try {
+          const response = await axios.get('http://68.183.225.136:3000/party/'+post.party); // API 호출
+          setParty(response.data.name);
+        } catch (error) {
+          console.error('Error fetching post:', error); // 에러 상세 출력
+          setParty("파티 정보를 불러오는데 실패했습니다.");
+        }
+      };
+      getPartyName();
+      getUserLikes();
+    }
+    if(userLikes !== undefined) {
+      getUserLikes();
+    }
+  }, [post, userLikes]);
+
+  const toggleLikes = () => {
+    const fetchPost = async () => {
+      try {
+        //console.log('http://68.183.225.136:3000/cloth/like/'+userId+'/'+post.id);
+        const response = await axios.get('http://68.183.225.136:3000/cloth/like/'+userId+'/'+post.id); // API 호출
+        setLikes(response.data.likes)
+        setUserLikes(response.data.liked_users.includes(userId))
+      } catch (error) {
+        console.error('Error fetching post:', error); // 에러 상세 출력
+      }
+    };
+    fetchPost();
+  }
 
   if (isLoading) {
     return (
@@ -87,7 +129,7 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
       {/* 사용자 프로필 */}
 
       <Box mt="10px" ml="16px">
-        <UserProfile user={dummyUser} />
+        <UserProfile id={post.owner} />
       </Box>
 
       {/* 옷 사진 */}
@@ -111,9 +153,9 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
                 aria-label="Like"
                 icon={<FaHeart />}
                 variant="ghost"
-                colorScheme={likes > 0 ? 'red' : 'gray'}
+                colorScheme={userLikes ? 'red' : 'gray'}
                 onClick={() => {
-                  setLikes((prevLikes) => (prevLikes > 0 ? 0 : 1));
+                  toggleLikes();
                 }}
                 _hover={{ bg: 'transparent' }}
                 _focus={{ bg: 'transparent' }}
@@ -157,7 +199,7 @@ function ClothingPost({ id, post: initialPost, hasLikeButton }) {
               fontWeight="500"
               lineHeight="normal"
             >
-              {getPartyName(post.party)}
+              {party}
             </Text>
           </Flex>
         )}
