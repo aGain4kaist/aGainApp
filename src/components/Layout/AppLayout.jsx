@@ -167,7 +167,11 @@ function NavBarAndButton() {
             }}
           >
             {selectedPage == 1 && (
-              <IconifyIcon icon="bxs:home" style={{ fontSize: '30px' }} color='#411461'/>
+              <IconifyIcon
+                icon="bxs:home"
+                style={{ fontSize: '30px' }}
+                color="#411461"
+              />
             )}
             {selectedPage != 1 && (
               <IconifyIcon icon="bx:home" style={{ fontSize: '30px' }} />
@@ -201,7 +205,11 @@ function NavBarAndButton() {
             }}
           >
             {selectedPage == 2 && (
-              <IconifyIcon icon="bxs:party" style={{ fontSize: '30px' }} color='#411461' />
+              <IconifyIcon
+                icon="bxs:party"
+                style={{ fontSize: '30px' }}
+                color="#411461"
+              />
             )}
             {selectedPage != 2 && (
               <IconifyIcon icon="bx:party" style={{ fontSize: '30px' }} />
@@ -252,7 +260,7 @@ function NavBarAndButton() {
               <IconifyIcon
                 icon="lsicon:clothes-filled"
                 style={{ fontSize: '33px' }}
-                color='#411461'
+                color="#411461"
               />
             )}
             {selectedPage != 3 && (
@@ -293,7 +301,7 @@ function NavBarAndButton() {
               <IconifyIcon
                 icon="streamline:closet-solid"
                 style={{ fontSize: '30px' }}
-                 color='#411461'
+                color="#411461"
               />
             )}
             {selectedPage != 4 && (
