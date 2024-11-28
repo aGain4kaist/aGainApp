@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Text, HStack, Button, useToast } from '@chakra-ui/react';
+import { Box, Text, HStack, Button, useToast, Spinner } from '@chakra-ui/react';
 import { FaHeart } from 'react-icons/fa';
 
 function UserProfile({ id, user: initialUser }) {
   const [user, setUser] = useState(initialUser || null);
-  const [isLoading, setIsLoading] = useState(!initialUser);
   const toast = useToast();
 
   useEffect(() => {
-    console.log(initialUser);
     if (!initialUser && id) {
       // Fetch user data from the API if not provided directly
-      setIsLoading(true);
-      console.log('asdf');
-      fetch(`http://68.183.225.136:3000/user/${id}`)
+      fetch(`http://68.183.225.136:3000/user/` + id)
         .then((res) => res.json())
         .then((data) => {
           setUser(data);
-          setLikes(data.likes);
-          setIsLoading(false);
         })
         .catch((error) => {
           console.error('Error fetching user:', error); // 에러 상세 출력
@@ -29,15 +23,14 @@ function UserProfile({ id, user: initialUser }) {
             duration: 3000,
             isClosable: true,
           });
-          setIsLoading(false);
         });
     }
   }, [id, initialUser, toast]);
 
   if (!user) {
     return (
-      <Box textAlign="center" py={10}>
-        <Text>User not found</Text>
+      <Box textAlign="center" py={1}>
+        <Spinner size="lg" speed="0.8s"/>
       </Box>
     );
   }
