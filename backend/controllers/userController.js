@@ -1,6 +1,7 @@
 const { getWebUrl } = require('../utils/helpers');
 const UserModel = require('../models/userModel');
 const ClothModel = require('../models/clothModel');
+const multer = require('multer');
 
 async function edit_user(user) {
   console.log(user);
