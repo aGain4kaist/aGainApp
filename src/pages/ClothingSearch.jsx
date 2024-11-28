@@ -123,7 +123,6 @@ function ClothingSearch() {
   return (
     <Flex
       direction="column"
-      height="100vh"
       position="relative"
       bg="var(--background-silver, #FAF9FF)"
     >

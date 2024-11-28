@@ -2,6 +2,11 @@ const { format_date, getWebUrl } = require('../utils/helpers');
 const ClothModel = require('../models/clothModel');
 const PartyModel = require('../models/partyModel');
 const UserModel = require('../models/userModel');
+const { admin, db } = require('../config/firebaseAdmin');
+const { Timestamp } = require('firebase-admin').firestore;
+const path = require('path');
+
+const bucket = admin.storage().bucket();
 
 async function edit_cloth(cloth) {
   cloth.image = await getWebUrl('cloth/' + cloth.image);
@@ -12,7 +17,6 @@ async function edit_cloth(cloth) {
 exports.getAllClothes = async (req, res) => {
   try {
     const clothes = await ClothModel.getAllClothes();
-    console.log(clothes);
     const items = await clothes.map((cloth) => edit_cloth(cloth));
     Promise.all(items).then((result) => {
       result.sort((a, b) => b.date - a.date);
@@ -77,12 +81,18 @@ exports.getClothByUserID = async (req, res) => {
       }
     }
     if (onParty == 'true') {
+
       console.log('true');
+
+
       const edit_item = ret.filter((e) => 'party' in e);
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else if (onParty == 'false') {
+
       console.log('false');
+
+
       const edit_item = ret.filter((e) => !('party' in e));
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
@@ -150,7 +160,8 @@ exports.toggleClothLike = async (req, res) => {
 
 exports.uploadCloth = async (req, res) => {
   try {
-    const jsonData = req.body;
+    const data = req.body.jsonData;
+    const jsonData = JSON.parse(data);
     if (!req.file) {
       return res.status(400).send({ error: 'No file uploaded.' });
     }
@@ -162,15 +173,27 @@ exports.uploadCloth = async (req, res) => {
     if (!jsonData || Object.keys(jsonData).length === 0) {
       return res.status(400).send({ error: 'No JSON data provided.' });
     }
-    const id = ClothModel.createCloth(jsonData);
-    const fileName = `${'cloth/cloth'}${id}${path.extname(fileInfo.originalName)}`;
+    const id = await ClothModel.createCloth(jsonData);
+    const fileName = `${'cloth/cloth'}${id.id}${path.extname(fileInfo.originalName)}`;
+    const fileName2 = `${'cloth'}${id.id}${path.extname(fileInfo.originalName)}`;
+    const currentTimestamp = Timestamp.now();
+    const doc = await db.collection('counters').get('clothIdCounter');
+    const data1 = doc.docs[0].data();
+    const clothid = data1.lastClothId;
+    data1.lastClothId = clothid + 1;
+    jsonData.id = clothid + 1;
+    jsonData.upload_date = currentTimestamp;
+    jsonData.image = fileName2;
+    jsonData.liked_users = [];
+    jsonData.likes = 0;
+    await ClothModel.updateCloth(id.id, jsonData);
+    await db.collection('counters').doc('clothIdCounter').set(data1, {merge: true});
     const fileUpload = bucket.file(fileName);
     const stream = fileUpload.createWriteStream({
       metadata: {
         contentType: fileInfo.mimeType,
       },
     });
-
     stream.on('error', (error) => {
       console.error('Error uploading file:', error);
       res.status(500).send({ error: 'Failed to upload file.' });
@@ -181,10 +204,11 @@ exports.uploadCloth = async (req, res) => {
       const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
       res.status(200).send({
         message: 'File and JSON data uploaded successfully.',
-        documentId: documentId,
+        documentId: id.id,
         fileUrl: publicUrl,
       });
     });
+    stream.end(req.file.buffer);
   } catch (error) {
     console.log(error);
     res.status(500).send('Failed to process json data.');
