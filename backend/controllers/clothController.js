@@ -65,6 +65,7 @@ exports.getClothByPartyID = async (req, res) => {
 exports.getClothByUserID = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
+    const { onParty } = req.query;
     const ret = [];
     for (let i = 0; i < user.my_clothes.length; i++) {
       try {
@@ -75,7 +76,19 @@ exports.getClothByUserID = async (req, res) => {
         res.status(500).send('Error fetching cloth');
       }
     }
-    res.json(ret.sort((a, b) => b.date - a.date));
+    if (onParty == 'true') {
+      console.log('true');
+      const edit_item = ret.filter((e) => 'party' in e);
+      res.json(edit_item.sort((a, b) => b.date - a.date));
+      return;
+    } else if (onParty == 'false') {
+      console.log('false');
+      const edit_item = ret.filter((e) => !('party' in e));
+      res.json(edit_item.sort((a, b) => b.date - a.date));
+      return;
+    } else {
+      res.json(ret.sort((a, b) => b.date - a.date));
+    }
     return;
   } catch (error) {
     console.log(error);

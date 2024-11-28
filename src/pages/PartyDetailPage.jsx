@@ -4,6 +4,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Icon as IconifyIcon } from '@iconify/react/dist/iconify.js';
 import { useUser } from '../utils/UserContext';
 import axios from 'axios';
+import { useDisclosure } from '@chakra-ui/react';
+import { useRef } from 'react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+} from '@chakra-ui/react';
 
 // 옷 더미 데이터
 const registeredClothes = [
@@ -20,6 +31,9 @@ const registeredClothes = [
 ];
 
 function PartyDetailPage() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
+
   const { partyId } = useParams(); // routing 후 parameter로 파티 아이디 받음
   const { user, userClothes } = useUser();
 
@@ -643,7 +657,9 @@ function PartyDetailPage() {
                     />
                   </Flex>
                 </Flex>
+
                 <Button
+                  onClick={onOpen}
                   w="200px"
                   h="50px"
                   px="52px"
@@ -667,6 +683,106 @@ function PartyDetailPage() {
                     등록하기
                   </Text>
                 </Button>
+                <AlertDialog
+                  motionPreset="slideInBottom"
+                  leastDestructiveRef={cancelRef}
+                  onClose={onClose}
+                  isOpen={isOpen}
+                  isCentered
+                >
+                  <AlertDialogOverlay />
+
+                  <AlertDialogContent
+                    width="350px"
+                    // height="250px"
+                    borderRadius="40px"
+                  >
+                    <AlertDialogBody>
+                      <Box position="relative" mt={3}>
+                        <Flex justify="center" align="center">
+                          <IconifyIcon
+                            icon={'mdi:ticket-outline'}
+                            style={{
+                              width: '60px',
+                              height: '60px',
+                              color: '#7C31B4',
+                            }}
+                          />
+                          <Text
+                            position="absolute"
+                            fontWeight={800}
+                            fontSize="20px"
+                            color="#7C31B4"
+                            fontFamily="SUIT"
+                          >
+                            +1
+                          </Text>
+                        </Flex>
+                      </Box>
+
+                      <Flex
+                        mt={1}
+                        alignItems="center"
+                        direction="column"
+                        fontFamily="SUIT"
+                        textAlign="center"
+                        whiteSpace="normal"
+                        wordWrap="break-word"
+                        mb={3}
+                      >
+                        <Text fontWeight="400" fontSize="24px">
+                          <span style={{ fontWeight: 700, color: '#411461' }}>
+                            {selectedClothesMine.name}
+                          </span>
+                          을(를) 등록했어요!
+                        </Text>
+                        <Text mt={2} fontWeight="300" fontSize="20px">
+                          <span style={{ fontWeight: 600 }}>{name} </span>옷
+                          목록에서
+                        </Text>
+                        <Text fontWeight="300" fontSize="20px">
+                          확인할 수 있어요.
+                        </Text>
+                      </Flex>
+                    </AlertDialogBody>
+                    <AlertDialogFooter
+                      display="flex"
+                      justifyContent="center"
+                      bg="#E8E8E8"
+                      borderRadius="0 0 40px 40px"
+                    >
+                      <Button
+                        ref={cancelRef}
+                        onClick={onClose}
+                        fontWeight="700"
+                        fontSize="20px"
+                        fontFamily="SUIT"
+                        bg="transparent"
+                      >
+                        완료하기
+                      </Button>
+                      <Button
+                        ml={6}
+                        fontWeight="700"
+                        fontSize="20px"
+                        color="#7C31B4"
+                        fontFamily="SUIT"
+                        bg="transparent"
+                      >
+                        <IconifyIcon
+                          icon={'ic:outline-share'}
+                          style={{
+                            width: '25px',
+                            height: '25px',
+                            color: '#7C31B4',
+                          }}
+                        />
+                        <Box width={'3px'}></Box>
+                        공유하기
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </Flex>
             )}
           </Flex>
