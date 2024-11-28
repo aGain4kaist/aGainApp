@@ -692,11 +692,11 @@ function PartyDetailPage() {
 
                   <AlertDialogContent
                     width="350px"
-                    height="250px"
+                    // height="250px"
                     borderRadius="40px"
                   >
                     <AlertDialogBody>
-                      <Box position="relative">
+                      <Box position="relative" mt={3}>
                         <Flex justify="center" align="center">
                           <IconifyIcon
                             icon={'mdi:ticket-outline'}
@@ -723,6 +723,10 @@ function PartyDetailPage() {
                         alignItems="center"
                         direction="column"
                         fontFamily="SUIT"
+                        textAlign="center"
+                        whiteSpace="normal"
+                        wordWrap="break-word"
+                        mb={3}
                       >
                         <Text fontWeight="400" fontSize="24px">
                           <span style={{ fontWeight: 700, color: '#411461' }}>
