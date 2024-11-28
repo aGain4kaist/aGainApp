@@ -9,7 +9,10 @@ const PartyModel = {
 
   // 특정 ID를 사용하여 Firestore에서 특정 파티를 가져오는 메소드
   async getPartyById(id) {
-    const doc = await db.collection('Party').where('id', '==', Number(id)).get();
+    const doc = await db
+      .collection('Party')
+      .where('id', '==', Number(id))
+      .get();
     return doc.empty ? null : { id: doc.docs[0].id, ...doc.docs[0].data() };
   },
 

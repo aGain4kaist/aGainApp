@@ -132,6 +132,7 @@ function ClothingSearch() {
         bg="var(--background-silver, #FAF9FF)"
         ml="25px"
         mb="10px"
+        overflow="auto"
       >
         {/* 카테고리 선택 */}
         <CategorySwiper

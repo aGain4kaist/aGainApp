@@ -48,6 +48,11 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
     }
   };
 
+  // Update `post` whenever `initialPost` changes
+  useEffect(() => {
+    setPost(initialPost);
+  }, [initialPost]);
+
   useEffect(() => {
     if (!initialPost && id) {
       // Fetch post data from the API if not provided directly
@@ -127,8 +132,8 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
   }
 
   const getTagString = (list) => {
-    return list.map(item => `#${item}`).join(' ');
-  }
+    return list.map((item) => `#${item}`).join(' ');
+  };
 
   return (
     <Flex
@@ -159,17 +164,17 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
         {hasLikeButton && (
           <Flex direction="row" justifyContent="space-between" width="100%">
             <HStack spacing="0" align="center" minH="24px">
-              {userLikes && 
+              {userLikes && (
                 <IconButton
                   w="24px"
                   minH="24px"
                   h="24px"
                   minW="24px"
                   aria-label="Like"
-                  icon={<FaHeart boxSize="24px"/>}
+                  icon={<FaHeart boxsize="24px" />}
                   variant="ghost"
                   color={userLikes ? '#411461' : 'gray'}
-                  mr='0px'
+                  mr="0px"
                   justifyContent="center"
                   onClick={() => {
                     toggleLikes();
@@ -178,18 +183,18 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
                   _focus={{ bg: 'transparent' }}
                   _active={{ bg: 'transparent' }}
                 />
-              }
-              { !userLikes && 
+              )}
+              {!userLikes && (
                 <IconButton
                   w="24px"
                   minH="24px"
                   h="24px"
                   minW="24px"
                   aria-label="Like"
-                  icon={<FaRegHeart boxSize="24px" />}
+                  icon={<FaRegHeart boxsize="24px" />}
                   variant="ghost"
                   color={userLikes ? '#411461' : 'gray'}
-                  mr='0px'
+                  mr="0px"
                   justifyContent="center"
                   onClick={() => {
                     toggleLikes();
@@ -198,7 +203,7 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
                   _focus={{ bg: 'transparent' }}
                   _active={{ bg: 'transparent' }}
                 />
-              }
+              )}
               <Text>{likes}</Text>
             </HStack>
             <Text
