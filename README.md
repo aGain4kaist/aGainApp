@@ -75,6 +75,7 @@ This will enhance accessibility to the 21% Party culture, increase participant e
   **"View Clothes" Page**  
   **옷 보기** 페이지는 유저들이 파티에 등록한 옷들을 게시글 형태로 모아볼 수 있는 페이지 입니다. 관심 있는 옷들에 좋아요를 누르며 최근 등록된 옷들을 스크롤해가며 볼 수 있는 SNS 형태로 디자인 하였으며, 옷이 어떤 사이즈이고 무슨 파티에 등록되어 있는지를 한눈에 볼 수 있습니다. 카테고리를 클릭하면 그에 해당하는 게시글들만을 모아볼 수 있도록 디자인 했습니다.  
   The **View Clothes** page is where users can view clothes registered for the party in a post format. Designed as an SNS feed, users can scroll through recently registered clothes, like items they are interested in, and see information such as the size of the clothes and the party they are registered for. Clicking on a category will filter posts to show only those belonging to that category.
+  
   유저들끼리 서로 옷 정보와 옷에 얽힌 이야기들을 공유함으로써, 당장 파티에 참여하지 않는 유저들도 재사용 문화를 즐기고, 확산할 수 있을 것입니다.  
   By sharing clothing information and stories, users who are not currently attending a party can still enjoy and spread the culture of reusing clothes.
 
