@@ -30,7 +30,7 @@ function UserProfile({ id, user: initialUser }) {
   if (!user) {
     return (
       <Box textAlign="center" py={1}>
-        <Spinner size="lg" speed="0.8s"/>
+        <Spinner size="lg" speed="0.8s" />
       </Box>
     );
   }

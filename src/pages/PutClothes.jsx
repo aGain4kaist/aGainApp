@@ -179,6 +179,7 @@ function PutClothes() {
 
       // API 호출
       const response = await axios.post(
+        // 'http://localhost:3000/cloth/upload',
         'http://68.183.225.136:3000/cloth/upload',
         formData,
         {

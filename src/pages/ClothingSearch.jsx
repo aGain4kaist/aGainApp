@@ -94,7 +94,7 @@ const dummyPost = {
 };
 
 function ClothingSearch() {
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [postList, setPostList] = useState([]);
   const [userId, setUserId] = useState('');
   const maxPostLength = 5;
@@ -118,8 +118,7 @@ function ClothingSearch() {
       }
     };
     fetchPost();
-  }
-  )
+  });
 
   return (
     <Flex
@@ -136,7 +135,10 @@ function ClothingSearch() {
         mb="10px"
       >
         {/* 카테고리 선택 */}
-        <CategorySwiper items={catagoryData} setSelectedCategory={setSelectedCategory} />
+        <CategorySwiper
+          items={catagoryData}
+          setSelectedCategory={setSelectedCategory}
+        />
         {/* 옷 스토리 게시판 */}
         <Box mt={4}>
           <Text
@@ -165,18 +167,25 @@ function ClothingSearch() {
       <Box p={0}>
         {' '}
         {/* padding을 0으로 설정하여 적용되지 않도록 합니다. */}
-        <VStack
-          spacing={6}
-        >
+        <VStack spacing={6}>
           {postList
-          .filter(item => selectedCategory == "" ? true : item.type == selectedCategory)
-          .slice(0, postList.length > maxPostLength ? maxPostLength : postList.length)
-          .map((item) => (
-            <Box key={item.id} w="100%">
-              {/* <ClothingPost post={dummyPost} hasLikeButton={false} /> */}
-              <ClothingPost userId={userId} post={item} hasLikeButton={true} />
-            </Box>
-          ))}
+            .filter((item) =>
+              selectedCategory == '' ? true : item.type == selectedCategory
+            )
+            .slice(
+              0,
+              postList.length > maxPostLength ? maxPostLength : postList.length
+            )
+            .map((item) => (
+              <Box key={item.id} w="100%">
+                {/* <ClothingPost post={dummyPost} hasLikeButton={false} /> */}
+                <ClothingPost
+                  userId={userId}
+                  post={item}
+                  hasLikeButton={true}
+                />
+              </Box>
+            ))}
         </VStack>
       </Box>
       <Box minH="120px" />
