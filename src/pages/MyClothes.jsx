@@ -18,7 +18,7 @@ import { useUser } from '../utils/UserContext';
 function MyClothes() {
   const maxItems = 12;
 
-  const { user, userClothes } = useUser();
+  const { user, userRegisteredClothes, userUnregisteredClothes } = useUser();
   //const [userData, setUserData] = useState(null); // 사용자 데이터 상태 추가
 
   const navigate = useNavigate(); // useNavigate 훅 초기화
@@ -50,16 +50,16 @@ function MyClothes() {
     '/images/notregister5.jpg',
   ]; */
 
-  // 현재 등록된 옷 / 등록안된 옷 구분 없음 똑같이 한번에 불러온 userClothes 똑같이 적용
+
   const displayRegisteredClothes =
-    userClothes.length > maxItems
-      ? userClothes.slice(0, maxItems - 1)
-      : userClothes;
+    userRegisteredClothes.length > maxItems
+      ? userRegisteredClothes.slice(0, maxItems - 1)
+      : userRegisteredClothes;
 
   const displaynotregisteredClothes =
-    userClothes.length > maxItems
-      ? userClothes.slice(0, maxItems - 1)
-      : userClothes;
+    userUnregisteredClothes.length > maxItems
+      ? userUnregisteredClothes.slice(0, maxItems - 1)
+      : userUnregisteredClothes;
 
   /* useEffect(() => {
     // 사용자 데이터 가져오기 함수
@@ -202,7 +202,7 @@ function MyClothes() {
             />
           </Box>
         ))}
-        {userClothes.length > maxItems && (
+        {userRegisteredClothes.length > maxItems && (
           <Box
             key="view-all-registered"
             width="90px"
@@ -279,7 +279,7 @@ function MyClothes() {
             />
           </Box>
         ))}
-        {userClothes.length > maxItems && (
+        {userUnregisteredClothes.length > maxItems && (
           <Box
             key="view-all-notregestered"
             width="90px"

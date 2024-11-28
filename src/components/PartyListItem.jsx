@@ -9,7 +9,7 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
 
   const handleFavClick = (e) => {
     e.stopPropagation(); // Prevent triggering the onPartyClick
-    onToggleFavorite(party.id);
+    //isFavorite = !isFavorite; 
   };
   useEffect(() => {
     // console.log(party?.name);
@@ -83,7 +83,7 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
             onClick={handleFavClick}
           />
           <Text textAlign="center" color="black">
-            {party.favs}
+            {party.liked_users.length}
           </Text>
         </Flex>
       </Flex>
