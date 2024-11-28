@@ -162,14 +162,16 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
-            onClick={() => {setSelectedPage(1)}}
+            onClick={() => {
+              setSelectedPage(1);
+            }}
           >
-            {selectedPage == 1 && 
-              <IconifyIcon icon="bxs:home" style={{ fontSize: '30px' }} />
-            }
-            {selectedPage != 1 && 
+            {selectedPage == 1 && (
+              <IconifyIcon icon="bxs:home" style={{ fontSize: '30px' }} color='#411461'/>
+            )}
+            {selectedPage != 1 && (
               <IconifyIcon icon="bx:home" style={{ fontSize: '30px' }} />
-            }
+            )}
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"
@@ -194,14 +196,16 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
-            onClick={() => {setSelectedPage(2)}}
+            onClick={() => {
+              setSelectedPage(2);
+            }}
           >
-            {selectedPage == 2 && 
-              <IconifyIcon icon="bxs:party" style={{ fontSize: '30px' }} />
-            }
-            {selectedPage != 2 && 
+            {selectedPage == 2 && (
+              <IconifyIcon icon="bxs:party" style={{ fontSize: '30px' }} color='#411461' />
+            )}
+            {selectedPage != 2 && (
               <IconifyIcon icon="bx:party" style={{ fontSize: '30px' }} />
-            }
+            )}
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"
@@ -240,20 +244,23 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
-            onClick={() => {setSelectedPage(3)}}
+            onClick={() => {
+              setSelectedPage(3);
+            }}
           >
-            {selectedPage == 3 && 
+            {selectedPage == 3 && (
               <IconifyIcon
                 icon="lsicon:clothes-filled"
                 style={{ fontSize: '33px' }}
+                color='#411461'
               />
-            }
-            {selectedPage != 3 && 
+            )}
+            {selectedPage != 3 && (
               <IconifyIcon
                 icon="lsicon:clothes-outline"
                 style={{ fontSize: '33px' }}
               />
-            }
+            )}
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"
@@ -278,21 +285,24 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
-            onClick={() => {setSelectedPage(4)}}
+            onClick={() => {
+              setSelectedPage(4);
+            }}
           >
-            {selectedPage == 4 && 
+            {selectedPage == 4 && (
               <IconifyIcon
-              icon="streamline:closet-solid"
-              style={{ fontSize: '30px' }}
-            />
-            }
-            {selectedPage != 4 && 
+                icon="streamline:closet-solid"
+                style={{ fontSize: '30px' }}
+                 color='#411461'
+              />
+            )}
+            {selectedPage != 4 && (
               <IconifyIcon
-              icon="streamline:closet"
-              style={{ fontSize: '30px' }}
-            />
-            }
-            
+                icon="streamline:closet"
+                style={{ fontSize: '30px' }}
+              />
+            )}
+
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"

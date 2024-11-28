@@ -4,15 +4,14 @@ import 'swiper/css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 function CategorySwiper({ items, setSelectedCategory }) {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
   const categorySelected = (newCategory) => {
     console.log(newCategory);
-    if(category == newCategory) {
+    if (category == newCategory) {
       console.log(1);
-      setSelectedCategory("");
-      setCategory("");
-    }
-    else {
+      setSelectedCategory('');
+      setCategory('');
+    } else {
       console.log(2);
       setSelectedCategory(newCategory);
       setCategory(newCategory);
@@ -35,8 +34,10 @@ function CategorySwiper({ items, setSelectedCategory }) {
               boxShadow="0px 0px 10px 1px rgba(0, 0, 0, 0.10)"
               overflow="hidden"
               textAlign="center"
-              onClick={() => { categorySelected(item.type) }}
-              border={item.type === category ? "2px solid #411461" : "none"}
+              onClick={() => {
+                categorySelected(item.type);
+              }}
+              border={item.type === category ? '2px solid #411461' : 'none'}
             >
               <Box mt={1.5}></Box>
 
