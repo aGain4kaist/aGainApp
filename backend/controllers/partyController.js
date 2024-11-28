@@ -1,5 +1,6 @@
 const PartyModel = require('../models/partyModel');
-const userModel = require('../models/userModel');
+const UserModel = require('../models/userModel');
+const ClothModel = require('../models/clothModel');
 const { getDistance, format_date, getWebUrl } = require('../utils/helpers');
 
 async function edit_party(party, latitude, longitude) {
@@ -26,6 +27,7 @@ exports.getAllParties = async (req, res) => {
     Promise.all(items).then((result) => {
       result.sort((a, b) => a.distance - b.distance);
       res.json(result);
+      return;
     });
   } catch (error) {
     console.log(error);
@@ -42,6 +44,7 @@ exports.getPartyById = async (req, res) => {
 
       const item = await edit_party(party, latitude, longitude);
       res.json(item);
+      return;
     } else {
       res.status(404).send('Party not found');
     }
@@ -56,6 +59,7 @@ exports.getPartyLike = async (req, res) => {
     if (party) {
       const item = await edit_party(party);
       res.json({ likes: item.likes, liked_users: item.liked_users });
+      return;
     }
   } catch (error) {
     console.log(error);
@@ -76,9 +80,12 @@ exports.togglePartyLike = async (req, res) => {
             user.liked_parties.splice(j, 1);
           }
         }
-        await PartyModel.updateCloth(req.params.partyid, party);
+        delete party.id;
+        delete user.id;
+        await PartyModel.updateParty(req.params.partyid, party);
         await UserModel.updateUser(req.params.userid, user);
         res.json(party);
+        return;
       }
     }
     party.liked_users.push(req.params.userid);
@@ -86,9 +93,12 @@ exports.togglePartyLike = async (req, res) => {
     party.liked_users = [...new Set(party.liked_users)]; // 중복 제거
     party.likes = party.liked_users.length;
     user.liked_parties = [...new Set(user.liked_parties)]; // 중복 제거
-    await ClothModel.updateCloth(req.params.partyid, party);
+    delete party.id;
+    delete user.id;
+    await PartyModel.updateParty(req.params.partyid, party);
     await UserModel.updateUser(req.params.userid, user);
     res.json(party);
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching party or user');
