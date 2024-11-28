@@ -146,16 +146,17 @@ exports.toggleClothLike = async (req, res) => {
 };
 
 exports.uploadCloth = async (req, res) => {
-  console.log("upload");
+  console.log('upload');
   try {
-    const jsonData = req.body;
-    if (!req.file) {
+    console.log(req.headers);
+    const jsonData = req.body.jsonData;
+    if (!req.body.file) {
       return res.status(400).send({ error: 'No file uploaded.' });
     }
     const fileInfo = {
-      originalName: req.file.originalname,
-      mimeType: req.file.mimetype,
-      size: req.file.size,
+      originalName: req.body.file.originalname,
+      mimeType: req.body.file.mimetype,
+      size: req.body.file.size,ㅊ
     };
     if (!jsonData || Object.keys(jsonData).length === 0) {
       return res.status(400).send({ error: 'No JSON data provided.' });

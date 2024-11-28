@@ -9,7 +9,7 @@ const ClothModel = {
 
   // 특정 ID를 사용하여 Firestore에서 특정 파티를 가져오는 메소드
   async getClothByID(id) {
-    const doc = await db.collection('Cloth').doc(id).get();
+    const doc = await db.collection('Cloth').where('id', '==', Number(id)).get();
     return doc.exists ? { id: doc.id, ...doc.data() } : null;
   },
 
