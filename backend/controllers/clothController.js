@@ -81,10 +81,18 @@ exports.getClothByUserID = async (req, res) => {
       }
     }
     if (onParty == 'true') {
+
+      console.log('true');
+
+
       const edit_item = ret.filter((e) => 'party' in e);
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else if (onParty == 'false') {
+
+      console.log('false');
+
+
       const edit_item = ret.filter((e) => !('party' in e));
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;

@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import OpenAI from 'openai';
 import { storage } from '@/utils/firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useUser } from '../utils/UserContext';
 
 // 커스텀 BackIcon
 const BackIcon = (props) => (
@@ -48,6 +49,11 @@ function PutClothes() {
   const [weight, setWeight] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [category, setCategory] = useState('');
+  const [size, setSize] = useState('');
+  const [fitSize, setFitSize] = useState('');
+
+  const { user, userClothes } = useUser();
 
   // 이미지 선택 핸들러
   const handleImageChange = (event) => {
@@ -100,7 +106,6 @@ function PutClothes() {
       });
 
       // OpenAI API 호출
-      // OpenAI API 호출
       const completion = await openai.chat.completions.create({
         model: 'gpt-4o-mini',
         messages: [
@@ -117,8 +122,6 @@ function PutClothes() {
 
       const description = completion.choices[0].message.content;
       const keywordsArray = description.split(',').map((kw) => kw.trim());
-      console.log(description);
-      console.log(keywordsArray);
       setKeywords(keywordsArray);
     } catch (error) {
       console.error('키워드 추출 실패:', error);
@@ -141,23 +144,68 @@ function PutClothes() {
     }
   };
 
-  const CustomHeader = () => (
-    <Flex mb="55px" mt="45px" ml="30px" alignSelf="flex-start">
-      <Button
-        onClick={() => navigate(-1)}
-        variant="ghost"
-        color="#000000"
-        left="0"
-        padding="0"
-      >
-        <BackIcon />
-      </Button>
+  // 옷 등록 API 호출 (완료하기 버튼 클릭 시)
+  const handleSubmit = async () => {
+    if (!selectedImage || !nickname || !story || !category || !size) {
+      alert('필수 항목을 모두 입력해주세요.');
+      return;
+    }
 
-      <Text textAlign="center" fontSize="24px" fontWeight="700">
-        옷 넣어두기
-      </Text>
-    </Flex>
-  );
+    setIsLoading(true);
+
+    try {
+      // Firebase에 이미지를 업로드하고 URL을 얻음
+      const uploadedImageUrl = await uploadImageToCloud(selectedImage);
+      if (!uploadedImageUrl) {
+        throw new Error('이미지 업로드에 실패했습니다.');
+      }
+
+      // FormData 생성
+      const formData = new FormData();
+      formData.append('file', selectedImage); // 이미지 파일 추가
+      formData.append(
+        'jsonData',
+        JSON.stringify({
+          name: nickname,
+          height:
+            category === 'top' || category === 'bottom' ? parseInt(height) : 0,
+          weight:
+            category === 'top' || category === 'bottom' ? parseInt(weight) : 0,
+          length: category === 'shoes' ? parseInt(fitSize) : 0,
+          size: size,
+          tags: keywords,
+          type: category,
+          party: '', // 파티 ID를 선택적으로 넣을 수 있습니다.
+          owner: user?.id,
+          description: story,
+        })
+      );
+
+      // API 호출
+      const response = await axios.post(
+        // 'http://localhost:3000/cloth/upload',
+        'http://68.183.225.136:3000/cloth/upload',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert('옷이 성공적으로 등록되었습니다!');
+        navigate('/home'); // 홈 페이지로 이동
+      } else {
+        alert('옷 등록에 실패했습니다. 다시 시도해주세요.');
+      }
+    } catch (error) {
+      console.error('옷 등록 오류:', error);
+      alert('옷 등록에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <Flex
@@ -168,7 +216,20 @@ function PutClothes() {
       width="100%"
     >
       {/* 상단 헤더 */}
-      <CustomHeader />
+      <Flex mb="55px" mt="45px" ml="30px" alignSelf="flex-start">
+        <Button
+          onClick={() => navigate(-1)}
+          variant="ghost"
+          color="#000000"
+          left="0"
+          padding="0"
+        >
+          <BackIcon />
+        </Button>
+        <Text textAlign="center" fontSize="24px" fontWeight="700">
+          옷 넣어두기
+        </Text>
+      </Flex>
 
       {/* 이미지 업로드 */}
       <Flex
@@ -362,6 +423,8 @@ function PutClothes() {
             bg="#FFFFFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           >
             <option value="top">상의</option>
             <option value="bottom">하의</option>
@@ -398,6 +461,8 @@ function PutClothes() {
             bg="#FFFFFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
           >
             <option value="small">S</option>
             <option value="medium">M</option>
@@ -549,6 +614,8 @@ function PutClothes() {
             bg="#FFFFFF"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.10)"
             backdropFilter="blur(25px)"
+            value={fitSize}
+            onChange={(e) => setFitSize(e.target.value)}
           >
             <option value="small">작음</option>
             <option value="fit">딱 맞음</option>
@@ -585,19 +652,8 @@ function PutClothes() {
             fontWeight="700"
             boxShadow="0px 2px 4px 1px rgba(0, 0, 0, 0.25)"
             backdropFilter="blur(25px)"
-            onClick={() => {
-              // 완료하기 버튼 클릭 시 동작 구현
-              // 예: 옷 등록 API 호출
-              // toast({
-              //   title: '옷 등록 완료',
-              //   description: '옷이 성공적으로 등록되었습니다.',
-              //   status: 'success',
-              //   duration: 3000,
-              //   isClosable: true,
-              // });
-              console.log('옷이 성공적으로 등록되었습니다.');
-              navigate('/'); // 홈 페이지로 이동
-            }}
+            onClick={handleSubmit}
+            isLoading={isLoading}
           >
             완료하기
           </Button>
