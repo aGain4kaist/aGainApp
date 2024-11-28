@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import OpenAI from 'openai';
 import { storage } from '@/utils/firebaseConfig';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useUser } from '../utils/UserContext';
 
 // 커스텀 BackIcon
 const BackIcon = (props) => (
@@ -51,6 +52,8 @@ function PutClothes() {
   const [category, setCategory] = useState('');
   const [size, setSize] = useState('');
   const [fitSize, setFitSize] = useState('');
+
+  const { user, userClothes } = useUser();
 
   // 이미지 선택 핸들러
   const handleImageChange = (event) => {
@@ -173,7 +176,7 @@ function PutClothes() {
           tags: keywords,
           type: category,
           party: '', // 파티 ID를 선택적으로 넣을 수 있습니다.
-          owner: '',
+          owner: user?.id,
           description: story,
         })
       );
@@ -192,7 +195,7 @@ function PutClothes() {
 
       if (response.status === 200) {
         alert('옷이 성공적으로 등록되었습니다!');
-        navigate('/'); // 홈 페이지로 이동
+        navigate('/home'); // 홈 페이지로 이동
       } else {
         alert('옷 등록에 실패했습니다. 다시 시도해주세요.');
       }
