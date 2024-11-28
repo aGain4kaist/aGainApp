@@ -12,7 +12,7 @@ import {
   Spinner,
   useToast,
 } from '@chakra-ui/react';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import UserProfile from './UserProfile';
 import axios from 'axios';
 
@@ -29,6 +29,7 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
   const [isLoading, setIsLoading] = useState(!initialPost);
   const [party, setParty] = useState('');
   const toast = useToast();
+  const maxTags = 20; // 태그의 최대 개수
 
   const getUserLikes = async () => {
     try {
@@ -125,6 +126,10 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
     );
   }
 
+  const getTagString = (list) => {
+    return list.map(item => `#${item}`).join(' ');
+  }
+
   return (
     <Flex
       borderRadius="20px 20px 20px 20px"
@@ -153,22 +158,47 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
         {/* 좋아요 버튼 */}
         {hasLikeButton && (
           <Flex direction="row" justifyContent="space-between" width="100%">
-            <HStack spacing={2} align="center">
-              <IconButton
-                w="22px"
-                h="24px"
-                minW="0"
-                aria-label="Like"
-                icon={<FaHeart />}
-                variant="ghost"
-                colorScheme={userLikes ? 'red' : 'gray'}
-                onClick={() => {
-                  toggleLikes();
-                }}
-                _hover={{ bg: 'transparent' }}
-                _focus={{ bg: 'transparent' }}
-                _active={{ bg: 'transparent' }}
-              />
+            <HStack spacing="0" align="center" minH="24px">
+              {userLikes && 
+                <IconButton
+                  w="24px"
+                  minH="24px"
+                  h="24px"
+                  minW="24px"
+                  aria-label="Like"
+                  icon={<FaHeart boxSize="24px"/>}
+                  variant="ghost"
+                  color={userLikes ? '#411461' : 'gray'}
+                  mr='0px'
+                  justifyContent="center"
+                  onClick={() => {
+                    toggleLikes();
+                  }}
+                  _hover={{ bg: 'transparent' }}
+                  _focus={{ bg: 'transparent' }}
+                  _active={{ bg: 'transparent' }}
+                />
+              }
+              { !userLikes && 
+                <IconButton
+                  w="24px"
+                  minH="24px"
+                  h="24px"
+                  minW="24px"
+                  aria-label="Like"
+                  icon={<FaRegHeart boxSize="24px" />}
+                  variant="ghost"
+                  color={userLikes ? '#411461' : 'gray'}
+                  mr='0px'
+                  justifyContent="center"
+                  onClick={() => {
+                    toggleLikes();
+                  }}
+                  _hover={{ bg: 'transparent' }}
+                  _focus={{ bg: 'transparent' }}
+                  _active={{ bg: 'transparent' }}
+                />
+              }
               <Text>{likes}</Text>
             </HStack>
             <Text
@@ -254,6 +284,17 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
           mt="3px"
         >
           {post.description}
+        </Text>
+        <Text
+          color="var(--subtitle-Gray, #7D7D7D)"
+          fontFamily="SUIT"
+          fontSize="14px"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight="normal"
+          mt="3px"
+        >
+          {getTagString(post.tags)}
         </Text>
         <Text
           color="var(--21-purple, #7C31B4)"
