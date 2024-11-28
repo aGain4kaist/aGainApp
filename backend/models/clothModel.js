@@ -13,7 +13,7 @@ const ClothModel = {
       .collection('Cloth')
       .where('id', '==', Number(id))
       .get();
-    return doc.empty ? { id: doc.docs[0].id, ...doc.docs[0].data() } : null;
+    return doc.empty ? null : { id: doc.docs[0].id, ...doc.docs[0].data() };
   },
 
   // 새로운 파티를 Firestore에 추가하는 메소드
