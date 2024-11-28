@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/utils/firebaseConfig';
+import { auth, db } from '@/utils/firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
   Box,
   Button,
@@ -14,13 +15,17 @@ import {
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { Image } from '@chakra-ui/react';
+import { useUser, createNewUserWithIncrementedId } from '../utils/UserContext';
 
 function Signup() {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleSignup = async () => {
@@ -29,7 +34,25 @@ function Signup() {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+
+      // Check if user already exists in Firestore
+      const userDocRef = doc(db, 'User', user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        // Create new user in Firestore
+        const newUser = await createNewUserWithIncrementedId(user, username);
+        setUser(newUser);
+      }
+
+      console.log('User signed up and saved to Firestore db!');
+
       navigate('/'); // 회원가입 후 홈으로 리다이렉션
     } catch (error) {
       let message = '회원가입에 실패했습니다.';
@@ -74,6 +97,14 @@ function Signup() {
           placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          mb={4}
+          bg="gray.100"
+          focusBorderColor="purple.500"
+        />
+        <Input
+          placeholder="닉네임"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           mb={4}
           bg="gray.100"
           focusBorderColor="purple.500"

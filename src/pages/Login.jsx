@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from 'firebase/auth';
-import { auth } from '@/utils/firebaseConfig';
-import { useUser } from '../utils/UserContext';
+import { auth, db } from '@/utils/firebaseConfig';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { useUser, createNewUserWithIncrementedId } from '../utils/UserContext';
 import {
   Box,
   Button,
@@ -26,18 +27,39 @@ function Login() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [userLoaded, setUserLoaded] = useState(false); // Track when user is fully loaded
+
+  const { user, setUser, fetchUserClothes } = useUser();
+
   const navigate = useNavigate();
 
-  // 유저 context에 추가
-  const { login } = useUser();
-
   const handleLogin = async () => {
+    setLoading(true);
+
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log('email login handled: ', response);
-      login(response.user); // setUser
+      const { user } = response;
 
-      navigate('/home'); // 로그인 후 홈으로 리다이렉션
+      // Reference to Firestore document for the user
+      const userDocRef = doc(db, 'User', user.uid);
+
+      // Fetch user document from Firestore
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        // Return existing user data
+        console.log('User document found:', userDoc.data());
+        // Set user context and navigate
+        setUser({ ...userDoc.data() });
+
+        navigate('/home'); // 로그인 후 홈으로 리다이렉션
+      } else {
+        // User is authenticated but no Firestore data exists (shouldn't happen in this flow)
+        throw new Error(
+          'User data not found in Firestore. Please contact support.'
+        );
+      }
     } catch (error) {
       let message = '로그인에 실패했습니다.';
       if (error.code === 'auth/user-not-found') {
@@ -46,20 +68,49 @@ function Login() {
         message = '비밀번호가 잘못되었습니다.';
       }
       alert(message);
+      console.log(error);
+    } finally {
+      setUserLoaded(true);
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    if (user && user.id && userLoaded) {
+      // Fetch user's clothes only if the user is loaded
+      fetchUserClothes(user.id);
+    }
+  }, [user, userLoaded]); // This runs after the user is loaded and the user state is updated
+
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
+    setLoading(true);
+
     try {
       const response = await signInWithPopup(auth, provider);
-      console.log('google login handled: ', response);
-      login(response.user); // setUser
+      const { user } = response;
 
+      // Check if user already exists in Firestore
+      const userDocRef = doc(db, 'User', user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        // Create new user in Firestore
+        const newUser = await createNewUserWithIncrementedId(user);
+        setUser(newUser);
+      }
+
+      console.log('구글 로그인 성공!');
+
+      // Set user context and navigate
+      const updatedUser = (await getDoc(userDocRef)).data();
+      setUser({ ...updatedUser });
       navigate('/home'); // 성공 시 홈으로 이동
     } catch (error) {
       console.error('구글 로그인 오류:', error);
       alert('구글 로그인에 실패했습니다. ' + (error.message || ''));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,7 +143,7 @@ function Login() {
         boxShadow="xl"
       >
         <Input
-          placeholder="아이디"
+          placeholder="이메일"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           mb={4}

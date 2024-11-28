@@ -1,11 +1,12 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text, VStack } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'swiper/css'; // Swiper 기본 스타일
 import CategorySwiper from '../components/CategorySwiper';
 import Header from '../components/Layout/Header';
 import ClothingPost from '../components/ClothingPost';
 import { catagoryData } from '../data/categoryData';
+import axios from 'axios';
 
 const CLOTHING_ITEMS = {
   1: [
@@ -93,7 +94,33 @@ const dummyPost = {
 };
 
 function ClothingSearch() {
-  const [selectedCategory, setSelectedCategory] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [postList, setPostList] = useState([]);
+  const [userId, setUserId] = useState('');
+  const maxPostLength = 5;
+
+  useEffect(() => {
+    // 여기에 userId 받아와야함
+    setUserId('1');
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get('http://68.183.225.136:3000/cloth/'); // API 호출
+        setPostList(response.data);
+      } catch (error) {
+        console.error('Error fetching post:', error); // 에러 상세 출력
+        toast({
+          title: 'Failed to load post',
+          description: `Error: ${error.message}`,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+    fetchPost();
+  }
+  )
+
   return (
     <Flex
       direction="column"
@@ -109,7 +136,7 @@ function ClothingSearch() {
         mb="10px"
       >
         {/* 카테고리 선택 */}
-        <CategorySwiper items={catagoryData} />
+        <CategorySwiper items={catagoryData} setSelectedCategory={setSelectedCategory} />
         {/* 옷 스토리 게시판 */}
         <Box mt={4}>
           <Text
@@ -138,23 +165,21 @@ function ClothingSearch() {
       <Box p={0}>
         {' '}
         {/* padding을 0으로 설정하여 적용되지 않도록 합니다. */}
-        <Swiper
-          direction="vertical"
-          spaceBetween={50}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          style={{ height: '450px' }}
+        <VStack
+          spacing={6}
         >
-          {CLOTHING_ITEMS[selectedCategory].map((item, index) => (
-            <SwiperSlide key={item.id}>
-              <ClothingPost post={dummyPost} hasLikeButton={false} />
-              {/* <ClothingPost item={item} id='1' /> */}
-            </SwiperSlide>
+          {postList
+          .filter(item => selectedCategory == "" ? true : item.type == selectedCategory)
+          .slice(0, postList.length > maxPostLength ? maxPostLength : postList.length)
+          .map((item) => (
+            <Box key={item.id} w="100%">
+              {/* <ClothingPost post={dummyPost} hasLikeButton={false} /> */}
+              <ClothingPost userId={userId} post={item} hasLikeButton={true} />
+            </Box>
           ))}
-        </Swiper>
+        </VStack>
       </Box>
-      <Box h="100px" />{' '}
+      <Box minH="120px" />
       {/* 하단의 navigation bar로 인해 내용이 잘려서 빈 공백을 추가함 */}
     </Flex>
   );

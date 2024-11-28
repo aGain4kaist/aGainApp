@@ -17,6 +17,7 @@ exports.getAllClothes = async (req, res) => {
     Promise.all(items).then((result) => {
       result.sort((a, b) => b.date - a.date);
       res.json(result);
+      return;
     });
   } catch (error) {
     console.log(error);
@@ -30,6 +31,7 @@ exports.getClothByID = async (req, res) => {
     if (cloth) {
       const item = await edit_cloth(cloth);
       res.json(item);
+      return;
     } else {
       res.status(404).send('Cloth not found');
     }
@@ -53,6 +55,7 @@ exports.getClothByPartyID = async (req, res) => {
       }
     }
     res.json(ret.sort((a, b) => b.date - a.date));
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching party');
@@ -62,6 +65,7 @@ exports.getClothByPartyID = async (req, res) => {
 exports.getClothByUserID = async (req, res) => {
   try {
     const user = await UserModel.getUserById(req.params.id);
+    const {onParty} = req.query;
     const ret = [];
     for (let i = 0; i < user.my_clothes.length; i++) {
       try {
@@ -72,7 +76,25 @@ exports.getClothByUserID = async (req, res) => {
         res.status(500).send('Error fetching cloth');
       }
     }
-    res.json(ret.sort((a, b) => b.date - a.date));
+    if (onParty == "true")
+    {
+      console.log("true");
+      const edit_item = ret.filter(e => 'party' in e);
+      res.json(edit_item.sort((a, b) => b.date - a.date));
+      return;
+    }
+    else if(onParty == "false")
+    {
+      console.log("false");
+      const edit_item = ret.filter(e => !('party' in e));
+      res.json(edit_item.sort((a, b) => b.date - a.date));
+      return;
+    }
+    else
+    {
+      res.json(ret.sort((a, b) => b.date - a.date));
+    }
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user');
@@ -85,6 +107,7 @@ exports.getClothLike = async (req, res) => {
     if (cloth) {
       const item = await edit_cloth(cloth);
       res.json({ likes: item.likes, liked_users: item.liked_users });
+      return;
     }
   } catch (error) {
     console.log(error);
@@ -105,9 +128,12 @@ exports.toggleClothLike = async (req, res) => {
             user.liked_clothes.splice(j, 1);
           }
         }
+        delete cloth.id;
+        delete user.id;
         await ClothModel.updateCloth(req.params.clothid, cloth);
         await UserModel.updateUser(req.params.userid, user);
         res.json(cloth);
+        return;
       }
     }
     cloth.liked_users.push(req.params.userid);
@@ -115,9 +141,12 @@ exports.toggleClothLike = async (req, res) => {
     cloth.liked_users = [...new Set(cloth.liked_users)]; // 중복 제거
     cloth.likes = cloth.liked_users.length;
     user.liked_cloths = [...new Set(user.liked_clothes)]; // 중복 제거
+    delete cloth.id;
+    delete user.id;
     await ClothModel.updateCloth(req.params.clothid, cloth);
     await UserModel.updateUser(req.params.userid, user);
     res.json(cloth);
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching cloth or user');

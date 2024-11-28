@@ -2,20 +2,9 @@ import { auth } from '@/utils/firebaseConfig';
 import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
 import axios from 'axios';
-import { signOut } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../utils/UserContext';
-
-export const handleLogout = async () => {
-  const { logout } = useUser();
-  try {
-    await signOut(auth);
-    console.log('로그아웃되었습니다.');
-  } catch (error) {
-    console.error('로그아웃에 실패했습니다:', error);
-  }
-};
 
 function Header({ id, title, subtitle }) {
   const [isSearchButtonExpanded, setIsSearchButtonExpanded] = useState(false);
@@ -25,8 +14,12 @@ function Header({ id, title, subtitle }) {
   const [backgroundColor, setBackgroundColor] = useState(
     'var(--background-silver, #FAF9FF)'
   );
+
+  // user context에 모든 유저 정보
+  const { user } = useUser();
+
   const [textColor, setTextColor] = useState('var(--21-purple-dark, #411461)');
-  const [ticketCount, setTicketCount] = useState(0); // 티켓 개수 상태 추가
+  const [ticketCount, setTicketCount] = useState(user.tickets); // 티켓 개수 상태 추가
 
   const navigate = useNavigate(); // 로그아웃 후 리다이렉션을 위해 추가
 
@@ -50,62 +43,6 @@ function Header({ id, title, subtitle }) {
   };
 
   useEffect(() => {
-    //임시로 userID를 1로 설정.
-
-    const userId = 1;
-
-    /*
-UID를 추후에 로그인 정보에서 가져올시
-
-
-const fetchUserTicket = async () => {
-      const currentUser = auth.currentUser;
-
-      if (currentUser) {
-        try {
-          const userId = currentUser.uid;
-
-          // 사용자 티켓 정보를 백엔드에서 가져오기
-          const response = await axios.get(
-            `http://68.183.225.136:3000/user/ticket/${userId}`
-          );
-
-          if (response.data && response.data.ticket !== undefined) {
-            setTicketCount(response.data.ticket);
-          } else {
-            console.error('사용자 티켓 정보를 가져올 수 없습니다.');
-          }
-        } catch (error) {
-          console.error('사용자 티켓 정보를 가져오는 중 오류 발생:', error);
-        }
-      } else {
-        console.error('로그인된 사용자가 없습니다.');
-        // 로그인 페이지로 리다이렉션
-        navigate('/login');
-      }
-    };
-*/
-
-    // 로그인된 사용자 티켓 정보 가져오기
-    const fetchUserTicket = async () => {
-      try {
-        // 사용자 티켓 정보를 백엔드에서 가져오기
-        const response = await axios.get(
-          `http://68.183.225.136:3000/user/ticket/${userId}`
-        );
-
-        if (response.data && response.data.ticket !== undefined) {
-          setTicketCount(response.data.ticket);
-        } else {
-          console.error('사용자 티켓 정보를 가져올 수 없습니다.');
-        }
-      } catch (error) {
-        console.error('사용자 티켓 정보를 가져오는 중 오류 발생:', error);
-      }
-    };
-
-    fetchUserTicket();
-
     switch (id) {
       case 'Home':
         setIsTitleExpanded(true);

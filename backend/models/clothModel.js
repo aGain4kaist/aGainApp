@@ -1,5 +1,4 @@
 const { db } = require('../config/firebaseAdmin');
-const multer = require('multer');
 
 const ClothModel = {
   // 모든 파티를 Firestore에서 가져오는 메소드
@@ -10,7 +9,6 @@ const ClothModel = {
 
   // 특정 ID를 사용하여 Firestore에서 특정 파티를 가져오는 메소드
   async getClothByID(id) {
-    console.log(typeof id);
     const doc = await db.collection('Cloth').doc(id).get();
     return doc.exists ? { id: doc.id, ...doc.data() } : null;
   },
@@ -22,9 +20,9 @@ const ClothModel = {
   },
 
   // 특정 파티를 Firestore에서 업데이트하는 메소드
-  async updateCloth(clothData) {
-    const docRef = await db.collection('Cloth').add(clothData, { merge: true });
-    return docRef.id;
+  async updateCloth(id, clothData) {
+    await db.collection('Cloth').doc(id).set(clothData, { merge: true });
+    return { id, ...clothData };
   },
 
   // 특정 파티를 Firestore에서 삭제하는 메소드
