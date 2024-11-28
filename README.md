@@ -87,6 +87,18 @@
 
 <br/>
 
+## 💻 개발 환경
+
+### Frontend
+- ReactJS
+- Vite
+
+### Backend
+- Firebase
+- Node.js
+
+<br/>
+
 ## 🎬 데모 영상
 
 [데모 영상 링크]  
@@ -95,7 +107,9 @@
 
 ## 📚 연관 자료
 
-[다시입다연구소 홈페이지](https://wearagain.org/)
+- [다시입다연구소 홈페이지](https://wearagain.org/)
+- [최종 발표 자료 Figma](https://www.figma.com/deck/n4Rs05WpzvCFeNzE0NBPHf/Final-Presentation?node-id=2048-244&node-type=slide&viewport=-7927%2C219%2C0.32&t=dP6ATYnXE3BTTE7U-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
+
 
 <br />
 
@@ -231,6 +245,18 @@ All registered clothes are saved in the **My Wardrobe** section, where users can
 2. Install dependencies: `npm install`  
 3. Start the application: `npm start`  
 
+<br/>
+
+## 💻 Development Environment
+
+### Frontend
+- ReactJS
+- Vite
+
+### Backend
+- Firebase
+- Node.js
+
 <br />
 
 ## 🎬 Demo Video
@@ -241,7 +267,8 @@ All registered clothes are saved in the **My Wardrobe** section, where users can
 
 ## 📚 Related Resources
 
-[Wear Again Lab Website](https://wearagain.org/)
+- [Wear Again Lab Website](https://wearagain.org/)
+- [Final Presentation Figma](https://www.figma.com/deck/n4Rs05WpzvCFeNzE0NBPHf/Final-Presentation?node-id=2048-244&node-type=slide&viewport=-7927%2C219%2C0.32&t=dP6ATYnXE3BTTE7U-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1)
 
 <br />
 
