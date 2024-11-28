@@ -7,8 +7,8 @@ const UserModel = {
   },
 
   async getUserById(id) {
-    const doc = await db.collection('User').doc(id).get();
-    return doc.exists ? { id: doc.id, ...doc.data() } : null;
+    const doc = await db.collection('User').where('id', '==', Number(id)).get();
+    return doc.empty ? null : { id: doc.docs[0].id, ...doc.docs[0].data() };
   },
 
   async createUser(userData) {

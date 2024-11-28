@@ -3,6 +3,15 @@ const UserModel = require('../models/userModel');
 const ClothModel = require('../models/clothModel');
 
 async function edit_user(user) {
+  console.log(user);
+  if(user.profile_picture == null)
+  {
+    user.profile_picture = await getWebUrl('user/userbasic.jpg');
+  }
+  if(user.profile_picture[5] == ':' && user.profile_picture[6] == '/')
+  {
+    return user;
+  }
   user.profile_picture = await getWebUrl('user/' + user.profile_picture);
   return user;
 }
@@ -112,8 +121,9 @@ exports.buyCloth = async (req, res) => {
     user.tickets -= 1;
     delete user.id;
     delete owner.id;
-    await UserModel.updateUser(user.id, user);
-    await UserModel.updateUser(owner.id, owner);
+    await UserModel.updateUser(req.params.user_id, user);
+    await UserModel.updateUser(cloth.owner, owner);
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching user or cloth.');

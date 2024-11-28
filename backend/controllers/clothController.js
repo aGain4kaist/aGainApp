@@ -12,7 +12,6 @@ async function edit_cloth(cloth) {
 exports.getAllClothes = async (req, res) => {
   try {
     const clothes = await ClothModel.getAllClothes();
-    console.log(clothes);
     const items = await clothes.map((cloth) => edit_cloth(cloth));
     Promise.all(items).then((result) => {
       result.sort((a, b) => b.date - a.date);
@@ -77,12 +76,10 @@ exports.getClothByUserID = async (req, res) => {
       }
     }
     if (onParty == 'true') {
-      console.log('true');
       const edit_item = ret.filter((e) => 'party' in e);
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else if (onParty == 'false') {
-      console.log('false');
       const edit_item = ret.filter((e) => !('party' in e));
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
@@ -149,15 +146,18 @@ exports.toggleClothLike = async (req, res) => {
 };
 
 exports.uploadCloth = async (req, res) => {
+  console.log('upload');
   try {
-    const jsonData = req.body;
-    if (!req.file) {
+    console.log(req.headers);
+    const jsonData = req.body.jsonData;
+    if (!req.body.file) {
       return res.status(400).send({ error: 'No file uploaded.' });
     }
     const fileInfo = {
-      originalName: req.file.originalname,
-      mimeType: req.file.mimetype,
-      size: req.file.size,
+      originalName: req.body.file.originalname,
+      mimeType: req.body.file.mimetype,
+      size: req.body.file.size,
+      ㅊ,
     };
     if (!jsonData || Object.keys(jsonData).length === 0) {
       return res.status(400).send({ error: 'No JSON data provided.' });
