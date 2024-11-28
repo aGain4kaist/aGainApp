@@ -9,7 +9,7 @@ function PartyListItem({ onPartyClick, party, onToggleFavorite, isFavorite }) {
 
   const handleFavClick = (e) => {
     e.stopPropagation(); // Prevent triggering the onPartyClick
-    //isFavorite = !isFavorite; 
+    //isFavorite = !isFavorite;
   };
   useEffect(() => {
     // console.log(party?.name);

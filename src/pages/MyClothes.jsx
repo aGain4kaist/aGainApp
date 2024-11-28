@@ -50,7 +50,6 @@ function MyClothes() {
     '/images/notregister5.jpg',
   ]; */
 
-
   const displayRegisteredClothes =
     userRegisteredClothes.length > maxItems
       ? userRegisteredClothes.slice(0, maxItems - 1)

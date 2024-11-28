@@ -17,7 +17,6 @@ import {
 } from '@chakra-ui/react';
 import ClothingPost from '../components/ClothingPost';
 
-
 function PartyDetailPage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
@@ -99,7 +98,6 @@ function PartyDetailPage() {
     fetchPartyDetailandClothes(partyId);
   }, [partyId]);
 
-
   if (isLoading) {
     return (
       <Flex
@@ -175,7 +173,6 @@ function PartyDetailPage() {
     setSelectedClothesMine(userAllClothes[prior]);
   };
 
-
   const renderContent = () => {
     switch (currentView) {
       case 'info':
@@ -244,7 +241,7 @@ function PartyDetailPage() {
                         ? `내 위치로부터 ・ ${(partyDetails.distance * 1000).toFixed(0)}m`
                         : `내 위치로부터 ・ ${partyDetails.distance.toFixed(2)}km`
                       : '거리 정보를 확인할 수 없습니다'} */}
-                    내 위치로부터 ・ 6.2km  {/* hard coding */}
+                    내 위치로부터 ・ 6.2km {/* hard coding */}
                   </Text>
                   <Text
                     alignSelf="stretch"

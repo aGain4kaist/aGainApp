@@ -5,12 +5,10 @@ const multer = require('multer');
 
 async function edit_user(user) {
   console.log(user);
-  if(user.profile_picture == null)
-  {
+  if (user.profile_picture == null) {
     user.profile_picture = await getWebUrl('user/userbasic.jpg');
   }
-  if(user.profile_picture[5] == ':' && user.profile_picture[6] == '/')
-  {
+  if (user.profile_picture[5] == ':' && user.profile_picture[6] == '/') {
     return user;
   }
   user.profile_picture = await getWebUrl('user/' + user.profile_picture);

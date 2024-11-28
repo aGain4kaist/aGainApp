@@ -67,7 +67,9 @@ export const UserProvider = ({ children }) => {
   // Function to fetch user's registered clothes
   const fetchUserRegisteredClothes = async (userId) => {
     try {
-      const response = await axios.get(`http://68.183.225.136:3000/cloth/user/${userId}?onParty=true`);
+      const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/${userId}?onParty=true`
+      );
       /* const response = await axios.get(
         `http://68.183.225.136:3000/cloth/user/1`
       ); // 1번을 제외한 api가 터짐 (코드500) */
@@ -82,7 +84,9 @@ export const UserProvider = ({ children }) => {
   // Function to fetch user's not registered clothes
   const fetchUserUnregisteredClothes = async (userId) => {
     try {
-      const response = await axios.get(`http://68.183.225.136:3000/cloth/user/${userId}?onParty=false`);
+      const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/${userId}?onParty=false`
+      );
       /* const response = await axios.get(
         `http://68.183.225.136:3000/cloth/user/1`
       ); // 1번을 제외한 api가 터짐 (코드500) */
@@ -152,15 +156,15 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ 
-        user, 
-        setUser, 
-        userRegisteredClothes, 
-        fetchUserRegisteredClothes, 
-        userUnregisteredClothes, 
+      value={{
+        user,
+        setUser,
+        userRegisteredClothes,
+        fetchUserRegisteredClothes,
+        userUnregisteredClothes,
         fetchUserUnregisteredClothes,
-        loading, 
-        logout 
+        loading,
+        logout,
       }}
     >
       {children}

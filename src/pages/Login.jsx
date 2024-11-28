@@ -30,7 +30,12 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [userLoaded, setUserLoaded] = useState(false); // Track when user is fully loaded
 
-  const { user, setUser, fetchUserRegisteredClothes, fetchUserUnregisteredClothes } = useUser();
+  const {
+    user,
+    setUser,
+    fetchUserRegisteredClothes,
+    fetchUserUnregisteredClothes,
+  } = useUser();
 
   const navigate = useNavigate();
 
