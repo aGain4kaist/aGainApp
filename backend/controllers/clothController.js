@@ -156,7 +156,8 @@ exports.uploadCloth = async (req, res) => {
     const fileInfo = {
       originalName: req.body.file.originalname,
       mimeType: req.body.file.mimetype,
-      size: req.body.file.size,ㅊ
+      size: req.body.file.size,
+      ㅊ,
     };
     if (!jsonData || Object.keys(jsonData).length === 0) {
       return res.status(400).send({ error: 'No JSON data provided.' });
