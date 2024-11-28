@@ -92,7 +92,62 @@ It will also help promote the culture of viewing clothes as meaningful and speci
 ### 설치 및 실행 방법  
 **Installation and Running Instructions**
 
-1. **프로젝트 클론**  
-   **Clone the Project**  
-   ```bash
-   git clone https://github.com/yourusername/21percent.git
+### 데모 영상  
+**Demo Video**
+
+
+### 연관 자료  
+**Related Resources**
+
+
+
+### 팀 및 팀원 소개  
+**Team and Members Introduction**
+
+- **팀명**: aGain  
+  **Team Name**: aGain  
+
+-### 팀 및 팀원 소개  
+**Team and Members Introduction**
+
+- **팀명**: 21%  
+  **Team Name**: 21%  
+
+- **팀원 소개**:  
+  **Team Members**:  
+  - **류이채**: 팀장, 디자인, 프론트엔드 개발  
+    **Ryu Ichae**: Team Leader, Design, Frontend Development  
+    - **Contact**: 
+
+  - **김태우**: 풀스택 개발  
+    **Kim Tae-woo**: Fullstack Developer  
+    - **Contact**: 
+
+  - **김민범**: 디자인, 프론트엔드 개발  
+    **Kim Min-beom**: Design, Frontend Development  
+    - **Contact**: kmb3322@kaist.ac.kr
+
+  - **박영우**: 프론트엔드 개발  
+    **Park Young-woo**: Frontend Developer  
+    - **Contact**: 
+
+  - **김진휘**: 백엔드 개발  
+    **Kim Jin-hwi**: Backend Developer  
+    - **Contact**: 
+
+  - **이예린**: 프론트엔드 개발  
+    **Lee Ye-rin**: Frontend Developer  
+    - **Contact**: 
+
+  - **진은재**: 백엔드 개발  
+    **Jin Eun-jae**: Backend Developer  
+    - **Contact**: 
+
+- **멘토**: 최지원 / 카카오  
+  **Mentor**: Choi Ji-won / Kakao  
+
+- **펠로우**: 정주연 / 다시입다연구소 대표  
+  **Fellow**: Jeong Ju-yeon / CEO of Reuse Research Institute  
+
+
+
