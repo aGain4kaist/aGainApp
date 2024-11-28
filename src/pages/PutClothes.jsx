@@ -173,6 +173,7 @@ function PutClothes() {
           tags: keywords,
           type: category,
           party: '', // 파티 ID를 선택적으로 넣을 수 있습니다.
+          owner: '',
           description: story,
         })
       );
