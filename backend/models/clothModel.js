@@ -33,6 +33,11 @@ const ClothModel = {
     return { ...clothData };
   },
 
+  async updateClothByDocId(id, clothData) {
+    await db.collection('Cloth').doc(id).set(clothData, { merge: true });
+    return { ...clothData };
+  },
+
   // 특정 파티를 Firestore에서 삭제하는 메소드
   async deleteCloth(id) {
     await db.collection('Cloth').where('id', '==', Number(id)).delete();
