@@ -4,7 +4,7 @@ const ClothModel = {
   // 모든 파티를 Firestore에서 가져오는 메소드
   async getAllClothes() {
     const snapshot = await db.collection('Cloth').get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    return snapshot.docs.map((doc) => ({ ...doc.data() }));
   },
 
   // 특정 ID를 사용하여 Firestore에서 특정 파티를 가져오는 메소드
@@ -24,7 +24,10 @@ const ClothModel = {
 
   // 특정 파티를 Firestore에서 업데이트하는 메소드
   async updateCloth(id, clothData) {
-    const snapshot = await db.collection('Cloth').where('id', '==', Number(id)).get();
+    const snapshot = await db
+      .collection('Cloth')
+      .where('id', '==', Number(id))
+      .get();
     const doc = snapshot.docs[0];
     await db.collection('Cloth').doc(doc.id).set(clothData, { merge: true });
     return { ...clothData };
