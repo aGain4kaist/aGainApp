@@ -34,7 +34,7 @@ const ClothModel = {
   },
 
   async updateClothByDocId(id, clothData) {
-    await db.collection('Cloth').doc(id).set(clothData, {merge : true});
+    await db.collection('Cloth').doc(id).set(clothData, { merge: true });
     return { ...clothData };
   },
 
