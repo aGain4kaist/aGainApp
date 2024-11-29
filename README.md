@@ -87,7 +87,27 @@
 ### 백엔드 설치 및 실행 방법
 1. 클론된 저장소에서 backend 디렉토리로 들어갑니다: `cd backend`
 2. 의존성을 설치합니다: `npm install`
-3. 애플리케이션을 실행합니다: `node index`
+3. Firebase 프로젝트를 설정합니다.
+   * Firebase 콘솔에서 새 프로젝트를 생성하고 웹 앱을 추가합니다.
+   * 프로젝트에 Firestore Database와 Storage를 추가합니다.
+   * 프로젝트 설정 -> 서비스 계정에서 새 비공개 키를 생성합니다.
+   * 생성한 비공개 키의 이름을 `serviceAccountKey.json`으로 변경하고 backend 디렉토리 내부로 이동시킵니다.
+     ```
+     {
+        "type": "service_account",
+        "project_id": your-project-id,
+        "private_key_id": your-private-key-id,
+        "private_key": your-private-key,
+        "client_email": your-client-email,
+        "client_id": your-client-id,
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": your-cert-url,
+        "universe_domain": "googleapis.com"
+      }
+4. 애플리케이션을 실행합니다: `node index`
+
 
 <br/>
 
