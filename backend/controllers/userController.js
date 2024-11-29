@@ -4,7 +4,7 @@ const ClothModel = require('../models/clothModel');
 
 async function edit_user(user) {
   console.log(user);
-  if (user.profile_picture == null) {
+  if (user.profile_picture == null || user.profile_picture == "") {
     user.profile_picture = await getWebUrl('user/userbasic.jpg');
   }
   if (user.profile_picture[5] == ':' && user.profile_picture[6] == '/') {
