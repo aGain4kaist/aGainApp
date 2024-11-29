@@ -48,6 +48,11 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
     }
   };
 
+  // Update `post` whenever `initialPost` changes
+  useEffect(() => {
+    setPost(initialPost);
+  }, [initialPost]);
+
   useEffect(() => {
     if (!initialPost && id) {
       // Fetch post data from the API if not provided directly
@@ -166,7 +171,7 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
                   h="24px"
                   minW="24px"
                   aria-label="Like"
-                  icon={<FaHeart boxSize="24px" />}
+                  icon={<FaHeart boxsize="24px" />}
                   variant="ghost"
                   color={userLikes ? '#411461' : 'gray'}
                   mr="0px"
@@ -186,7 +191,7 @@ function ClothingPost({ userId, id, post: initialPost, hasLikeButton }) {
                   h="24px"
                   minW="24px"
                   aria-label="Like"
-                  icon={<FaRegHeart boxSize="24px" />}
+                  icon={<FaRegHeart boxsize="24px" />}
                   variant="ghost"
                   color={userLikes ? '#411461' : 'gray'}
                   mr="0px"

@@ -30,7 +30,12 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [userLoaded, setUserLoaded] = useState(false); // Track when user is fully loaded
 
-  const { user, setUser, fetchUserClothes } = useUser();
+  const {
+    user,
+    setUser,
+    fetchUserRegisteredClothes,
+    fetchUserUnregisteredClothes,
+  } = useUser();
 
   const navigate = useNavigate();
 
@@ -78,7 +83,8 @@ function Login() {
   useEffect(() => {
     if (user && user.id && userLoaded) {
       // Fetch user's clothes only if the user is loaded
-      fetchUserClothes(user.id);
+      fetchUserRegisteredClothes(user.id);
+      fetchUserUnregisteredClothes(user.id);
     }
   }, [user, userLoaded]); // This runs after the user is loaded and the user state is updated
 

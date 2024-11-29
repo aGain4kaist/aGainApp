@@ -110,7 +110,7 @@ function AppLayout() {
 }
 
 function NavBarAndButton() {
-  const [selectedPage, setSelectedPage] = useState(0);
+  const [selectedPage, setSelectedPage] = useState(1);
   const location = useLocation();
   const hiddenPaths = [
     '/',

@@ -58,22 +58,43 @@ export const createNewUserWithIncrementedId = async (
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userClothes, setUserClothes] = useState([]); // 유저가 넣어둔 옷들 (지금 api가 등록된 옷/안등록된 옷 구분을 안 함)
+  const [userRegisteredClothes, setUserRegisteredClothes] = useState([]); // 유저가 파티에 등록한 옷
+  const [userUnregisteredClothes, setUserUnregisteredClothes] = useState([]); // 유저가 아직 파티에 등록 안 한 옷
+
   const [loading, setLoading] = useState(true);
   const [userLoaded, setUserLoaded] = useState(false); // Track when user is fully loaded
 
-  // Function to fetch user's clothes
-  const fetchUserClothes = async (userId) => {
+  // Function to fetch user's registered clothes
+  const fetchUserRegisteredClothes = async (userId) => {
     try {
-      //const response = await axios.get(`http://68.183.225.136:3000/cloth/user/${userId}`);
       const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/${userId}?onParty=true`
+      );
+      /* const response = await axios.get(
         `http://68.183.225.136:3000/cloth/user/1`
-      ); // 1번을 제외한 api가 터짐 (코드500)
+      ); // 1번을 제외한 api가 터짐 (코드500) */
 
-      console.log('user clothes fetched: ', response.data);
-      setUserClothes(response.data);
+      console.log('user registered clothes fetched: ', response.data);
+      setUserRegisteredClothes(response.data);
     } catch (error) {
-      console.error('Error fetching user clothes:', error);
+      console.error('Error fetching user registered clothes:', error);
+    }
+  };
+
+  // Function to fetch user's not registered clothes
+  const fetchUserUnregisteredClothes = async (userId) => {
+    try {
+      const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/${userId}?onParty=false`
+      );
+      /* const response = await axios.get(
+        `http://68.183.225.136:3000/cloth/user/1`
+      ); // 1번을 제외한 api가 터짐 (코드500) */
+
+      console.log('user unregistered clothes fetched: ', response.data);
+      setUserUnregisteredClothes(response.data);
+    } catch (error) {
+      console.error('Error fetching user unregistered clothes:', error);
     }
   };
 
@@ -102,7 +123,8 @@ export const UserProvider = ({ children }) => {
         }
       } else {
         setUser(null);
-        setUserClothes([]); // Clear clothes on logout
+        setUserRegisteredClothes([]); // Clear clothes on logout
+        setUserUnregisteredClothes([]);
       }
       setUserLoaded(true); // Set userLoaded to true after user data is fetched or logged out
       setLoading(false);
@@ -114,7 +136,8 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (user && user.id && userLoaded) {
       // Fetch user's clothes only if the user is loaded
-      fetchUserClothes(user.id);
+      fetchUserRegisteredClothes(user.id);
+      fetchUserUnregisteredClothes(user.id);
     }
   }, [user, userLoaded]); // This runs after the user is loaded and the user state is updated
 
@@ -122,7 +145,8 @@ export const UserProvider = ({ children }) => {
     try {
       await auth.signOut();
       setUser(null);
-      setUserClothes([]); // Clear clothes on logout
+      setUserRegisteredClothes([]); // Clear clothes on logout
+      setUserUnregisteredClothes([]);
       console.log('로그아웃 했습니다.');
     } catch (error) {
       console.error('Error during logout:', error);
@@ -132,7 +156,16 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, userClothes, fetchUserClothes, loading, logout }}
+      value={{
+        user,
+        setUser,
+        userRegisteredClothes,
+        fetchUserRegisteredClothes,
+        userUnregisteredClothes,
+        fetchUserUnregisteredClothes,
+        loading,
+        logout,
+      }}
     >
       {children}
     </UserContext.Provider>

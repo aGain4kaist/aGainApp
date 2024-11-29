@@ -20,7 +20,7 @@ function CategorySwiper({ items, setSelectedCategory }) {
   return (
     <Box mt={0}>
       <Text fontSize="24px" fontWeight="bold" style={{ color: 'black' }}>
-        카테고리로 찾기
+        카테고리로 보기
       </Text>
       <Swiper spaceBetween={20} slidesPerView="auto">
         {items.map((item) => (
