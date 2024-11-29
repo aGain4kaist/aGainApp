@@ -81,15 +81,11 @@ exports.getClothByUserID = async (req, res) => {
       }
     }
     if (onParty == 'true') {
-      console.log('true');
-
-      const edit_item = ret.filter((e) => 'party' in e);
+      const edit_item = ret.filter((e) => 'party' in e && e.party != '');
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else if (onParty == 'false') {
-      console.log('false');
-
-      const edit_item = ret.filter((e) => !('party' in e));
+      const edit_item = ret.filter((e) => !('party' in e) || e.party == '');
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else {
@@ -109,6 +105,8 @@ exports.getClothLike = async (req, res) => {
       const item = await edit_cloth(cloth);
       res.json({ likes: item.likes, liked_users: item.liked_users });
       return;
+    } else {
+      res.status(400).send('No cloth with such ID');
     }
   } catch (error) {
     console.log(error);
@@ -129,8 +127,6 @@ exports.toggleClothLike = async (req, res) => {
             user.liked_clothes.splice(j, 1);
           }
         }
-        delete cloth.id;
-        delete user.id;
         await ClothModel.updateCloth(req.params.clothid, cloth);
         await UserModel.updateUser(req.params.userid, user);
         res.json(cloth);
@@ -141,9 +137,7 @@ exports.toggleClothLike = async (req, res) => {
     user.liked_clothes.push(req.params.clothid);
     cloth.liked_users = [...new Set(cloth.liked_users)]; // 중복 제거
     cloth.likes = cloth.liked_users.length;
-    user.liked_cloths = [...new Set(user.liked_clothes)]; // 중복 제거
-    delete cloth.id;
-    delete user.id;
+    user.liked_clothes = [...new Set(user.liked_clothes)]; // 중복 제거
     await ClothModel.updateCloth(req.params.clothid, cloth);
     await UserModel.updateUser(req.params.userid, user);
     res.json(cloth);
@@ -176,13 +170,17 @@ exports.uploadCloth = async (req, res) => {
     const doc = await db.collection('counters').get('clothIdCounter');
     const data1 = doc.docs[0].data();
     const clothid = data1.lastClothId;
+    const owner = await UserModel.getUserById(jsonData.owner);
     data1.lastClothId = clothid + 1;
     jsonData.id = clothid + 1;
+    owner.my_clothes.push(jsonData.id);
+    owner.tickets += 1;
     jsonData.upload_date = currentTimestamp;
     jsonData.image = fileName2;
     jsonData.liked_users = [];
     jsonData.likes = 0;
     await ClothModel.updateCloth(id.id, jsonData);
+    await UserModel.updateUser(jsonData.owner, owner);
     await db
       .collection('counters')
       .doc('clothIdCounter')

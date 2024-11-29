@@ -1,7 +1,6 @@
 const { getWebUrl } = require('../utils/helpers');
 const UserModel = require('../models/userModel');
 const ClothModel = require('../models/clothModel');
-const multer = require('multer');
 
 async function edit_user(user) {
   console.log(user);
@@ -113,13 +112,11 @@ exports.buyCloth = async (req, res) => {
     if (user.tickets == 0) {
       res.status(400).send('Not enough tickets.');
     }
-    // await ClothModel.deleteCloth(req.params.cloth_id); 교환이 완료된 옷 삭제, 테스트 필요해서 주석처리함.
+    await ClothModel.deleteCloth(req.params.cloth_id); //교환이 완료된 옷 삭제
     const owner = await UserModel.getUserById(cloth.owner);
     owner.exchanges += 1;
     user.exchanges += 1;
     user.tickets -= 1;
-    delete user.id;
-    delete owner.id;
     await UserModel.updateUser(req.params.user_id, user);
     await UserModel.updateUser(cloth.owner, owner);
     return;
