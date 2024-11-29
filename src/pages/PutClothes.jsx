@@ -53,8 +53,7 @@ function PutClothes() {
   const [size, setSize] = useState('');
   const [fitSize, setFitSize] = useState('');
 
-  const { user, fetchUserClothes } = useUser();
-  console.log(user?.id?.toString());
+  const { user, userRegisteredClothes, userUnRegisteredClothes, fetchUserClothes } = useUser(); // 등록된/안된 옷 따로 보관
 
   // 이미지 선택 핸들러
   const handleImageChange = (event) => {

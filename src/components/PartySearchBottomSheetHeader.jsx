@@ -29,9 +29,9 @@ function PartySearchBottomSheetHeader() {
             내게 가까운 파티들
           </Text>
           <Spacer />
-          <Text fontSize="md" color="#7C31B4" alignSelf="center">
+          {/* <Text fontSize="md" color="#7C31B4" alignSelf="center">
             거리순
-          </Text>
+          </Text> */}
         </Flex>
       </Flex>
     </Box>

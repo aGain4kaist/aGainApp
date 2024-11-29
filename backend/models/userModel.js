@@ -3,12 +3,12 @@ const { db } = require('../config/firebaseAdmin');
 const UserModel = {
   async getAllUsers() {
     const snapshot = await db.collection('User').get();
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    return snapshot.docs.map((doc) => ({ ...doc.data() }));
   },
 
   async getUserById(id) {
-    const doc = await db.collection('User').doc(id).get();
-    return doc.exists ? { id: doc.id, ...doc.data() } : null;
+    const doc = await db.collection('User').where('id', '==', Number(id)).get();
+    return doc.empty ? null : { ...doc.docs[0].data() };
   },
 
   async createUser(userData) {
@@ -17,12 +17,17 @@ const UserModel = {
   },
 
   async updateUser(id, userData) {
-    await db.collection('User').doc(id).set(userData, { merge: true });
-    return { id, ...userData };
+    const snapshot = await db
+      .collection('User')
+      .where('id', '==', Number(id))
+      .get();
+    const doc = snapshot.docs[0];
+    await db.collection('User').doc(doc.id).set(userData, { merge: true });
+    return { ...userData };
   },
 
   async deleteUser(id) {
-    await db.collection('User').doc(id).delete();
+    await db.collection('User').where('id', '==', Number(id)).delete();
     return { message: `User with ID ${id} deleted` };
   },
 };

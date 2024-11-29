@@ -10,7 +10,7 @@ import PartySearch from '@/pages/PartySearch';
 import Signup from '@/pages/Signup';
 import { Box, Button, Flex, IconButton, Text } from '@chakra-ui/react';
 import { Icon as IconifyIcon } from '@iconify/react';
-import React from 'react';
+import { React, useState } from 'react';
 import {
   Link,
   Route,
@@ -110,6 +110,7 @@ function AppLayout() {
 }
 
 function NavBarAndButton() {
+  const [selectedPage, setSelectedPage] = useState(1);
   const location = useLocation();
   const hiddenPaths = [
     '/',
@@ -161,8 +162,20 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+            onClick={() => {
+              setSelectedPage(1);
+            }}
           >
-            <IconifyIcon icon="bx:home" style={{ fontSize: '30px' }} />
+            {selectedPage == 1 && (
+              <IconifyIcon
+                icon="bxs:home"
+                style={{ fontSize: '30px' }}
+                color="#411461"
+              />
+            )}
+            {selectedPage != 1 && (
+              <IconifyIcon icon="bx:home" style={{ fontSize: '30px' }} />
+            )}
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"
@@ -187,8 +200,20 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+            onClick={() => {
+              setSelectedPage(2);
+            }}
           >
-            <IconifyIcon icon="bx:party" style={{ fontSize: '30px' }} />
+            {selectedPage == 2 && (
+              <IconifyIcon
+                icon="bxs:party"
+                style={{ fontSize: '30px' }}
+                color="#411461"
+              />
+            )}
+            {selectedPage != 2 && (
+              <IconifyIcon icon="bx:party" style={{ fontSize: '30px' }} />
+            )}
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"
@@ -227,11 +252,23 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+            onClick={() => {
+              setSelectedPage(3);
+            }}
           >
-            <IconifyIcon
-              icon="lsicon:clothes-outline"
-              style={{ fontSize: '33px' }}
-            />
+            {selectedPage == 3 && (
+              <IconifyIcon
+                icon="lsicon:clothes-filled"
+                style={{ fontSize: '33px' }}
+                color="#411461"
+              />
+            )}
+            {selectedPage != 3 && (
+              <IconifyIcon
+                icon="lsicon:clothes-outline"
+                style={{ fontSize: '33px' }}
+              />
+            )}
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"
@@ -256,11 +293,24 @@ function NavBarAndButton() {
             variant="ghost"
             _hover={{ backgroundColor: 'transparent' }}
             _active={{ backgroundColor: 'transparent', boxShadow: 'none' }}
+            onClick={() => {
+              setSelectedPage(4);
+            }}
           >
-            <IconifyIcon
-              icon="streamline:closet"
-              style={{ fontSize: '30px' }}
-            />
+            {selectedPage == 4 && (
+              <IconifyIcon
+                icon="streamline:closet-solid"
+                style={{ fontSize: '30px' }}
+                color="#411461"
+              />
+            )}
+            {selectedPage != 4 && (
+              <IconifyIcon
+                icon="streamline:closet"
+                style={{ fontSize: '30px' }}
+              />
+            )}
+
             <Text
               color="#000"
               fontFamily="'SUIT', sans-serif"

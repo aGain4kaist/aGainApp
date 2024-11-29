@@ -1,6 +1,5 @@
 const PartyModel = require('../models/partyModel');
 const UserModel = require('../models/userModel');
-const ClothModel = require('../models/clothModel');
 const { getDistance, format_date, getWebUrl } = require('../utils/helpers');
 
 async function edit_party(party, latitude, longitude) {
@@ -60,6 +59,8 @@ exports.getPartyLike = async (req, res) => {
       const item = await edit_party(party);
       res.json({ likes: item.likes, liked_users: item.liked_users });
       return;
+    } else {
+      res.status(400).send('No such party');
     }
   } catch (error) {
     console.log(error);
@@ -80,8 +81,6 @@ exports.togglePartyLike = async (req, res) => {
             user.liked_parties.splice(j, 1);
           }
         }
-        delete party.id;
-        delete user.id;
         await PartyModel.updateParty(req.params.partyid, party);
         await UserModel.updateUser(req.params.userid, user);
         res.json(party);
@@ -93,8 +92,6 @@ exports.togglePartyLike = async (req, res) => {
     party.liked_users = [...new Set(party.liked_users)]; // 중복 제거
     party.likes = party.liked_users.length;
     user.liked_parties = [...new Set(user.liked_parties)]; // 중복 제거
-    delete party.id;
-    delete user.id;
     await PartyModel.updateParty(req.params.partyid, party);
     await UserModel.updateUser(req.params.userid, user);
     res.json(party);
@@ -102,5 +99,48 @@ exports.togglePartyLike = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send('Error fetching party or user');
+  }
+};
+
+exports.uploadParty = async (req, res) => {
+  try {
+    const jsonData = req.body;
+    if (!req.file) {
+      return res.status(400).send({ error: 'No file uploaded.' });
+    }
+    const fileInfo = {
+      originalName: req.file.originalname,
+      mimeType: req.file.mimetype,
+      size: req.file.size,
+    };
+    if (!jsonData || Object.keys(jsonData).length === 0) {
+      return res.status(400).send({ error: 'No JSON data provided.' });
+    }
+    const id = PartyModel.createParty(jsonData);
+    const fileName = `${'party'}${id}${path.extname(fileInfo.originalName)}`;
+    const fileUpload = bucket.file(fileName);
+    const stream = fileUpload.createWriteStream({
+      metadata: {
+        contentType: fileInfo.mimeType,
+      },
+    });
+
+    stream.on('error', (error) => {
+      console.error('Error uploading file:', error);
+      res.status(500).send({ error: 'Failed to upload file.' });
+    });
+
+    stream.on('finish', async () => {
+      // 파일 업로드 완료 후 URL 생성
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
+      res.status(200).send({
+        message: 'File and JSON data uploaded successfully.',
+        documentId: documentId,
+        fileUrl: publicUrl,
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Failed to process json data.');
   }
 };
