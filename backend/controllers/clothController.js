@@ -179,7 +179,7 @@ exports.uploadCloth = async (req, res) => {
     jsonData.image = fileName2;
     jsonData.liked_users = [];
     jsonData.likes = 0;
-    await ClothModel.updateCloth(id.id, jsonData);
+    await ClothModel.updateCloth(jsonData.id, jsonData);
     await UserModel.updateUser(jsonData.owner, owner);
     await db
       .collection('counters')
