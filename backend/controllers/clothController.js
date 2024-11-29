@@ -167,8 +167,10 @@ exports.uploadCloth = async (req, res) => {
     const fileName = `${'cloth/cloth'}${id.id}${path.extname(fileInfo.originalName)}`;
     const fileName2 = `${'cloth'}${id.id}${path.extname(fileInfo.originalName)}`;
     const currentTimestamp = Timestamp.now();
+
     const doc = await db.collection('counters').get('clothIdCounter');
     const data1 = doc.docs[0].data();
+
     const clothid = data1.lastClothId;
     const owner = await UserModel.getUserById(jsonData.owner);
     data1.lastClothId = clothid + 1;
@@ -179,7 +181,7 @@ exports.uploadCloth = async (req, res) => {
     jsonData.image = fileName2;
     jsonData.liked_users = [];
     jsonData.likes = 0;
-    await ClothModel.updateCloth(jsonData.id, jsonData);
+    await ClothModel.updateClothByDocId(id.id, jsonData);
     await UserModel.updateUser(jsonData.owner, owner);
     await db
       .collection('counters')
