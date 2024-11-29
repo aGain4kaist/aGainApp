@@ -172,14 +172,21 @@ exports.uploadCloth = async (req, res) => {
     const doc = await db.collection('counters').get('clothIdCounter');
     const data1 = doc.docs[0].data();
     const clothid = data1.lastClothId;
+    const owner = await UserModel.getUserById(jsonData.owner);
     data1.lastClothId = clothid + 1;
     jsonData.id = clothid + 1;
+    owner.my_clothes.push(jsonData.id);
+    owner.tickets += 1;
     jsonData.upload_date = currentTimestamp;
     jsonData.image = fileName2;
     jsonData.liked_users = [];
     jsonData.likes = 0;
     await ClothModel.updateCloth(id.id, jsonData);
-    await db.collection('counters').doc('clothIdCounter').set(data1, {merge: true});
+    await UserModel.updateUser(jsonData.owner, owner);
+    await db
+      .collection('counters')
+      .doc('clothIdCounter')
+      .set(data1, { merge: true });
     const fileUpload = bucket.file(fileName);
     const stream = fileUpload.createWriteStream({
       metadata: {

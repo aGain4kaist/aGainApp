@@ -7,8 +7,11 @@ const UserModel = {
   },
 
   async getUserById(id) {
-    const doc = await db.collection('User').where('id', '==', Number(id)).get();
-    return doc.empty ? null : { id: doc.docs[0].id, ...doc.docs[0].data() };
+    const doc = await db
+      .collection('User')
+      .where('id', '==', Number(id))
+      .get();
+    return doc.empty ? null : { ...doc.docs[0].data() };
   },
 
   async createUser(userData) {
@@ -17,12 +20,14 @@ const UserModel = {
   },
 
   async updateUser(id, userData) {
-    await db.collection('User').doc(id).set(userData, { merge: true });
-    return { id, ...userData };
+    const snapshot = await db.collection('User').where('id', '==', Number(id)).get();
+    const doc = snapshot.docs[0];
+    await db.collection('User').doc(doc.id).set(userData, { merge: true });
+    return { ...userData };
   },
 
   async deleteUser(id) {
-    await db.collection('User').doc(id).delete();
+    await db.collection('User').where('id', '==', Number(id)).delete();
     return { message: `User with ID ${id} deleted` };
   },
 };

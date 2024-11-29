@@ -13,7 +13,7 @@ const ClothModel = {
       .collection('Cloth')
       .where('id', '==', Number(id))
       .get();
-    return doc.empty ? null : { id: doc.docs[0].id, ...doc.docs[0].data() };
+    return doc.empty ? null : { ...doc.docs[0].data() };
   },
 
   // 새로운 파티를 Firestore에 추가하는 메소드
@@ -24,13 +24,15 @@ const ClothModel = {
 
   // 특정 파티를 Firestore에서 업데이트하는 메소드
   async updateCloth(id, clothData) {
-    await db.collection('Cloth').doc(id).set(clothData, { merge: true });
-    return { id, ...clothData };
+    const snapshot = await db.collection('Cloth').where('id', '==', Number(id)).get();
+    const doc = snapshot.docs[0];
+    await db.collection('Cloth').doc(doc.id).set(clothData, { merge: true });
+    return { ...clothData };
   },
 
   // 특정 파티를 Firestore에서 삭제하는 메소드
   async deleteCloth(id) {
-    await db.collection('Cloth').doc(id).delete();
+    await db.collection('Cloth').where('id', '==', Number(id)).delete();
     return { message: `Cloth with ID ${id} deleted` };
   },
 };
