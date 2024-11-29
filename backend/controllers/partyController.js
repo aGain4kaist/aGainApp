@@ -59,8 +59,7 @@ exports.getPartyLike = async (req, res) => {
       const item = await edit_party(party);
       res.json({ likes: item.likes, liked_users: item.liked_users });
       return;
-    }
-    else {
+    } else {
       res.status(400).send('No such party');
     }
   } catch (error) {

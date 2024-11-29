@@ -81,11 +81,11 @@ exports.getClothByUserID = async (req, res) => {
       }
     }
     if (onParty == 'true') {
-      const edit_item = ret.filter((e) => 'party' in e && e.party != "");
+      const edit_item = ret.filter((e) => 'party' in e && e.party != '');
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else if (onParty == 'false') {
-      const edit_item = ret.filter((e) => !('party' in e) || e.party == "");
+      const edit_item = ret.filter((e) => !('party' in e) || e.party == '');
       res.json(edit_item.sort((a, b) => b.date - a.date));
       return;
     } else {
@@ -105,9 +105,7 @@ exports.getClothLike = async (req, res) => {
       const item = await edit_cloth(cloth);
       res.json({ likes: item.likes, liked_users: item.liked_users });
       return;
-    }
-    else
-    {
+    } else {
       res.status(400).send('No cloth with such ID');
     }
   } catch (error) {
