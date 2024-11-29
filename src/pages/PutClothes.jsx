@@ -53,7 +53,8 @@ function PutClothes() {
   const [size, setSize] = useState('');
   const [fitSize, setFitSize] = useState('');
 
-  const { user, userClothes } = useUser();
+  const { user, fetchUserClothes } = useUser();
+  console.log(user?.id?.toString());
 
   // 이미지 선택 핸들러
   const handleImageChange = (event) => {
@@ -176,7 +177,7 @@ function PutClothes() {
           tags: keywords,
           type: category,
           party: '', // 파티 ID를 선택적으로 넣을 수 있습니다.
-          owner: user?.id,
+          owner: user?.id?.toString(),
           description: story,
         })
       );
@@ -195,6 +196,10 @@ function PutClothes() {
 
       if (response.status === 200) {
         alert('옷이 성공적으로 등록되었습니다!');
+        // 옷 등록 후 최신 데이터를 가져옴
+        if (user?.id) {
+          await fetchUserClothes(user.id); // 사용자 옷 fetch 호출
+        }
         navigate('/home'); // 홈 페이지로 이동
       } else {
         alert('옷 등록에 실패했습니다. 다시 시도해주세요.');
